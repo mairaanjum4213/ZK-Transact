@@ -1,0 +1,151 @@
+h2 {
+    margin-top: 0;
+    margin-bottom: .5rem;
+    font-weight: 500;
+    line-height: 1.2;
+}
+h2 {
+    font-size: calc(1.325rem + .9vw);
+}
+@media (min-width:1200px) {
+    h2 {
+        font-size: 2rem !important;
+    }
+}
+ul {
+    padding-left: 2rem;
+}
+ul {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+h2 {
+    font-weight: 600;
+    line-height: 1.4;
+    color: #000;
+}
+.list-style {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.list-style li {
+    list-style: none;
+}
+
+.breadcrumb-wrap {
+    box-shadow: 0 4px 29px rgba(51, 51, 51, 0.185);
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: auto;
+    padding: 120px 0;
+}
+@media only screen and (max-width: 575px) {
+    .breadcrumb-wrap {
+        padding: 50px 0;
+    }
+    .breadcrumb-wrap .breadcrumb-title .breadcrumb-menu li {
+        font-size: 14px !important;
+    }
+    .breadcrumb-wrap .breadcrumb-title .breadcrumb-menu li a {
+        font-size: 14px !important;
+    }
+}
+@media only screen and (max-width: 767px) {
+    ul li {
+        font-size: 14px !important;
+    }
+    .breadcrumb-title h2 {
+        font-size: 24px !important;
+        margin-bottom: 10px;
+    }
+    .breadcrumb-title .breadcrumb-menu li {
+        font-size: 14px !important;
+    }
+    .breadcrumb-title .breadcrumb-menu li:after {
+        font-size: 12px !important;
+    }
+    .breadcrumb-title .breadcrumb-menu li a {
+        font-size: 14px !important;
+    }
+    */ .breadcrumb-wrap {
+        padding: 60px 0;
+    }
+}
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    .breadcrumb-title h2 {
+        font-size: 35px !important;
+    }
+    .breadcrumb-wrap {
+        padding: 70px 0;
+    }
+}
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+    .breadcrumb-title h2 {
+        font-size: 35px !important;
+    }
+    .breadcrumb-wrap {
+        padding: 120px 0;
+    }
+}
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {
+    .breadcrumb-title h2 {
+        font-size: 40px !important;
+    }
+}
+@media only screen and (min-width: 1600px) {
+    .breadcrumb-title h2 {
+        font-size: 44px !important;
+    }
+}
+.breadcrumb-title {
+    z-index: 1;
+    width: 100%;
+}
+.breadcrumb-title h2 {
+    font-size: 36px;
+    font-weight: 600;
+    margin: 0 0 5px;
+    color: #fff;
+}
+.breadcrumb-title .breadcrumb-menu li {
+    display: inline-block;
+    margin: 0 10px;
+    position: relative;
+    color: #fff;
+    font-weight: 500;
+}
+.breadcrumb-title .breadcrumb-menu li:after {
+    position: absolute;
+    top: 2px;
+    right: -13px;
+    content: "/";
+    font-size: 14px !important;
+    background-color: transparent;
+    color: #fff;
+}
+.breadcrumb-title .breadcrumb-menu li:first-child {
+    margin-left: 0;
+}
+.breadcrumb-title .breadcrumb-menu li:first-child a {
+    padding-left: 0;
+}
+.breadcrumb-title .breadcrumb-menu li:last-child {
+    margin-right: 0;
+    color: #43B4A0;
+}
+.breadcrumb-title .breadcrumb-menu li:last-child:after {
+    display: none;
+}
+.breadcrumb-title .breadcrumb-menu li a {
+    font-size: 16px !important;
+    line-height: 22px;
+    display: inline-block;
+    padding: 0px 5px;
+    transition: 0.3s;
+    color: #fff;
+}
+.breadcrumb-title .breadcrumb-menu li a:hover {
+    color: #43B4A0;
+}

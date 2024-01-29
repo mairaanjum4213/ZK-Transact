@@ -1,0 +1,11 @@
+#bg {
+    position: relative;
+    background: url('../assets/aboutusFeature.png') center center/cover no-repeat;
+    background-color: #07012F !important;
+}
+.HigherLimitsP {
+    font-size: x-large;
+}
+.HigherLimitsH {
+    font-size: xx-large !important;
+}

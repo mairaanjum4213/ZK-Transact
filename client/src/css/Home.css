@@ -1,0 +1,260 @@
+.textAnimate {
+  user-select: none;
+  user-select: none;
+}
+
+.textAnimate {
+  cursor: none;
+  color: #1c967f;
+}
+
+.borderBottom {
+  border-bottom: 8px solid #1c967f !important;
+}
+
+#heroSection {
+  position: relative;
+  /* background: url('../assets/BreadCrumbs/Home1.jpg') center center/cover no-repeat; */
+}
+
+
+#usingZKTransact {
+  position: relative;
+  background: url('../assets/LoaderBg.png') center center/cover no-repeat !important;
+}
+
+#getStarted {
+  position: relative !important;
+  background: url('../assets/Globe.png') center center/cover no-repeat;
+}
+
+.getStartedh1 {
+  font-size: xx-large;
+  font-weight: 900 !important;
+}
+
+.getStartedP {
+  font-size: large;
+}
+
+.homeImageLocker {
+  animation: 2s infinite moveUpDown;
+  filter: brightness(80%);
+}
+
+@keyframes moveUpDown {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(8px);
+  }
+}
+
+.alignCenter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.alignCenter .btn {
+  width: min-content;
+}
+
+.descriptionHeader {
+  line-height: 1.8;
+  text-align: justify;
+}
+
+@media (prefers-color-scheme: light) {
+
+  #heroSection,
+  #usingZKTransact {
+    background: url('../assets/BreadCrumbs/Home2.jpg') center center/cover no-repeat;
+    background-color: #090320 !important;
+  }
+
+  #heroSection {
+    color: #fff;
+    background: url('../assets/BreadCrumbs/Home2.jpg') center center/cover no-repeat;
+    background-color: #060125 !important;
+  }
+
+  .getStartedh1 {
+    color: #fff !important;
+  }
+
+  #getStarted {
+    background-image: url("../assets/Globe.png");
+  }
+
+  .card {
+    background-color: #fff !important;
+    border: 1px solid rgba(128, 128, 128, .644);
+    transition: .5s;
+  }
+
+  .card:hover {
+    box-shadow: rgba(0, 0, 0, .19) 0 10px 20px, rgba(0, 0, 0, .23) 0 6px 6px;
+    border-top: 5px solid #1c967f !important;
+    border: none;
+  }
+
+}
+
+@media (prefers-color-scheme: dark) {
+
+  #heroSection,
+  #usingZKTransact {
+    /* background-color: #09131571; */
+  }
+
+  #heroSection {
+    background: url('../assets/BreadCrumbs/Home1.jpg') center center/cover no-repeat;
+  }
+
+  .getStartedh1 {
+    color: #fff !important;
+  }
+
+  #getStarted {
+    background-image: url("../assets/GlobeDark.png");
+  }
+
+  .card {
+    background: 0 0 !important;
+    border-color: grey;
+    transition: .5s !important;
+  }
+
+  .card:hover {
+    box-shadow: 0 30px 30px -25px rgba(38, 57, 77, .9);
+    border-top: 5px solid #1c967f !important;
+    background-color: #091113 !important;
+    border: none;
+  }
+}
+
+@media only screen and (min-width:768px) and (max-width:790px) {
+  .heroContenth1 {
+    font-size: 48px !important;
+  }
+}
+
+@media only screen and (min-width:791px) and (max-width:991px) {
+  .heroContenth1 {
+    font-size: 50px;
+  }
+}
+
+.heroContenth1 {
+  margin-bottom: 5px !important;
+  font-size: calc(1.375rem + 1.5vw);
+}
+
+@media (min-width:1200px) {
+  .heroContenth1 {
+    font-size: 2.5rem;
+  }
+}
+
+@media only screen and (min-width:768px) and (max-width:991px) {
+  .heroContenth1 {
+    font-size: 52px;
+  }
+}
+
+@media only screen and (max-width:767px) {
+  .hero-wrap.style1 .hero-content h1 {
+    font-size: 32px;
+  }
+
+  .heroContenth1 {
+    font-size: 40px;
+  }
+}
+
+.heroContenth2 {
+  font-size: calc(1.375rem + 1.5vw - 3px);
+  margin-bottom: 2px;
+}
+
+@media (min-width:1200px) {
+  .heroContenth2 {
+    font-size: 2.5rem;
+  }
+}
+
+@media only screen and (min-width:768px) and (max-width:790px) {
+  .heroContenth2 {
+    font-size: 38px !important;
+  }
+}
+
+@media only screen and (min-width:791px) and (max-width:991px) {
+  .heroContenth2 {
+    font-size: 44px;
+  }
+}
+
+@media only screen and (max-width:767px) {
+  .heroContenth2 {
+    font-size: 34px;
+  }
+
+  .displayNone {
+    display: none !important;
+  }
+}
+
+@media only screen and (min-width:992px) and (max-width:1199px) {
+  .heroContenth1 {
+    font-size: 48px;
+  }
+
+  .heroContenth2 {
+    font-size: 39px;
+  }
+}
+
+@media only screen and (min-width:1200px) and (max-width:1399px) {
+  .heroContenth1 {
+    font-size: 60px;
+  }
+
+  .heroContenth2 {
+    font-size: 47px;
+  }
+}
+
+@media only screen and (min-width:1400px) and (max-width:1599px) {
+  .heroContenth1 {
+    font-size: 68px;
+  }
+
+  .heroContenth2 {
+    font-size: 55px;
+  }
+}
+
+@media only screen and (min-width:1600px) {
+  .heroContenth1 {
+    font-size: 74px;
+  }
+
+  .heroContenth2 {
+    font-size: 59px;
+  }
+}
+
+.card:hover {
+  transform: translateY(-12px);
+}
+
+.card-img-top {
+  width: 55px;
+  height: 60px;
+}

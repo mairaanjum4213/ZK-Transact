@@ -1,0 +1,65 @@
+.backgroundImage {
+  
+    position: relative;
+    background: url('../assets/BreadCrumbs/Footer.png') center center no-repeat;
+}
+.Logo-alignment {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+}
+.footerRemarks {
+    border-bottom: 1px solid rgba(255, 255, 255, .1);
+}
+ul {
+    list-style: none;
+}
+.footerLinksParent {
+    font-size: normal;
+    text-decoration: none;
+    border: none;
+}
+.footerLinksParent:hover {
+    color: #1C967F;
+}
+.socialIcons {
+    background-color: #00000050;
+    color: #1C967F;
+    font-size: larger;
+    display: inline !important;
+    padding: 6px;
+    height: 35px;
+    width: 35px;
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 15px 0px;
+    transition: color 0.2s, background-color 0.7s, padding 0.4s, transform 0.2s ease-in-out;
+}
+.socialIcons:hover {
+    background-color: #1C967F;
+    transform: translateY(-0.8px);
+    color: white;
+}
+#BoxPurp {
+    position: relative;
+    background: url('../assets/BreadCrumbs/Footer.png') center center no-repeat;
+    background-size: cover;
+}
+.container {
+    position: relative;
+    z-index: 1;
+}
+img {
+    vertical-align: middle;
+}
+@media (prefers-color-scheme: dark) {
+    #BoxPurp {
+        background-color: #091113 !important;
+        color: white !important;
+    }
+}
+@media (prefers-color-scheme: light) {
+    #BoxPurp {
+        background-color: #060125 !important;
+        color: white !important;
+    }
+}

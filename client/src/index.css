@@ -1,0 +1,172 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Jost&display=swap');
+
+* {
+  margin: 0;
+  transition: color .048s ease-in-out, background-color .25s ease-in-out, border-color .05s ease-in-out, box-shadow .05s ease-in-out, font-size .05s ease-in-out;
+  padding: 0, font-size 0.15s ease-in-out, ;
+  font-family: 'Jost', sans-serif;
+}
+
+:root {
+  color-scheme: light dark;
+  overflow-x: hidden;
+}
+
+/* --- Common  Classes/ Attributes */
+a {
+  text-decoration: none;
+}
+
+/* Scroll-bar */
+
+::-webkit-scrollbar {
+  width: 9px;
+  height: 1000px !important;
+  scrollbar-width: thin !important;
+  scrollbar-gutter: stable both-edges; 
+}
+::-webkit-scrollbar-thumb {
+  background-color:  #1c967f; 
+  width: 50%;
+  border-radius: 3px;
+} 
+
+
+
+
+/* --- Button Used In : Files incluing buttons change width in inline css min-width property*/
+.btnStyle:after,
+.btnStyle:before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: "";
+  height: 100%;
+  z-index: -1;
+  transition: .4s ease-in-out;
+}
+
+.btnStyle {
+  border: 1px solid transparent;
+  display: inline-block;
+  min-width: fit-content;
+  max-width: fit-content;
+  font-size: 1rem;
+  font-weight: 400;
+  text-decoration: none;
+  line-height: 26px;
+  border-radius: 0;
+  text-align: center;
+  transition: .7s ease-in-out;
+  position: relative;
+  padding: 14px 42px;
+  color: #fff;
+  overflow: hidden;
+  background-image: linear-gradient(to right, #a246e8dc 0%, #256a81 51%, #7839a8b4 100%);
+  transition: 0.5s;
+  background-size: 200% auto;
+}
+
+
+.btnStyle:hover{
+  background-position: right center;
+  color: #fff;
+  text-decoration: none;
+  transition: 0.3s;
+}
+.btnStyle:disabled {
+  pointer-events: none;
+  opacity: 0.45;
+}
+
+.btnStyle:hover:after {
+  visibility: visible;
+  opacity: 1;
+  width: 100%;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+  .btnStyle {
+    font-size: 16px;
+    padding: 14px 30px;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  .btnStyle {
+    font-size: 18px;
+    padding: 16px 35px;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .btnStyle {
+    font-size: 14px;
+    padding: 12px 25px;
+  }
+}
+
+/* --- Underline Links: Used in Footer & Login */
+.link-wrapper {
+  position: relative;
+  display: inline-block;
+  padding: 6px 0;
+}
+
+.link {
+  display: inline-block;
+  position: relative;
+  padding: 4px 0;
+}
+
+.hover-2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 1.3px;
+  background-color: #1C967F;
+  transform-origin: bottom right;
+  transition: width 0.3s ease, left 0.3s ease;
+}
+
+.hover-2:hover::after {
+  width: 100%;
+  left: 0;
+  transform-origin: bottom left;
+}
+
+/* --- Media Queries */
+@media (prefers-color-scheme: light) {
+  body {
+    color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+  }
+
+  h1,
+  h2,
+  h3,
+  h5,
+  h6 {
+    color: rgb(0, 0, 0);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+  }
+
+  h1,
+  h2,
+  h3,
+  h5,
+  h6 {
+    color: rgb(255, 255, 255);
+  }
+}

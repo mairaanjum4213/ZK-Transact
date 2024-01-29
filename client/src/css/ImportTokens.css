@@ -1,0 +1,39 @@
+.textImportTokens {
+    outline: none;
+    color: #1c9680ec !important;
+    font-size: small;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    transition: all 0.5s;
+}
+
+button.textBtn{
+   color : #1C967F ;
+   transition: all 0.3s;
+}
+
+button.textBtn:hover{
+  border-bottom: 1px solid #1C967F ;
+ }
+
+
+ @media (prefers-color-scheme:dark) {
+  
+  .offcanvas{
+    background-color: black;
+    
+  }
+ 
+
+ }
+
+
+ 
+ @media (prefers-color-scheme:light) {
+  
+  .offcanvas{
+    
+    
+  }
+ 
+
+ }

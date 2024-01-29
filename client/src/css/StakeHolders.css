@@ -1,0 +1,199 @@
+replace StakeHolder.css  by h3,
+ul {
+    margin-top: 0
+}
+.centerIcon{
+    padding-left: 25%;
+    padding-top: 25%;
+}
+
+a,
+a:focus,
+a:hover {
+    text-decoration: none;
+}
+
+ul {
+    padding-left: 2rem;
+    margin-bottom: 1rem
+}
+
+@media (min-width:1200px) {
+    h3 {
+        font-size: 1.75rem
+    }
+  
+}
+a {
+    text-transform: inherit;
+    transition: .3s
+}
+a:focus,
+a:hover {
+    box-shadow: none
+}
+a:focus {
+    outline: solid 0
+}
+.social-profile li {
+    display: inline-block;
+    margin: 0 4px
+}
+.social-profile li:first-child {
+    margin-left: 0
+}
+.social-profile li:last-child {
+    margin-right: 0
+}
+.social-profile li a {
+    display: block;
+    text-align: center;
+    border: 1px solid transparent;
+    transition: .3s ease-in-out
+}
+.social-profile li a i {
+    transition: .3s ease-in-out;
+    font-size: 14px;
+    line-height: .8
+}
+.social-profile li a:hover {
+    border-color: transparent;
+    color: #43b4a0
+}
+.social-profile.style1 li a {
+    width: 35px;
+    height: 35px;
+    background: rgba(255, 255, 255, .1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, .08)
+}
+.social-profile.style1 li a i {
+    color: #43b4a0
+}
+.social-profile.style1 li a:hover {
+    background-color: #43b4a0;
+    transform: translateY(-3px)
+}
+.team-card {
+    padding: 5px 25px 22px;
+    position: relative;
+    margin-bottom: 25px;
+    z-index: 1;
+    border-radius: 5px
+}
+.team-card:after {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    content: "";
+    width: 100%;
+    border-radius: 2px;
+    height: calc(100% - 150px);
+    background-color: #fff !important;
+    box-shadow: 0 0 25px rgba(0, 0, 0, .2);
+    z-index: -1
+}
+.team-card .team-member-img {
+    width: 256px;
+    height: 256px;
+    border-radius: 50%;
+    margin: 0 auto 22px;
+    text-align: center
+}
+.team-card .team-member-img img {
+    border-radius: 50%;
+    display: block;
+    margin: 0 auto
+}
+.team-card .team-member-img .member-social {
+    position: relative;
+    top: -55px;
+    left: 20px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    text-align: center;
+    background-color: #43b4a0
+}
+.team-card .team-member-img .member-social i {
+    color: #fff;
+    font-size: 15px;
+    line-height: 42px;
+    margin: 0 auto
+}
+.team-card .team-member-img .member-social .social-profile {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    min-height: 100%;
+    visibility: hidden;
+    opacity: 0;
+    transition: .4s
+}
+.team-card .team-member-img .member-social .social-profile li {
+    display: block;
+    margin: 10px 0
+}
+.team-card .team-member-img .member-social .social-profile li:last-child {
+    margin-bottom: 0
+}
+.team-card .team-member-img .member-social .social-profile li a {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-color: #43b4a0
+}
+.team-card .team-member-img .member-social .social-profile li a i {
+    color: #fff;
+    font-size: 15px;
+    margin: 0 auto
+}
+.team-card .team-member-imfo {
+    text-align: center
+}
+.team-card .team-member-imfo h3 {
+    font-size: 22px;
+    margin: 0 0 5px
+}
+.team-card .team-member-imfo span {
+    color: #666
+}
+.team-card:hover .member-social {
+    background-color: #43b4a0
+}
+.team-card:hover .member-social .social-profile {
+    visibility: visible;
+    opacity: 1;
+    bottom: calc(100% + 15px)
+}
+@media only screen and (max-width:575px) {
+    .team-card .team-member-img {
+        width: 245px;
+        height: 256px;
+        margin: 0 auto 10px
+    }
+}
+@media only screen and (max-width:767px) {
+    ul li {
+        font-size: 14px
+    }
+    .team-card .team-member-imfo h3 {
+        font-size: 20px
+    }
+}
+@media only screen and (min-width:768px) and (max-width:991px) {
+    .team-card .team-member-imfo h3 {
+        font-size: 20px
+    }
+}
+@media only screen and (min-width:1200px) and (max-width:1399px) {
+    .team-card .team-member-img {
+        width: 212px;
+        height: 212px
+    }
+}
+@media only screen and (min-width:1400px) {
+    .team-card .team-member-img {
+        width: 255px;
+        height: 255px
+    }
+}
