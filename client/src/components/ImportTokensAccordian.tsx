@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
-
 import "../css/ImportTokens.css";
 import { MdOutlinePlaylistRemove } from 'react-icons/md';
 interface ImportTokens {
     text: string;
 }
-const ImportTokens: React.FC<ImportTokens> = (props) => {
+const ImportTokensAccordian: React.FC<ImportTokens> = (props) => {
     const [isVisible, setIsVisible] = useState(true);
     const handleHideClick = () => {
         setIsVisible(false);
     };
     return (
-        <>  
+        <>
             {isVisible && (
-                <div className="row mx-1">
+                <div className="row mx-1 mt-5 bg">
                     <div className="alert alert-warning alert-dark fade show" role="alert">
                         {props.text}
                         <button
@@ -35,4 +34,4 @@ const ImportTokens: React.FC<ImportTokens> = (props) => {
         </>
     );
 };
-export default ImportTokens;
+export default ImportTokensAccordian;

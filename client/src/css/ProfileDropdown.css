@@ -1,0 +1,33 @@
+@media (prefers-color-scheme: dark) {
+    .profileDropdownParent {
+        background-color: #091113 !important;
+        color: rgb(232, 233, 233);
+        border: 1px solid rgba(230, 226, 226, 0.116);
+    }
+}
+@media (prefers-color-scheme: light) {
+    .profileDropdownParent {
+        background-color: #fdffff;
+        color: rgb(0, 0, 0);
+    }
+}
+.profileDropdownParent {
+    width: 15rem;
+}
+@media (max-width: 991px) {
+    .profileDropdownParent {
+        color: rgb(255, 255, 255) !important;
+        background-color: rgba(128, 128, 128, 0.158) !important;
+        backdrop-filter: blur(8px);
+    }
+}
+.profileDropdownParent li {
+    padding: 10px;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.568);
+    border-left: 2px solid transparent;
+    transition: background-color 0.45s;
+}
+.profileDropdownParent li:hover {
+    background-color: rgba(155, 152, 152, 0.178);
+    border-left: 3px solid #269e88;
+}

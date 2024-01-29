@@ -7,7 +7,6 @@ import { useFormik } from 'formik';
 import { registerValidation } from "../helper/validate";
 import { registerUser } from '../helper/helper'
 import toast, { Toaster } from 'react-hot-toast';
-
 // when ever we need to use console word we need to declare it 
 declare var console: {
   log: (...args: any[]) => void;
@@ -23,25 +22,24 @@ const Register: React.FC = () => {
       confirmpwd: '',
       email: '',
       fullName: '',
-      mobile:'',
-      address:''
+      mobile: '',
+      address: ''
     },
     validate: registerValidation,
     onSubmit: async (values) => {
       values = await Object.assign(values);
-      let registerPromise =registerUser(values)
+      let registerPromise = registerUser(values)
       toast.promise(registerPromise, {
         loading: 'Creating...',
-        success : <b>Register Successfully...!</b>,
-        error : <b>Could not Register.</b>
+        success: <b>Register Successfully...!</b>,
+        error: <b>Could not Register.</b>
       });
-
-      registerPromise.then(function(){ navigate('/login')});
+      registerPromise.then(function () { navigate('/login') });
     }
   });
   return (
     <>
-    <Toaster position='top-center' reverseOrder={false}></Toaster>
+      <Toaster position='top-center' reverseOrder={false}></Toaster>
       <BreadCrumb parentPageLink="/" ParentPage="Home" pageName="Register New Account " ChildPage="Register" imageUrl={registration} />
       <div className="container mt-5">
         <div className="row ">
@@ -50,11 +48,11 @@ const Register: React.FC = () => {
               Register a new account
             </p>
             <p className="mt-2  mb-2 text-secondary" style={{ fontSize: "large" }}>
-              Welcome ! create a new account
+              Create a new account
             </p>
             <form onSubmit={formik.handleSubmit}>
               <input
-               {...formik.getFieldProps('fullName')}
+                {...formik.getFieldProps('fullName')}
                 className="InputReg"
                 type="text"
                 placeholder=" Full Name"
@@ -123,7 +121,6 @@ const Register: React.FC = () => {
           </div>
         </div>
       </div>
-  
     </>
   );
 };

@@ -13,11 +13,9 @@ const Footer: React.FC = () => {
             <div className="col-lg-3 col-md-6 col-sm-12  mt-4 ">
               <div className="Logo-alignment">
                 <img width="10%" src={logo} alt="" />
-                <b>
-                  <span className="mx-2" style={{ fontSize: "bold" }}>
-                    ZK-Transact
-                  </span>
-                </b>
+                <span className="mx-2 fs-5 fw-bold" >
+                  ZK-Transact
+                </span>
               </div>
               <p className="mt-4 mb-4 text-justify" style={{ fontSize: "small" }}>
                 Enjoy fast transactions with minimul fees in matter of minutes with no minimum limit.
@@ -113,7 +111,7 @@ const Footer: React.FC = () => {
           <div className="row  mt-3">
             <center>
               <p className="text-justify text-center" style={{ fontSize: "small" }}>
-                <b style={{ color: "rgb(28, 150, 127)", fontSize: "" }}>
+                <b style={{ color: "rgb(28, 150, 127)" }}>
                   <u> ZK-Transact.
                   </u>
                 </b>

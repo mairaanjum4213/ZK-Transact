@@ -15,7 +15,7 @@ const PageNotFound: React.FC = () => {
           </b>
         </p>
         <p className="text-center" style={{ fontSize: "large" }}> The page you are looking is not available</p>
-        <button className="btnStyle mt-3 " onClick={handleGoBack}> Back To Home </button>
+        <button className="btnStyle mt-3 " onClick={handleGoBack}> Go Back </button>
       </div>
     </>
   );

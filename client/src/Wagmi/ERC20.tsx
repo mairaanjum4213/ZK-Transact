@@ -5,7 +5,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import BreadCrumb from '../components/BreadCrumb';
 import Transfer from '../assets/BreadCrumbs/Transfer.png';
 import contractABI from './data.json';
-import ImportTokens from '../components/ImportTokens';
+import ImportTokens from '../components/ImportTokensAccordian';
 import '../css/Registration.css';
 export const ERC20: React.FC = () => {
   const [amount, setAmount] = useState<number | string>(0);

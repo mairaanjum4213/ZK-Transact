@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../css/Registration.css';
+import dotenv from "dotenv"
 import Loader from './Loader';
 import { Toaster, toast } from 'react-hot-toast';
 const LocalCurrencyConversion: React.FC = () => {
@@ -9,10 +10,11 @@ const LocalCurrencyConversion: React.FC = () => {
   const [userInputLocalVal, setUserInputLocalVal] = useState<number>(0);
   const [zkTokenUniversal, setZkTokenUniversal] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  
   const getData = async () => {
     try {
       const response = await fetch(
-        "http://data.fixer.io/api/latest?access_key=2cd2b54c8ab823cd76010ef18bd562ea"
+        import.meta.env.VITE_FIXER_IO
       );
       const result = await response.json();
       setCountry1(result.rates);
@@ -21,6 +23,7 @@ const LocalCurrencyConversion: React.FC = () => {
       setIsLoading(false);
     } catch (error) {
       toast.error(`Error fetching data: ${error}`);
+      console.log("FIXERR IO API KEY ERROR")
       setIsLoading(false);
     }
   };
@@ -40,6 +43,9 @@ const LocalCurrencyConversion: React.FC = () => {
     let roundedNum = parseFloat(num.toFixed(5));
     setzkTokenVal(roundedNum.toString());
   };
+
+
+  try {
   return (
     <>
       <Toaster />
@@ -95,6 +101,9 @@ const LocalCurrencyConversion: React.FC = () => {
         </form>
       )}
     </>
-  );
+  );}
+  catch(e){
+    console.log("Check Expiry of Fixer.io --Local Currency Conversion Component")
+  }
 };
 export default LocalCurrencyConversion;

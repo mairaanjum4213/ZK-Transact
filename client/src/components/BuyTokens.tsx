@@ -3,7 +3,7 @@ import BreadCrumb from './BreadCrumb';
 import '../css/Registration.css';
 import aboutUs from '../assets/BreadCrumbs/buyZkTokens.png';
 import buyToken from '../assets/buyTokens.png';
-import ImportTokens from './ImportTokens.tsx';
+import ImportTokens from './ImportTokensAccordian.tsx';
 import LocalCurrencyConversion from './LocalCurrencyConversion.tsx';
 import ZkTokenConversion from './ZkTokenConversion.tsx';
 const BuyTokens: React.FC = () => {

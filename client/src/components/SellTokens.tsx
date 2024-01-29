@@ -3,7 +3,7 @@ import BreadCrumb from './BreadCrumb';
 import '../css/Registration.css';
 import aboutUs from '../assets/BreadCrumbs/buyZkTokens.png';
 import buyToken from '../assets/buyTokens.png';
-import ImportTokens from './ImportTokens.tsx';
+import ImportTokens from './ImportTokensAccordian.tsx';
 import ZkTokenConversion from './ZkTokenConversion.tsx';
 import LocalCurrencyConversion from './LocalCurrencyConversion.tsx';
 const SellTokens: React.FC = () => {
@@ -45,7 +45,7 @@ const SellTokens: React.FC = () => {
               placeholder=' Enter Meta Mask Wallet Address'
             /> */}
             <div className=''>
-              <LocalCurrencyConversion />
+              <ZkTokenConversion />
             </div>
             {/* <input
               className='InputReg mt-4'

@@ -8,10 +8,14 @@ const ZkTokenConversion: React.FC = () => {
   const [inputZkTokens, setInputZkTokens] = useState<number>(0);
   const [zkTokenUniversalVal, setZkTokenUniversalVal] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  
   const getData = async () => {
+   
+   
+   
     try {
       const response = await fetch(
-        "http://data.fixer.io/api/latest?access_key=2cd2b54c8ab823cd76010ef18bd562ea"
+        import.meta.env.VITE_FIXER_IO
       );
       const result = await response.json();
       setCountry1(result.rates);
@@ -20,6 +24,7 @@ const ZkTokenConversion: React.FC = () => {
       setIsLoading(false);
     } catch (error) {
       toast.error(`Error fetching data: ${error}`);
+      console.log(" FIXER IO API KEY ERROR")
       setIsLoading(false);
     }
   };
@@ -39,6 +44,8 @@ const ZkTokenConversion: React.FC = () => {
     let roundedNum = parseFloat(num.toFixed(5));
     setLocalCurrencyVal(roundedNum.toString());
   };
+
+  try{
   return (
     <>
       <Toaster />
@@ -94,5 +101,9 @@ const ZkTokenConversion: React.FC = () => {
       )}
     </>
   );
+}
+catch(e){
+  console.log("Check Expiry of Fixer.io --ZK Token Conversion Component")
+}
 };
 export default ZkTokenConversion;

@@ -1,5 +1,8 @@
-import { useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from "../store/store";
+import { RiUser2Fill } from "react-icons/ri";
+import "../css/ProfileDropdown.css"
+import WalletDetails from './WalletDetails';
 const Navprofile: React.FC = () => {
   const navigate = useNavigate();
   const setIsAuthentiacted = useAuthStore(state => state.setIsAuthenticated);
@@ -10,17 +13,27 @@ const Navprofile: React.FC = () => {
     localStorage.removeItem('isAuthenticated');
     navigate('/');
   };
- 
   return (
     <>
-      <div className="dropdown">
-        <button className="btn dropdown-toggle profileNav  dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-          F
+      <div className="btn-group mx-1">
+        <button
+          type="button"
+          className="btn btn-secondary   dropdown-toggle rounded-circle userProfiledp p-2 "
+          data-bs-toggle="dropdown"
+          data-bs-display="static"
+          aria-expanded="false"
+        >
+          <RiUser2Fill />
         </button>
-        <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-          <li><a className="dropdown-item" href="#">Settings</a></li>
-          <li><a className="dropdown-item" href="#">Meta Mask Data (nextppt)</a></li>
-          <li><button className="dropdown-item" onClick={handleLogout}>Logout</button></li>
+        <ul className="dropdown-menu dropdown-menu-end profileDropdownParent px-2
+      "
+        >
+          <li>Edit Profile</li>
+          <li>Setting</li>
+          <li> <WalletDetails/>  rough </li>
+          <li>Meta Mask Data</li>
+          <li>Meta Mask Data</li>
+          <div className='text-center px-1 mt-3 pb-2'><button className="simpleButton1 w-75 " onClick={handleLogout}>Logout</button></div>
         </ul>
       </div>
     </>

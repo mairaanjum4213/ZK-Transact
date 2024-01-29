@@ -44,8 +44,6 @@ const Login: React.FC = () => {
     }
   });
   setUsername(formik.values.username);
-
-
   //if(isLoading) return <h1 className='text-2xl font-bold'>isLoading</h1>;
   //if(serverError) return <h1 className='text-xl text-red-500'>{serverError.message}</h1>
   return (
@@ -54,7 +52,6 @@ const Login: React.FC = () => {
       <BreadCrumb parentPageLink="/" ParentPage="Home" pageName="Login To Your Account " ChildPage="Login" imageUrl={registration} />
       <div className="container mt-5">
         <div className="row pb-5">
-       
           <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
             <p style={{ fontSize: "x-large" }}>
               Login Here

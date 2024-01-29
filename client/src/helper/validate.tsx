@@ -36,7 +36,7 @@ export async function loginValidate(values: FormValues): Promise<Errors> {
       const response = await authenticate(values.username);
 
       if (response && response.status !== 200) {
-        errors.username = 'User does not exist...!';
+        errors.username = 'User does not exist';
       
       }
     } catch (error) {
