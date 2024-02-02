@@ -1,11 +1,14 @@
 import React from 'react';
 import BreadCrumb from './BreadCrumb';
 import '../css/Registration.css';
+import { ReactDOM } from 'react';
+
 import aboutUs from '../assets/BreadCrumbs/buyZkTokens.png';
 import buyToken from '../assets/buyTokens.png';
 import ImportTokens from './ImportTokensAccordian.tsx';
 import LocalCurrencyConversion from './LocalCurrencyConversion.tsx';
-import ZkTokenConversion from './ZkTokenConversion.tsx';
+import { Link } from 'react-router-dom';
+
 const BuyTokens: React.FC = () => {
   return (
     <>
@@ -16,7 +19,7 @@ const BuyTokens: React.FC = () => {
         ChildPage='Buy ZK Tokens'
         imageUrl={aboutUs}
       />
-      <div className='container pt-2'>
+      <div className=' pt-2 px-5'>
        
         <ImportTokens  text="Dont forget to import ZKT in Meta Mask wallet"/>
       
@@ -47,18 +50,25 @@ const BuyTokens: React.FC = () => {
               type='text'
               placeholder=' Enter Meta Mask Wallet Address'
             />
-            <div className=''>
-              <ZkTokenConversion />
-            </div>
+
+            <div className="admin">
             <input
               className='InputReg mt-4'
-              type='file'
-              placeholder='Chose File'
+              type='text'
+              placeholder='Enter Local Admin User Name'
             />
-            <button
+            <Link
+            to="/buyTokensd"
               className='text-secondary text-decoration-underline'>
-              Admin Local Accounts
-            </button>
+             View Local
+
+            </Link>
+            </div>
+            <div className='mt-4'>
+            LocalCurrencyConversion  commented in file:"BuyTokens" to save api free trial
+              {/* <LocalCurrencyConversion /> */}
+            </div>
+          
             <input
               className='InputReg mt-4'
               type='text'

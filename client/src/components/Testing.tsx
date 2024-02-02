@@ -1,6 +1,7 @@
 import "../css/Testing.css";
 import { useState, useEffect } from "react";
 import Loader from "./Loader";
+import ImportingTokensModal from "./subSections/ImportingTokensModal";
 
 const Testing: React.FC = () => {
   const [text1, setText1] = useState(20);
@@ -47,47 +48,7 @@ const Testing: React.FC = () => {
 
   return (
     <>
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <form>
-          <input
-            type="number"
-            autoComplete='false'
-            value={text1}
-            onChange={(e) => setText1(Number((e.target as HTMLInputElement).value))}
-          />
-          <select onChange={handleValue1Change}>
-            <option>Select a country</option>
-            {Object.keys(country1).map((data, index) => (
-              <option key={index} value={(country1 as Record<string, number>)[data]}>
-                {data}
-              </option>
-            ))}
-          </select>
-          <br /> <br />
-          <input
-            type="number"
-            autoComplete='false'
-            value={text2}
-            disabled
-            onChange={(e) => setText2(e.target.value)}
-          />
-          <select disabled>
-            <option>ZK-Tokens</option>
-          </select>
-          <br /> <br />
-          <button
-            className="btnStyle"
-            onClick={convert}
-            type="submit"
-            disabled={!value1} 
-          >
-            Convert
-          </button>
-        </form>
-      )}
-
+  <ImportingTokensModal/>
 
       
     </>

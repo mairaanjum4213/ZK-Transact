@@ -11,9 +11,12 @@
         color: rgb(0, 0, 0);
     }
 }
+
+/* Maira make width resposnove for different devices mera kial sa sahi ha yh bas test krlo */
 .profileDropdownParent {
     width: 15rem;
 }
+
 @media (max-width: 991px) {
     .profileDropdownParent {
         color: rgb(255, 255, 255) !important;

@@ -23,6 +23,7 @@ import BuyTokens from './components/BuyTokens';
 import { ERC20 } from './Wagmi/ERC20';
 import ScrollUp from './components/ScrollUp';
 import SellTokens from './components/SellTokens';
+import Testing from './components/Testing';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -54,6 +55,7 @@ function App() {
               <Route path="/sellTokens" element={<SellTokens />} />
               <Route path="/tokenTransfer" element={<ERC20 />} />
               <Route path="/" element={<Home />} />
+              <Route path="/testing" element={<Testing />} />
               <Route path="/aboutus" element={<AboutUs />} />
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />

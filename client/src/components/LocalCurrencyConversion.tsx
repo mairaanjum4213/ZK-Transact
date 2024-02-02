@@ -59,7 +59,7 @@ const LocalCurrencyConversion: React.FC = () => {
             autoComplete='false'
             step={100}
             style={{ width: "60%" }}
-            placeholder=" Local Currency Amount"
+            placeholder="Local Currency Amount"
             value={LocalCurrencyVal || ''}
             onChange={(e) => setLocalCurrencyVal(Number((e.target as HTMLInputElement).value))}
           />
@@ -86,7 +86,7 @@ const LocalCurrencyConversion: React.FC = () => {
           />
           {/* Equivalent ZKT Tokens*/}
           <select disabled
-            className="InputReg text-center  hideSelectIcon"
+            className="InputReg text-center  hideSelectIcon  "
             style={{ width: "40%", borderRadius: "0px" }}>
             <option>ZKT's</option>
           </select>

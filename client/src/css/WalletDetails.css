@@ -114,6 +114,13 @@
     position: relative;
     background: url('../assets/img8.png') center center/cover no-repeat !important;
 }
+
+#intructionModalBg{
+    position: relative;
+    background: url('../assets/importingTokens.png') center center/cover no-repeat !important;
+    filter: saturate(1.25);
+}
+
 .closeBtn {
     font-size: x-large;
 }

@@ -34,13 +34,13 @@ const Notifications: React.FC = () => {
             <p>
               Transaction request approved by admin.
             </p>
-            <FaCircle className="notificationPointer" />
+            <FaCircle className="notificationPointer" style={{ color: '#3eaa96cb', minWidth: "10px", minHeight: "10px" }} />
           </li>
           <li className='d-flex justify-content-between align-items-center m-2'>
             <p>
               Your request to send transaction to ***px account has been declined by admin
             </p>
-            <FaCircle className="notificationPointer" />
+            <FaCircle className="notificationPointer" style={{ color: '#3eaa96cb', minWidth: "10px", minHeight: "10px" }} />
           </li>
           <li className='d-flex justify-content-between align-items-center m-2'>
             <p>
@@ -61,5 +61,4 @@ const Notifications: React.FC = () => {
     </>
   );
 };
-
 export default Notifications;

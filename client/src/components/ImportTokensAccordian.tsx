@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import InstructionModal from "./subSections/ImportingTokensModal.tsx"
 import "../css/ImportTokens.css";
 import { MdOutlinePlaylistRemove } from 'react-icons/md';
 interface ImportTokens {
@@ -15,11 +16,7 @@ const ImportTokensAccordian: React.FC<ImportTokens> = (props) => {
                 <div className="row mx-1 mt-5 bg">
                     <div className="alert alert-warning alert-dark fade show" role="alert">
                         {props.text}
-                        <button
-                            data-bs-toggle="modal" data-bs-target="#exampleModal"
-                            className="mx-2 textBtn">
-                            <p >learn More</p>
-                        </button>
+                        <InstructionModal/>
                         <button
                             className="float-end d-flex justify-content-center align-items-center"
                             onClick={handleHideClick}
