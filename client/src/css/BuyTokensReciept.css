@@ -1,0 +1,72 @@
+@media (prefers-color-scheme: light) {
+    .recieptOfPurchasingCard {
+        background-color: #fff;
+        border: 1px solid rgba(167, 164, 164, 0.726);
+        box-shadow: rgba(0, 0, 0, .19) 0 10px 20px, rgba(0, 0, 0, .23) 0 6px 6px;
+    }
+    .invoice-container .invoice-details {
+        background-color: #2d30311a !important;
+    }
+    .customTabletd {
+        background-color: transparent !important;
+        color: rgb(0, 0, 0) !important;
+    }
+    .customTableth {
+        background-color: transparent !important;
+    }
+}
+@media (prefers-color-scheme: dark) {
+    .customTableth {
+        background-color: transparent !important;
+    }
+    .recieptOfPurchasingCard {
+        background-color: #091113;
+        box-shadow: 0 30px 30px -25px rgba(38, 57, 77, .9);
+        box-shadow: rgba(39, 39, 39, 0.19) 0 10px 20px, rgba(0, 0, 0, .23) 0 6px 6px;
+        background-color: #091113;
+    }
+    .invoice-container .invoice-details {
+        background-color: #34484d4b !important;
+    }
+    .customTabletd {
+        background-color: transparent !important;
+        color: rgb(255, 255, 255) !important;
+    }
+}
+.invoice-container .invoice-details {
+    margin: 1rem 0 0 0;
+    padding: 1rem;
+    line-height: 180%;
+}
+.recieptOfPurchasingCard {
+    border-top: 5px solid #1c967f;
+    border-radius: 8px 8px 0px 0px;
+}
+.invoice-container {
+    padding: 1rem;
+}
+.invoice-container .invoice-header .invoice-logo {
+    margin: 0.8rem 0 0 0;
+    display: inline-block;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #bcd0f7;
+}
+.invoice-container .invoice-header .invoice-logo img {
+    max-width: 130px;
+}
+.invoice-container .invoice-header address {
+    font-size: 0.8rem;
+    color: #8a99b5;
+    margin: 0;
+}
+.invoice-container .invoice-num {
+    text-align: right;
+}
+.invoice-container .invoice-body {
+    padding: 1rem 0 0 0;
+}
+.invoice-container .invoice-footer {
+    text-align: center;
+    font-size: 0.9rem;
+}

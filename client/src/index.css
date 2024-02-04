@@ -19,7 +19,6 @@ a {
 /* Scroll-bar */
 ::-webkit-scrollbar {
   width: 9px;
-  height: 1000px !important;
   scrollbar-width: thin !important;
   scrollbar-gutter: stable both-edges;
 }
@@ -29,7 +28,10 @@ a {
   width: 50%;
   border-radius: 2.4px;
 }
-.modal ::-webkit-scrollbar-thumb, .dropdownParent::-webkit-scrollbar-thumb {
+
+
+.modal ::-webkit-scrollbar-thumb,
+ .dropdownParent::-webkit-scrollbar-thumb {
   background-color:rgba(226, 59, 184, 0.877) !important;
 }
 
@@ -134,6 +136,7 @@ a {
   h1,
   h2,
   h3,
+  .normalTextColor,
   h5,
   h6 {
     color: rgb(0, 0, 0);
@@ -145,6 +148,7 @@ a {
     color: rgb(255, 255, 255);
   }
   h1,
+  .normalTextColor,
   h2,
   h3,
   h5,

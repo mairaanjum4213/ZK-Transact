@@ -110,14 +110,17 @@
     color: #2cb69d;
     font-size: x-large;
 }
-#modalBg {
-    position: relative;
-    background: url('../assets/img8.png') center center/cover no-repeat !important;
-}
 
-#intructionModalBg{
+
+#intructionModalBg,#modalBg{
     position: relative;
     background: url('../assets/importingTokens.png') center center/cover no-repeat !important;
+    filter: saturate(1.25);
+}
+
+#accountDetailsModalBg{
+    position: relative;
+    background: url('../assets/BreadCrumbs/buyZkTokens.png') center center/cover no-repeat !important;
     filter: saturate(1.25);
 }
 

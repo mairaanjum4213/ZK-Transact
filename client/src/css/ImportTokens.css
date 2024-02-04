@@ -7,11 +7,14 @@
 }
 button.textBtn {
   color: #1C967F;
-  transition: all 0.3s;
+  transition: all 0.4s;
+  border-bottom: 1px solid transparent;
 }
 button.textBtn:hover {
-  border-bottom: 1px solid #1C967F;
+  border-bottom: 1px solid #1C967F ;
 }
+
+
 @media (prefers-color-scheme:dark) {
   .offcanvas {
     background-color: black;

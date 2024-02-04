@@ -11,18 +11,14 @@ export const ERC20: React.FC = () => {
   const [amount, setAmount] = useState<number | string>(0);
   const [address, setAddress] = useState<number | string>("");
   const { address: metamaskaddress } = useAccount();
-
   const wagmigotchiContract = {
     address: import.meta.env.VITE_SMART_ADD2,
     abi: [...contractABI.abi] as any,
   } as const;
-
   const { data: useContractReadsData } = useContractReads({
     contracts: [{ ...wagmigotchiContract, functionName: "name" }],
   });
-
   const value = useContractReadsData?.[0].result;
-  
   const { config } = usePrepareContractWrite({
     address: import.meta.env.VITE_SMART_ADD2,
     abi: contractABI.abi,
@@ -56,7 +52,6 @@ export const ERC20: React.FC = () => {
       toast.loading('Fetching balance...');
       return;
     }
-
     if (Number(balance) < Number(enteredAmount)) {
       toast.error('Insufficient tokens');
       setAmount(0);
@@ -68,7 +63,6 @@ export const ERC20: React.FC = () => {
   const handleInputChange2 = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAddress(e.target.value as number | string);
   };
-
   useEffect(() => {
     if (isSuccess) {
       // Perform actions for a successful transaction
@@ -80,8 +74,8 @@ export const ERC20: React.FC = () => {
     <>
       <BreadCrumb parentPageLink="/" ParentPage="Home" pageName="Transfer ZKT  " ChildPage="Transffer ZKT" imageUrl={Transfer} />
       <Toaster position="top-center" reverseOrder={false}></Toaster>
-      <div className="container mt-5">
-      <ImportTokens text="Make Sure Recipent have imported ZKT" />
+      <div className="px-5 mt-5">
+        <ImportTokens text="Make Sure Recipent have imported ZKT" />
         <div className=" fw-bold" style={{ fontSize: "xx-large" }}>
           Transfer {data?.symbol}
         </div>
@@ -89,9 +83,6 @@ export const ERC20: React.FC = () => {
           Total Balance<span className="text-secondary mx-2">{data?.formatted} {"ZKT"}  </span>
         </div>
       </div>
-    
-      
-      
       <div className="row d-flex justify-content-center mt-5 ">
         <input
           style={{ width: "45%" }}
@@ -115,7 +106,6 @@ export const ERC20: React.FC = () => {
           Transfer
         </button>
       </div>
-    
     </>
   );
 };

@@ -32,7 +32,7 @@ const Notifications: React.FC = () => {
           </div>
           <li className='d-flex justify-content-between align-items-center m-2'>
             <p>
-              Transaction request approved by admin.
+              Transaction request approved by admin. Download the reciept.
             </p>
             <FaCircle className="notificationPointer" style={{ color: '#3eaa96cb', minWidth: "10px", minHeight: "10px" }} />
           </li>

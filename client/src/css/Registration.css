@@ -170,3 +170,8 @@
     text-overflow: '';
   }
 
+.information{
+  font-size: x-large;
+  display: inline ;
+  color: #1C967F;
+}

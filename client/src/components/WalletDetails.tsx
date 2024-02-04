@@ -114,6 +114,11 @@ const WalletDetails: React.FC = () => {
                     </p>
                   </div>
                 </div>
+
+
+          
+
+ 
                 {/* switch button  */}
                 {switchNetwork && (
                   <div className="row pt-3 ">
@@ -124,7 +129,7 @@ const WalletDetails: React.FC = () => {
                       {chains.map((x) =>
                         x.id === chain?.id ? null : (
                           <button key={x.id} onClick={() => handleNetworkSwitch(x.id, x.name)} className='btnStyle btnStyleModel' >
-                            {x.name}
+                            {"switch to"+x.name}
                             {isLoading && x.id === pendingChainId && ' (switching)'}
                           </button>
                         ),

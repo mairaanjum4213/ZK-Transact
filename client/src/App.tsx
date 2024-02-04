@@ -13,6 +13,7 @@ import Home from "./components/Home";
 import AboutUs from "./components/AboutUs";
 import PageNotFound from './components/PageNotFound';
 import Login from "./components/Login"
+import ViewZKtokensProviders from "./components/subSections/ViewZKtokensProviders.tsx"
 import Footer from "./components/Footer"
 import Register from "./components/Register"
 import Recovery from './components/Recovery';
@@ -21,9 +22,11 @@ import Profile from './components/Profile';
 import Navbar from './components/Navbar';
 import BuyTokens from './components/BuyTokens';
 import { ERC20 } from './Wagmi/ERC20';
+import ZKtokeProviderProfile from "./components/subSections/ZKtokeProviderProfile.tsx"
 import ScrollUp from './components/ScrollUp';
 import SellTokens from './components/SellTokens';
 import Testing from './components/Testing';
+import BuyTokensReciept from './components/BuyTokensReciept.tsx';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -51,6 +54,12 @@ function App() {
             <Navbar />
             <ScrollUp />
             <Routes>
+
+
+           
+            <Route path="/ buyTokens-reciept" element={<BuyTokensReciept />} />
+              <Route path="/zkt-provider-profile" element={<ZKtokeProviderProfile />} />
+              <Route path="/zkt-providers" element={<ViewZKtokensProviders />} />
               <Route path="/buyTokens" element={<BuyTokens />} />
               <Route path="/sellTokens" element={<SellTokens />} />
               <Route path="/tokenTransfer" element={<ERC20 />} />
