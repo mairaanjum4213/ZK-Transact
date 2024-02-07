@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { MdOutlineContentCopy } from "react-icons/md";
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { useAccount, useBalance, useContractWrite, useContractReads, useWaitForTransaction, usePrepareContractWrite } from 'wagmi';
 import { BigNumber } from 'bignumber.js';
 import toast, { Toaster } from 'react-hot-toast';
@@ -8,6 +10,7 @@ import contractABI from './data.json';
 import ImportTokens from '../components/ImportTokensAccordian';
 import '../css/Registration.css';
 export const ERC20: React.FC = () => {
+  const [transactionHash, setTransactionHash] = useState('');
   const [amount, setAmount] = useState<number | string>(0);
   const [address, setAddress] = useState<number | string>("");
   const { address: metamaskaddress } = useAccount();
@@ -26,9 +29,14 @@ export const ERC20: React.FC = () => {
     args: [address, amount],
   });
   const { data: useContractWriteData, write } = useContractWrite(config);
-  const { data: useWaitForTransactionData, isSuccess } = useWaitForTransaction({
+  const { data: useWaitForTransactionData, isSuccess, isLoading } = useWaitForTransaction({
     hash: useContractWriteData?.hash,
   });
+
+  const handleCopyToClipboardContractHash = () => {
+    toast.success('Contract Hash Copied');
+};
+
   useEffect(() => {
     console.log("_________________________");
     console.log("UseContractWriteData", useContractWriteData);
@@ -67,9 +75,14 @@ export const ERC20: React.FC = () => {
     if (isSuccess) {
       // Perform actions for a successful transaction
       toast.success('Transaction Successful');
-      window.location.reload(); // Refresh the page
+      // ccSuccess
+      // window.location.reload();  
+      const hash = useContractWriteData?.hash; // Access the contract hash directly
+      if (hash) {
+        setTransactionHash(hash);
+      }
     }
-  }, [isSuccess]);
+  }, [isSuccess, useContractWriteData]);
   return (
     <>
       <BreadCrumb parentPageLink="/" ParentPage="Home" pageName="Transfer ZKT  " ChildPage="Transffer ZKT" imageUrl={Transfer} />
@@ -80,10 +93,39 @@ export const ERC20: React.FC = () => {
           Transfer {data?.symbol}
         </div>
         <div className="" style={{ fontSize: "large" }}>
-          Total Balance<span className="text-secondary mx-2">{data?.formatted} {"ZKT"}  </span>
+          Total Balance
+          <span className="text-secondary mx-2">{data?.formatted}
+            {"ZKT"}
+          </span>
+          <button className='simpleButton1' onClick={() => { window.location.reload() }}>Refresh Manually for now bad ma jab db connect hojie uncomment by search  <b>ccSuccess </b> </button>
+
+          <p className='' data-toggle="tooltip" data-placement="top" title="contract hash is used for metamask transation confirmation">
+           Previous Transaction Contract Hash
+          {transactionHash ? (
+            <span className='text-secondary mx-2'>
+             {transactionHash}
+              <CopyToClipboard onCopy={handleCopyToClipboardContractHash} text=  {transactionHash}>
+                                    <MdOutlineContentCopy className="mx-2 text-secondary fs-5 UsernameCopyicon" style={{ display: "inline" }} />
+                                </CopyToClipboard>
+              </span>
+          ) : (
+            <span className='text-secondary mx-2'>Contract hash not available yet</span>
+          )}
+        </p>
+        
+      <p className='bg-danger'>
+        <p>
+          for confirmation paste contract cash in search bar of link below
+        </p>
+        https://sepolia.etherscan.io/txs</p>
+
+        <div className='link-wrapper'>
+        <p className='mt-2 link hover-2 '>View All Transactions</p>
+        </div>
+      
         </div>
       </div>
-      <div className="row d-flex justify-content-center mt-5 ">
+      <div className="row d-flex justify-content-center mt-4 ">
         <input
           style={{ width: "45%" }}
           className="InputReg"
@@ -91,7 +133,7 @@ export const ERC20: React.FC = () => {
           onChange={handleInputChange1}
           placeholder=" Enter Token Amount"
         />
-        <div className="row  d-flex justify-content-center mt-5 ">
+        <div className="row  d-flex justify-content-center mt-4 ">
           <input
             className="InputReg"
             style={{ width: "45%" }}
@@ -105,6 +147,7 @@ export const ERC20: React.FC = () => {
         <button style={{ minWidth: "45%" }} className="btnStyle " disabled={!write || amount == 0} onClick={write}>
           Transfer
         </button>
+        
       </div>
     </>
   );

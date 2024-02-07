@@ -21,6 +21,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"],
+  "include": ["src", "src/components/sellTokens/ViewZKtokensPurchasers.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

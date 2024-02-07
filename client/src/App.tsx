@@ -1,40 +1,45 @@
-
-
 import { Route, Routes } from 'react-router-dom';
-import './App.css';
+import { useState, useEffect } from 'react';
+
+import AOS from 'aos';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import { useState, useEffect } from 'react';
-import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { WagmiProvider } from './Wagmi/WagmiContext';
+import { ERC20 } from './Wagmi/ERC20';
+
+import './App.css';
+
 import Loader from './components/Loader';
-import Home from "./components/Home";
-import AboutUs from "./components/AboutUs";
+import Home from './components/Home';
+import AboutUs from './components/AboutUs';
 import PageNotFound from './components/PageNotFound';
-import Login from "./components/Login"
-import ViewZKtokensProviders from "./components/subSections/ViewZKtokensProviders.tsx"
-import Footer from "./components/Footer"
-import Register from "./components/Register"
+import Login from './components/Login';
+import Footer from './components/Footer';
+import Register from './components/Register';
 import Recovery from './components/Recovery';
 import ResetPassword from './components/ResetPassword';
 import Profile from './components/Profile';
 import Navbar from './components/Navbar';
-import BuyTokens from './components/BuyTokens';
-import { ERC20 } from './Wagmi/ERC20';
-import ZKtokeProviderProfile from "./components/subSections/ZKtokeProviderProfile.tsx"
+import BuyTokens from './components/buyTokens/BuyTokens.tsx';
+import ZKtokeProviderProfile from './components/buyTokens/ZKtokeProviderProfile.tsx';
+import ViewZKtokensProviders from './components/buyTokens/ViewZKtokensProviders.tsx';
+import ZKtokePurchaserProfile from "./components/sellTokens/ZKtokePurchaserProfile.tsx";
+import ViewZKtokensPurchasers from './components/sellTokens/ViewZKtokensPurchasers.tsx';
+
 import ScrollUp from './components/ScrollUp';
-import SellTokens from './components/SellTokens';
+import SellTokens from './components/sellTokens/SellTokens.tsx';
 import Testing from './components/Testing';
-import BuyTokensReciept from './components/BuyTokensReciept.tsx';
+import UserDashboard from './components/UserDashboard.tsx';
+import AdminDashboard from './components/admin/AdminDashboard.tsx';
+import BuyTokensReciept from './components/buyTokens/BuyTokensReciept.tsx';
+import SellTokensReciept from './components/sellTokens/SellTokensReciept.tsx'
 
 function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     AOS.init();
-
-    // Simulate a delay to test the loading state
     const loadingTimeout = setTimeout(() => {
       setLoading(false);
     }, 500);
@@ -55,9 +60,12 @@ function App() {
             <ScrollUp />
             <Routes>
 
-
-           
-            <Route path="/ buyTokens-reciept" element={<BuyTokensReciept />} />
+              <Route path="/user" element={<UserDashboard />} />
+              <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/zkt-purchaser-profile" element={<ZKtokePurchaserProfile />} />
+              <Route path="/zkt-purchasers" element={<ViewZKtokensPurchasers />} />
+              <Route path="/buyTokens-reciept" element={<BuyTokensReciept />} />
+              <Route path="/sellTokens-reciept" element={<SellTokensReciept />} />
               <Route path="/zkt-provider-profile" element={<ZKtokeProviderProfile />} />
               <Route path="/zkt-providers" element={<ViewZKtokensProviders />} />
               <Route path="/buyTokens" element={<BuyTokens />} />
@@ -73,6 +81,7 @@ function App() {
               <Route path="/reset" element={<ResetPassword />} />
               <Route path="/profile" element={<Profile />} />
             </Routes>
+
             <Footer />
           </>
         )}

@@ -64,6 +64,11 @@ const UserNavbar: React.FC = () => {
             </div>
             <div className="offcanvas-body d-flex flex-column  flex-lg-row p-lg-0">
               <ul className="navbar-nav  justify-content-center fs-5 align-items-center flex-grow-1 pe-3">
+              
+              <li className="nav-item">
+                  <Link to="/user" className="nav-link active" aria-current="page">Home</Link>
+                </li>
+
                 <li className="nav-item">
                   <Link to="/buytokens" className="nav-link active" aria-current="page">Buy Tokens</Link>
                 </li>

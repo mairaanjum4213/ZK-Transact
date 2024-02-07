@@ -28,14 +28,10 @@ a {
   width: 50%;
   border-radius: 2.4px;
 }
-
-
 .modal ::-webkit-scrollbar-thumb,
- .dropdownParent::-webkit-scrollbar-thumb {
-  background-color:rgba(226, 59, 184, 0.877) !important;
+.dropdownParent::-webkit-scrollbar-thumb {
+  background-color: rgba(226, 59, 184, 0.877) !important;
 }
-
-
 /* --- Button Used In : Files incluing buttons change width in inline css min-width property*/
 .btnStyle:after,
 .btnStyle:before {
@@ -194,3 +190,4 @@ a {
     background-color: rgb(226, 59, 185) !important;
   }
 }
+

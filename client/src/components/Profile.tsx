@@ -78,7 +78,7 @@ const Profile: React.FC = () => {
   return (
     <>
       <Toaster position='top-center' reverseOrder={false}></Toaster>
-      <BreadCrumb parentPageLink="/" ParentPage="Home" pageName="My Profile" ChildPage="Edit Profile" imageUrl={profiling} />
+      <BreadCrumb parentPageLink="/user" ParentPage="Home" pageName="My Profile" ChildPage="Edit Profile" imageUrl={profiling} />
       <div className="container mt-5">
         <p style={{ fontSize: "x-large" }}>
           {username}{"'s  "}Profile
@@ -87,11 +87,36 @@ const Profile: React.FC = () => {
           Edit profile
         </p>
         <div className="row">
-          <p className="text-danger fw-bold fs-3">ideas (Maira):
-            error hadnling wrong login <br />  profile must be updated on otp confimation  <br />
-          restrict route to login user:  http://127.0.0.1:5173/ if login (notmal home page)</p>
-          <p className="text-primary fw-bold fs-3">ideas (faheem):
-            hide show balance feature <br />  KYC status profile ma show ho </p>
+       
+          <ul className="text-danger fw-bold fs-5">
+
+
+          <li>
+              No check in case user dont write uesr name and press forget password
+            </li>
+
+            <li>
+              Add a region input field
+            </li>
+            
+            <li>
+              create a compoent that renders incases user didnt  have kyc and region selected
+             , buy sell ma use hona
+            </li>
+
+            <li>
+              error handling wrong user name login
+            </li>
+
+            <li>
+              profile updation on otp confiramtion
+            </li>
+
+<li>
+  kyc status must be shown in profile
+</li>
+          </ul>
+    
           <form onSubmit={formik.handleSubmit}>
             {/* Full Name and Phone No on the same line for large screens */}
             <div className="row"> <div className="col-lg-6 col-md-6 col-sm-12">

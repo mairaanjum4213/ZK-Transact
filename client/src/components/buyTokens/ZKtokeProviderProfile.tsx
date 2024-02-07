@@ -1,23 +1,31 @@
-import BreadCrumb from "../BreadCrumb.tsx";
-import { MdOutlineContentCopy } from "react-icons/md";
-import BuyTokens from "../../assets/BreadCrumbs/ZKSellers.jpg"
-import Author from "../../assets/author.jpg"
-import toast from 'react-hot-toast';
+import React from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import "../../css/TokenTraders.css"
+import { MdOutlineContentCopy } from 'react-icons/md';
+import BreadCrumb from '../BreadCrumb.tsx';
+import BuyTokens from '../../assets/BreadCrumbs/ZKSellers.jpg';
+import Author from '../../assets/author.jpg';
+import toast from 'react-hot-toast';
+import '../../css/TokenTraders.css';
+
 const ZKtokeProviderProfile: React.FC = () => {
     const handleCopyToClipboardUserName = () => {
         toast.success('User Name Copied');
     };
+
+
+
     const handleCopyToClipboardAccount = () => {
         toast.success('Bank Account  Copied');
+    };
+    const handleCopyToClipboardWalletAddresss = () => {
+        toast.success('Wallet Address Copied');
     };
     return (
         <>
             <BreadCrumb parentPageLink='/buyTokens' ParentPage="Buy Tokens" pageName=" ZK-Token Sellers" ChildPage=" ZK-Token Sellers" imageUrl={BuyTokens} />
             <section className="">
                 <div className="container py-5 ">
-                    <h1 className="fw-bold fs-4">ZK Token Seller Profile</h1>
+                    <h1 className="fw-bold fs-4" style={{letterSpacing:"1px"}}>ZK Token Seller Profile</h1>
                     <div className="row d-flex justify-content-center align-items-center mt-5 ">
                         <div className="col col-lg-6 mb-4 mb-lg-0  ">
                             <div className="adminProfileCard mb-3 " style={{ borderRadius: ".5rem" }}>
@@ -74,6 +82,7 @@ const ZKtokeProviderProfile: React.FC = () => {
                                                     <p className="text-secondary">200 </p>
                                                 </div>
                                             </div>
+                                           
                                         </div>
                                     </div>
                                 </div>
@@ -103,13 +112,10 @@ const ZKtokeProviderProfile: React.FC = () => {
                                     My account title is Faheem Siddiqi
                                 </p>
                             </div>
-                            
                             <hr className="my-5" />
                         </div>
                     </section>
-
                     {/* To be deleted when making dynamic */}
-
                     <section className="container mt-2 mb-2">
                         <div className="table-responsive container-fluid ">
                             <div className="row pt-1">
@@ -132,14 +138,10 @@ const ZKtokeProviderProfile: React.FC = () => {
                                     My account title is Faheem Siddiqi
                                 </p>
                             </div>
-                            
                             <hr className="my-4" />
                         </div>
                     </section>
-
-                   
-
-                      <section className="container mt-2 mb-2">
+                    <section className="container mt-2 mb-2">
                         <div className="table-responsive container-fluid ">
                             <div className="row pt-1">
                                 <h1 className="fs-4 fw-bold bankTitle">Easy Pasa</h1>
@@ -161,12 +163,10 @@ const ZKtokeProviderProfile: React.FC = () => {
                                     My account title is Faheem Siddiqi
                                 </p>
                             </div>
-                            
                             <hr className="my-5" />
                         </div>
                     </section>
-   {/* To be deleted when making dynamic */}
-
+                    {/* To be deleted when making dynamic */}
                 </div>
             </section>
         </>

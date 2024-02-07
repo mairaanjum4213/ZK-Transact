@@ -1,8 +1,8 @@
-import BreadCrumb from './BreadCrumb';
-import "../css/BuyTokensReciept.css"
-import aboutUs from '../assets/BreadCrumbs/buyZkTokens.png';
-import lightlogo from "../assets/icon3.png"
-import darkLogo from "../assets/icon2.png"
+import BreadCrumb from '../BreadCrumb.tsx';
+import "../../css/BuyTokensReciept.css"
+import aboutUs from '../../assets/BreadCrumbs/buyZkTokens.png';
+import lightlogo from "../../assets/icon3.png"
+import darkLogo from "../../assets/icon2.png"
 import html2pdf from 'html2pdf.js';
 import { useDarkMode, useLightMode } from "color-scheme-hook";
 const BuyTokensReciept: React.FC = () => {
@@ -22,8 +22,6 @@ const BuyTokensReciept: React.FC = () => {
     };
     return (
         <>
-
-        
             <BreadCrumb parentPageLink='/buyTokens' ParentPage="Buy Tokens" pageName="Reciept" ChildPage="Reciept" imageUrl={aboutUs} />
             <p className="bg-danger">
                 There are two reciept aik jisa user dek ka request bja ga dosri admin sa approve hoka jo bna gi
@@ -39,7 +37,6 @@ const BuyTokensReciept: React.FC = () => {
                     </div>
                 </div>
             </div>
-            
             <div className="container mt-5 mb-3" id='printReciept'>
                 <div className="row gutters  ">
                     <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 "  >
@@ -50,7 +47,7 @@ const BuyTokensReciept: React.FC = () => {
                                         {/* Row start */}
                                         <div className="row gutters">
                                             <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                                                <h1 className='fs-3 fw-bold my-5'>Token Purshase Reciept</h1>
+                                                <p className='fs-3 fw-bold my-5' style={{letterSpacing:'2px'}}>Token Purshase Reciept</p>
                                                 {isLightMode ? (
                                                     <img className='mx-2' src={darkLogo} alt="" />
                                                 ) : (
@@ -91,20 +88,19 @@ const BuyTokensReciept: React.FC = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                        {/* Row end */}
+
                                     </div>
                                     <div className="invoice-body">
-                                        {/* Row start */}
                                         <div className="row gutters">
                                             <div className="col-lg-12 col-md-12 col-sm-12">
                                                 <div className="table-responsive p-3 ">
                                                     <table className="table custom-table     ">
                                                         <thead>
                                                             <tr >
-                                                                <th className='fs-5 p-2 customTableth '>User Meta Mask</th>
-                                                                <th className='fs-5 p-2 customTableth' >Local Currency</th>
-                                                                <th className='fs-5 p-2 customTableth' >Fee</th>
-                                                                <th className='fs-5 p-2 customTableth' >Token Purchased</th>
+                                                                <th className='fs-6 customTableth '>User Meta Mask</th>
+                                                                <th className='fs-6 customTableth' >Local Currency</th>
+                                                                <th className='fs-6 customTableth' >Fee</th>
+                                                                <th className='fs-6 customTableth' >Token Purchased</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -122,7 +118,7 @@ const BuyTokensReciept: React.FC = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="invoice-footer mt-4">Thank you for chosing ZK-Transact.</div>
+                                    <div className="invoice-footer mt-4" >Thank you for chosing ZK-Transact.</div>
                                 </div>
                             </div>
                         </div>

@@ -8,11 +8,8 @@ const ZkTokenConversion: React.FC = () => {
   const [inputZkTokens, setInputZkTokens] = useState<number>(0);
   const [zkTokenUniversalVal, setZkTokenUniversalVal] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  
+  const a = 10
   const getData = async () => {
-   
-   
-   
     try {
       const response = await fetch(
         import.meta.env.VITE_FIXER_IO
@@ -44,66 +41,74 @@ const ZkTokenConversion: React.FC = () => {
     let roundedNum = parseFloat(num.toFixed(5));
     setLocalCurrencyVal(roundedNum.toString());
   };
-
-  try{
-  return (
-    <>
-      <Toaster />
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <form>
-          <input
-            className="InputReg mt-4"
-            style={{ width: "60%", borderRadius: "0px" }}
-            placeholder="ZKT Amount"
-            type="number"
-            autoComplete='false'
-            value={text1}
-            step={100}
-            onChange={(e) => setText1(Number((e.target as HTMLInputElement).value))}
-          />
-          <select disabled
-            className="InputReg text-center  hideSelectIcon"
-            style={{ width: "40%", borderRadius: "0px" }}
-          >
-            <option>ZK-Tokens</option>
-          </select>
-          <input
-            className="InputReg mt-4"
-            style={{ width: "60%", borderRadius: "0px" }}
-            placeholder=" Equivalent Local Currency Amount"
-            type="number"
-            autoComplete='false'
-            disabled
-            value={localCurrencyVal}
-          />
-          <select
-            className="InputReg  border border-secondary"
-            style={{ width: "40%", borderRadius: "0px" }}
-            onChange={zkTokenValChange}>
-            <option>Select Currency</option>
-            {Object.keys(country1).map((data, index) => (
-              <option key={index} value={(country1 as Record<string, number>)[data]}>
-                {data}
-              </option>
-            ))}
-          </select>
-          <button
-            className="btnStyle  mt-4"
-            onClick={convert}
-            type="submit"
-            disabled={!inputZkTokens || (text1 < 0)}
-          >
-            Convert
-          </button>
-        </form>
-      )}
-    </>
-  );
-}
-catch(e){
-  console.log("Check Expiry of Fixer.io --ZK Token Conversion Component")
-}
+  try {
+    return (
+      <>
+        <Toaster />
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <form>
+            <input
+              className="InputReg mt-4"
+              style={{ width: "6~0%", borderRadius: "0px" }}
+              placeholder="ZKT Amount"
+              type="number"
+              autoComplete='false'
+              value={text1}
+              step={100}
+              onChange={(e) => setText1(Number((e.target as HTMLInputElement).value))}
+            />
+            <select disabled
+              className="InputReg text-center  hideSelectIcon"
+              style={{ width: "40%", borderRadius: "0px" }}
+            >
+              <option>ZK-Tokens</option>
+            </select>
+            <input
+              className="InputReg mt-4"
+              style={{ width: "60%", borderRadius: "0px" }}
+              placeholder=" Equivalent Local Currency Amount"
+              type="number"
+              autoComplete='false'
+              disabled
+              value={localCurrencyVal}
+            />
+            <select
+              className="InputReg  border border-secondary"
+              style={{ width: "40%", borderRadius: "0px" }}
+              onChange={zkTokenValChange}>
+              <option>Select Currency</option>
+              {Object.keys(country1).map((data, index) => (
+                <option key={index} value={(country1 as Record<string, number>)[data]}>
+                  {data}
+                </option>
+              ))}
+            </select> <br />
+            <input
+              className="InputReg mt-4 "
+              style={{ width: "40%", borderRadius: "0px" }}
+              type="number"
+              placeholder={"ZK Token Seller Fee : " + a + " % "}
+              autoComplete='false'
+              // value={a}
+              disabled
+            /> <br />
+            <button
+              className="btnStyle  mt-4"
+              onClick={convert}
+              type="submit"
+              disabled={!inputZkTokens || (text1 < 0)}
+            >
+              Convert
+            </button>
+          </form>
+        )}
+      </>
+    );  
+  }
+  catch (e) {
+    console.log("Check Expiry of Fixer.io --ZK Token Conversion Component")
+  }
 };
 export default ZkTokenConversion;

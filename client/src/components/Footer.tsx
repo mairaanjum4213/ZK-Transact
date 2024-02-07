@@ -13,7 +13,7 @@ const Footer: React.FC = () => {
             <div className="col-lg-3 col-md-6 col-sm-12  mt-4 ">
               <div className="Logo-alignment">
                 <img width="10%" src={logo} alt="" />
-                <span className="mx-2 fs-5 fw-bold" >
+                <span className="mx-2 fs-5 fw-bold" style={{letterSpacing:"2px"}} >
                   ZK-Transact
                 </span>
               </div>
@@ -112,7 +112,7 @@ const Footer: React.FC = () => {
             <center>
               <p className="text-justify text-center" style={{ fontSize: "small" }}>
                 <b style={{ color: "rgb(28, 150, 127)" }}>
-                  <u> ZK-Transact.
+                  <u > ZK-Transact.
                   </u>
                 </b>
                 {" "} FYP Project By Faheem Siddiqi & Maira Anjum

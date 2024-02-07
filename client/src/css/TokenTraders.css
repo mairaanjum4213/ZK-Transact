@@ -30,38 +30,37 @@
     width: 100%;
   }
 }
-
- th,.bankTitle {
+th,
+.bankTitle {
   color: #2c9784 !important;
 }
 @media (prefers-color-scheme: dark) {
   .tableInput input {
     color: white;
   }
-  .adminProfileCard{
+  .adminProfileCard {
     background-color: #091113 !important;
-     box-shadow: 0 30px 30px -25px rgba(38, 57, 77, .9); box-shadow: rgba(0, 0, 0, .19) 0 10px 20px, rgba(0, 0, 0, .23) 0 6px 6px;
+    box-shadow: 0 30px 30px -25px rgba(38, 57, 77, .9);
+    box-shadow: rgba(0, 0, 0, .19) 0 10px 20px, rgba(0, 0, 0, .23) 0 6px 6px;
     border-top: 5px solid #1c967f !important;
-      background-color: #091113 !important;
+    background-color: #091113 !important;
   }
 }
-.recieptChose::file-selector-button{
+.recieptChose::file-selector-button {
   outline: none !important;
   border: none !important;
-  margin-top:8px ;
+  margin-top: 8px;
   color: white;
-  background-color: #2c9783ce ;
-  }
+  background-color: #2c9783ce;
+}
 @media (prefers-color-scheme: light) {
-  
-  .adminProfileCard{
+  .adminProfileCard {
     background-color: #fff !important;
     box-shadow: rgba(0, 0, 0, .19) 0 10px 20px, rgba(0, 0, 0, .23) 0 6px 6px;
     border-top: 5px solid #1c967f !important;
     border: none;
   }
 }
-
 .UsernameCopyicon:hover {
   color: #2c9784 !important;
 }

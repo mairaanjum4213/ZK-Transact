@@ -1,15 +1,14 @@
-import BreadCrumb from "../BreadCrumb";
+import BreadCrumb from "../BreadCrumb.tsx";
 import BuyTokens from "../../assets/BreadCrumbs/ZKSellers.jpg"
 import Author from "../../assets/author.jpg"
 import "../../css/TokenTraders.css"
-
 import { Link } from 'react-router-dom';
 const ViewZKtokensProviders: React.FC = () => {
   return (
     <>
       <BreadCrumb parentPageLink='/buyTokens' ParentPage="Buy Tokens" pageName=" ZK-Token Sellers" ChildPage=" ZK-Token Sellers" imageUrl={BuyTokens} />
       <section id="" >
-        <p className="mt-3  px-5" style={{ fontSize: "x-large", fontWeight: "bold" }}>Online Zk-Token Sellers</p>
+        <p className="mt-3  px-5" style={{ fontSize: "x-large", fontWeight: "bold" ,letterSpacing:"1px"}}>Online Zk-Token Sellers</p>
         <p className="mt-3 mb-5 px-5" style={{ fontSize: "large"}}>Region: Pakistan</p>
         <div className="container">
           <div className="row ">
@@ -22,7 +21,7 @@ const ViewZKtokensProviders: React.FC = () => {
                       <img className="img-fluid" src={Author} alt="feature 1" />
                     </div>
                     <div>
-                      <p className="card-title fw-bolder mx-3" style={{ fontSize: "large", color: " rgb(28, 150, 127) " }}>
+                      <p className="card-title fw-bolder mx-3" style={{ fontSize: "large", color: " rgb(28, 150, 127) " ,letterSpacing:"1px"}}>
                         Maira Anjum </p>
                       <p className="card-title  mx-3" style={{ fontSize: "small", color: "gray" }}>
                         mairaanjum86@gmail.com</p>
