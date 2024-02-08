@@ -6,14 +6,10 @@ import BuyTokens from '../../assets/BreadCrumbs/ZKSellers.jpg';
 import Author from '../../assets/author.jpg';
 import toast from 'react-hot-toast';
 import '../../css/TokenTraders.css';
-
 const ZKtokeProviderProfile: React.FC = () => {
     const handleCopyToClipboardUserName = () => {
         toast.success('User Name Copied');
     };
-
-
-
     const handleCopyToClipboardAccount = () => {
         toast.success('Bank Account  Copied');
     };
@@ -25,8 +21,8 @@ const ZKtokeProviderProfile: React.FC = () => {
             <BreadCrumb parentPageLink='/buyTokens' ParentPage="Buy Tokens" pageName=" ZK-Token Sellers" ChildPage=" ZK-Token Sellers" imageUrl={BuyTokens} />
             <section className="">
                 <div className="container py-5 ">
-                    <h1 className="fw-bold fs-4" style={{letterSpacing:"1px"}}>ZK Token Seller Profile</h1>
-                    <div className="row d-flex justify-content-center align-items-center mt-5 ">
+                    <h1 className="fw-bold fs-4" style={{ letterSpacing: "1px" }}>ZK Token Seller Profile</h1>
+                    <div className="row d-flex justify-content-center align-items-center mt-5 mx-2 px-1">
                         <div className="col col-lg-6 mb-4 mb-lg-0  ">
                             <div className="adminProfileCard mb-3 " style={{ borderRadius: ".5rem" }}>
                                 <div className="row g-0">
@@ -40,8 +36,7 @@ const ZKtokeProviderProfile: React.FC = () => {
                                         <img
                                             src={Author}
                                             alt="Avatar"
-                                            className="img-fluid my-4"
-                                            style={{ width: "80%" }}
+                                            className="img-fluid my-4 px-4"
                                         />
                                         <h5 className=" fs-4">Faheem Siddiqi </h5>
                                         <p className="text-secondary my-2">Pakistan</p>
@@ -82,7 +77,6 @@ const ZKtokeProviderProfile: React.FC = () => {
                                                     <p className="text-secondary">200 </p>
                                                 </div>
                                             </div>
-                                           
                                         </div>
                                     </div>
                                 </div>

@@ -46,7 +46,7 @@
   text-decoration: none;
 }
 .simpleButton2 {
-  background-image: linear-gradient(to right, rgb(226, 59, 185) 0%, rgb(255, 123, 222) 51%, rgb(226, 59, 185) 100%);
+  background-image: linear-gradient(to right, rgb(226, 59, 185) 0%, rgb(255, 123, 222) 51%, rgb(226, 59, 185) 100%) !important;
   padding: 10px 15px 10px 15px;
   text-align: center;
   transition: 0.5s;

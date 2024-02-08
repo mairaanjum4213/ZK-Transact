@@ -29,17 +29,19 @@ import ViewZKtokensPurchasers from './components/sellTokens/ViewZKtokensPurchase
 
 import ScrollUp from './components/ScrollUp';
 import SellTokens from './components/sellTokens/SellTokens.tsx';
-import Testing from './components/Testing';
 import UserDashboard from './components/UserDashboard.tsx';
 import AdminDashboard from './components/admin/AdminDashboard.tsx';
 import BuyTokensReciept from './components/buyTokens/BuyTokensReciept.tsx';
 import SellTokensReciept from './components/sellTokens/SellTokensReciept.tsx'
+import KYCrequiredModal from './components/KYCrequiredModal';
+import WalletDetails from './components/WalletDetails.tsx';
 
 function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     AOS.init();
+    
     const loadingTimeout = setTimeout(() => {
       setLoading(false);
     }, 500);
@@ -72,13 +74,14 @@ function App() {
               <Route path="/sellTokens" element={<SellTokens />} />
               <Route path="/tokenTransfer" element={<ERC20 />} />
               <Route path="/" element={<Home />} />
-              <Route path="/testing" element={<Testing />} />
+              <Route path="/testing" element={<KYCrequiredModal />} />
               <Route path="/aboutus" element={<AboutUs />} />
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
               <Route path="*" element={<PageNotFound />} />
               <Route path="/recovery" element={<Recovery />} />
               <Route path="/reset" element={<ResetPassword />} />
+              <Route path="/walletDetails" element={<WalletDetails/>} />
               <Route path="/profile" element={<Profile />} />
             </Routes>
 

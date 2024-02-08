@@ -101,6 +101,7 @@
     }
     .modal-content {
         background: #091315;
+       
     }
 }
 .modal-header {
@@ -115,6 +116,13 @@
 #intructionModalBg,#modalBg{
     position: relative;
     background: url('../assets/importingTokens.png') center center/cover no-repeat !important;
+    filter: saturate(1.25);
+}
+
+
+#kyc{
+    position: relative;
+    background: url('../assets/notificationBg.png') center center/cover no-repeat !important;
     filter: saturate(1.25);
 }
 

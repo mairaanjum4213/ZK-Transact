@@ -1,5 +1,6 @@
 import "../css/Registration.css";
 import BreadCrumb from './BreadCrumb';
+import KYCrequiredModal from "./KYCrequiredModal.tsx"
 import profiling from "../assets/BreadCrumbs/BreadCrumb1.png"
 import { useFormik } from 'formik';
 import { profileValidation } from "../helper/validate";
@@ -77,6 +78,9 @@ const Profile: React.FC = () => {
   };
   return (
     <>
+
+<KYCrequiredModal/>
+
       <Toaster position='top-center' reverseOrder={false}></Toaster>
       <BreadCrumb parentPageLink="/user" ParentPage="Home" pageName="My Profile" ChildPage="Edit Profile" imageUrl={profiling} />
       <div className="container mt-5">

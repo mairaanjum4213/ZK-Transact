@@ -1,15 +1,20 @@
 import "../css/WalletDetails.css"
-import { IoWalletSharp } from "react-icons/io5";
-import { IoRefreshCircle } from "react-icons/io5";
+import BreadCrumb from './BreadCrumb';
+import breadCrumWallet from "../assets/BreadCrumbs/ImportTokens.png"
+import { HiOutlineRefresh } from "react-icons/hi";
 import { useEffect, useState } from 'react';
-import { IoClose } from "react-icons/io5";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { MdOutlineContentCopy } from "react-icons/md";
 import toast from 'react-hot-toast';
 import { useNetwork, useSwitchNetwork } from 'wagmi'
 import { useBlockNumber } from 'wagmi'
 import { useAccount, useEnsName, useBalance } from 'wagmi'
+import React from 'react';
+import metamask from "../assets/metamask.png"
 const WalletDetails: React.FC = () => {
+  const handleCopyToClipboardWalletAddresss = () => {
+    toast.success('Wallet Address Copied');
+  };
   const { chain } = useNetwork();
   const { chains, error, isLoading, pendingChainId, switchNetwork } = useSwitchNetwork();
   const { address } = useAccount()
@@ -23,15 +28,12 @@ const WalletDetails: React.FC = () => {
   useEffect(() => {
     { ensName ?? address }
     { ensName ? ` (${address})` : null }
-    const updatedAddress = address ?? 'Default Address'; // Replace 'Default Address' with your fallback value
+    const updatedAddress = address ?? 'Default Address';
     setWalletAddress(updatedAddress);
   }, [address])
-  const handleCopyToClipboard = () => {
-    toast.success('Wallet address copied! ');
-  };
   const handleNetworkSwitch = async (id: number, name: string) => {
     try {
-      if (switchNetwork) { // Check if switchNetwork is defined
+      if (switchNetwork) {
         await switchNetwork(id);
         toast.success(`Switching to ${name}`);
       }
@@ -40,121 +42,90 @@ const WalletDetails: React.FC = () => {
   };
   return (
     <>
-      {/* Button trigger modal */}
-      <button
-        type="button"
-        data-bs-toggle="modal"
-        data-bs-target="#staticBackdrop"
-      >
-        <span> <IoWalletSharp className="  walletDetails" /></span>
-      </button>
-      {/* Modal */}
-      <div
-        className="modal fade "
-        id="staticBackdrop"
-        // use static instead of relatice in case important model that close only by pressing x
-        data-bs-backdrop="relative"
-        data-bs-keyboard="false"
-        tabIndex={-1}
-        aria-labelledby="staticBackdropLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog  modal-dialog-scrollable">
-          <div className="modal-content  ">
-            <div className="modal-header py-4" id="modalBg">
-              <h5 className="modal-title" id="staticBackdropLabel">
-                Wallet Details
-              </h5>
-              <button
-                type="button"
-                className="btn-close closeBtn "
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              >   <span> <IoClose className="closeBtn" /></span> </button> <br />
-            </div>
-            <div className="modal-body ">
-              <div className="container ">
-                <div className="row">
-                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 mt-2  d-flex justify-content-start align-items-center ">
-                    <h6 >Connected To Chain </h6>
-                  </div>
-                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 mt-2 mb-2 d-flex justify-content-start  align-items-center inputModel">
-                    {chain?.name ?? chain?.id}
-                  </div>
-                </div>
-                <div className="row pt-3 ">
-                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 mt-lg-2 mb-lg-2  d-flex justify-content-start">
-                    <h6 className='mt-2'>Block Number </h6>
-                  </div>
-                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 mt-2 mb-3  chainName d-flex align-items-center justify-content-start inputModel">
-                    {data?.toString()}
-                  </div>
-                </div>
-                <div className="row pt-2">
-                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 mt-lg-3 mb-lg-2 d-flex justify-content-start">
-                    <h6> Wallet Address</h6>
-                  </div>
-                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 mt-2 mb-2 d-flex justify-start-center align-items-center inputModel">
-                    <input style={{ fontSize: "medium", width: "100%", backgroundColor: "transparent" }} value={walletAddress} disabled placeholder=' Account Number' type='text' />
-                    <CopyToClipboard onCopy={handleCopyToClipboard} text={walletAddress}>
-                      <MdOutlineContentCopy className=" copyIcon  mx-2" />
-                    </CopyToClipboard>
-                  </div>
-                </div>
-                <div className="row pt-3 ">
-                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 mt-lg-2 d-flex justify-content-start ">
-                    <h6>Available Balance  </h6>  <h6 onClick={() => refetch()}> <IoRefreshCircle className="refetch mx-2" /> </h6>
-                  </div>
-                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12   d-flex justify-content-start">
-                    <p>
-                      <span className="text-secondary">  {balance?.formatted}</span> <br />
-                      <span className="copyIcon" style={{ fontSize: "small" }}>
-                        {balance?.symbol}
-                      </span>
-                    </p>
-                  </div>
-                </div>
-
-
+      <BreadCrumb parentPageLink="/user" ParentPage="Home" pageName="Wallet Detials" ChildPage="Wallet Detials" imageUrl={breadCrumWallet} />
+      <section className="">
+        <div className="container  mb-5">
+          <h1 className="fw-bold fs-4 my-5" style={{ letterSpacing: "1px" }}>Crypto Wallet Details</h1>
+          <div 
+      
           
-
- 
-                {/* switch button  */}
-                {switchNetwork && (
-                  <div className="row pt-3 ">
-                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 mt-lg-2 mb-lg-3 d-flex justify-content-start align-items-center">
-                      <h6>Switch To : </h6>
-                    </div>
-                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 mt-2 mb-3 d-flex justify-content-start">
-                      {chains.map((x) =>
-                        x.id === chain?.id ? null : (
-                          <button key={x.id} onClick={() => handleNetworkSwitch(x.id, x.name)} className='btnStyle btnStyleModel' >
-                            {"switch to"+x.name}
-                            {isLoading && x.id === pendingChainId && ' (switching)'}
-                          </button>
-                        ),
-                      )}
-                    </div>
-                    <p style={{ fontSize: "x-small" }} className="error  text-danger">{error?.message}</p>
+          className="row d-flex justify-content-center align-items-center mt-5 mx-2 px-1"
+          >
+            <div className="col col-lg-6 mb-4 mb-lg-0  ">
+              <div className="adminProfileCard mb-3 " style={{ borderRadius: ".5rem" }}>
+                <div className="row g-0">
+                  <div
+                    className="col-md-4 gradient-custom text-center text-white d-flex justify-content-center align-items-center flex-column"
+                    style={{
+                      borderTopLeftRadius: ".5rem",
+                      borderBottomLeftRadius: ".5rem"
+                    }}
+                  >
+                    <img
+                      src={metamask}
+                      alt="Avatar"
+                      className="img-fluid my-4"
+                    />
+                    <h5 className=" fs-4">Meta Mask </h5>
+                    <p className="text-secondary my-2">Wallet</p>
                   </div>
-                )}
+                  <div className="col-md-8">
+                    <div className="card-body px-4 pb-4 pt-lg-4">
+                      <p className="fs-4 fw-bold mt-2  mb-2" style={{ letterSpacing: "2px" }}>Details</p>
+                      <hr className="mt-0 mb-4" />
+                      <div className="row pt-1">
+                        <div className="col-12 mb-3">
+                          <h6>Wallet Address
+                            <CopyToClipboard text={walletAddress}>
+                              <MdOutlineContentCopy onClick={handleCopyToClipboardWalletAddresss} className=" UsernameCopyicon mx-2" style={{ display: "inline" }} />
+                            </CopyToClipboard>
+                          </h6>
+                          <input className="bg-transparent outline-0 w-100 text-secondary " type="text" value={walletAddress} />
+                        </div>
+                      </div>
+                      <div className="row pt-1">
+                        <div className="col-7 mb-3">
+                          <h6>Bal. </h6>
+                          <p className="text-secondary">  {balance?.formatted}</p>
+                          <span className=" d-flex align-items-center justify-content-start" >
+                            <p className="copyIcon fs-6  ">
+                              {balance?.symbol}
+                            </p>
+                            < HiOutlineRefresh className="UsernameCopyicon mx-1 fs-5 " onClick={() => refetch()} />
+                          </span>
+                        </div>
+                        <div className="col-5 mb-3">
+                          <h6>Block Number</h6>
+                          <p className="text-secondary mt-1"> {data?.toString()}</p>
+                        </div>
+                      </div>
+                      <div className="row pt-1">
+                        <div className="col-7 mb-3">
+                          <h6>Connected To</h6>
+                          <p className="text-secondary mt-3"> {chain?.name ?? chain?.id}</p>
+                        </div>
+                        <div className="col-5 mb-3">
+                          <h6>Switch To</h6>
+                          {chains.map((x) =>
+                            x.id === chain?.id ? null : (
+                              <button key={x.id} onClick={() => handleNetworkSwitch(x.id, x.name)} className='simpleButton1 mt-2' >
+                                {"" + x.name}
+                                {isLoading && x.id === pendingChainId && ' ..'}
+                              </button>
+                            ),
+                          )}
+                        </div>
+                      </div>
+                      <p className="text-justify error  text-danger" style={{ fontSize: "x-small" }} >{error?.message}</p>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="modal-footer">
-              {/* Close button in footer */}
-              {/* <button
-                type="button"
-                className="btn btn-secondary footerCloseBtn mt-2 mx-4 mb-2"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button> */}
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </>
   );
 };
-
 export default WalletDetails;

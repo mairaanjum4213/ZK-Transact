@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from "../store/store";
 import { RiUser2Fill } from "react-icons/ri";
+import { Link } from 'react-router-dom';
 import "../css/ProfileDropdown.css"
 import WalletDetails from './WalletDetails';
 const Navprofile: React.FC = () => {
@@ -28,9 +29,36 @@ const Navprofile: React.FC = () => {
         <ul className="dropdown-menu dropdown-menu-end profileDropdownParent px-2
       "
         >
-          <li>Edit Profile</li>
+
+
+          <li style={{ textDecoration: 'none' }}>
+            <Link
+              to="/profile"
+              style={{
+                display: 'block',
+                width: '100%',
+                height: '100%',
+              }}
+            >
+              Edit Profile
+            </Link>
+          </li>
+
+          <li style={{ textDecoration: 'none' }}>
+            <Link
+              to="/walletDetails"
+              style={{
+                display: 'block',
+                width: '100%',
+                height: '100%',
+              }}
+            >
+              Wallet Details
+            </Link>
+          </li>
+
+
           <li>Setting</li>
-          <li> <WalletDetails/>  rough </li>
           <li>Meta Mask Data</li>
           <li>Meta Mask Data</li>
           <div className='text-center px-1 mt-3 pb-2'><button className="simpleButton1 w-75 " onClick={handleLogout}>Logout</button></div>
