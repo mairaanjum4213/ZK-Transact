@@ -50,8 +50,10 @@ const WalletDetails: React.FC = () => {
       
           
           className="row d-flex justify-content-center align-items-center mt-5 mx-2 px-1"
+          data-aos="zoom-in"
+        
           >
-            <div className="col col-lg-6 mb-4 mb-lg-0  ">
+            <div className="col col-lg-6 mb-4 mb-lg-0    " >
               <div className="adminProfileCard mb-3 " style={{ borderRadius: ".5rem" }}>
                 <div className="row g-0">
                   <div
