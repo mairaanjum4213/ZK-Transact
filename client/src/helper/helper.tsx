@@ -89,6 +89,7 @@ export async function registerUser(credentials: {
   username: string;
   email: string;
   fullName:string;
+  region:string;
 }): Promise<string | RegisterUserResponse> {
   try {
     const { data: { msg }, status } = await axios.post(`/api/register`, credentials);

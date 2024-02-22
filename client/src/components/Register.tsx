@@ -24,6 +24,7 @@ const Register: React.FC = () => {
       fullName: '',
       mobile: '',
       address: '',
+      region: ''
     
     },
     validate: registerValidation,
@@ -111,6 +112,24 @@ const Register: React.FC = () => {
                   Error
                 </p>
               )}
+
+            <input
+                {...formik.getFieldProps('region')}
+                className="InputReg"
+                type="text"
+                placeholder="Region"
+              />
+              {formik.touched.region && formik.errors.region ? (
+                <p className="error  text-danger" id="nameError" style={{ opacity: 1 }}>
+                  {formik.errors.region}
+                </p>
+              ) : (
+                <p className="error  text-danger" id="nameError" style={{ opacity: 0 }}>
+                  Error
+                </p>
+              )}
+              <br />
+              
               <button type="submit" className="standarButton-1 mt-2">
                 Register Now
               </button>

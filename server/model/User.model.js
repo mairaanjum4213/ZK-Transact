@@ -21,14 +21,12 @@ export const UserSchema = new mongoose.Schema({
     address: { type: String},
     kycStatus: {
         type: Boolean,
-        default:false 
-    },
-    region: {
-        type: String,
-        required : [true, "Please provide your region"],
-       
-    },
-    
+        default: false
+    },
+    region: {type: String,
+        required : [true, "Please provide a region"],
+    }
+
 });
 
 //if already have user model in mongodb database then use exisiting model otherwise return new one

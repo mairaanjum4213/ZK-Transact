@@ -48,6 +48,7 @@ const Profile: React.FC = () => {
       fullName: userData.fullName,
       address: userData.address,
       mobile: userData.mobile,
+      region: userData.region
    
     },
     enableReinitialize: true,
@@ -83,7 +84,7 @@ const Profile: React.FC = () => {
   return (
     <>
 
-      {userData.kycStatus === false && <KYCrequiredModal />}
+          {!userData.kycStatus && <KYCrequiredModal />}
 
       <Toaster position='top-center' reverseOrder={false}></Toaster>
       <BreadCrumb parentPageLink="/user" ParentPage="Home" pageName="My Profile" ChildPage="Edit Profile" imageUrl={profiling} />

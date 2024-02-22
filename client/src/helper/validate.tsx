@@ -8,6 +8,8 @@ interface FormValues {
   fullName:string;
   mobile:string;
   address:string;
+  region:string;
+
   // Add other form fields if present
 }
 
@@ -96,6 +98,11 @@ export async function registerValidation(values: FormValues): Promise<Errors> {
   usernameVerify(errors, values);
   passwordVerify(errors, values);
   emailVerify(errors, values);
+   
+  // Validation for the "Region" field
+   if (!values.region) {
+    errors.region = 'Region is required';
+  }
 
   return errors;
 }

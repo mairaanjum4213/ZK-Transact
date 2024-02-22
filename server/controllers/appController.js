@@ -36,7 +36,7 @@ export async function verifyUser(req, res, next) {
 
 export async function register(req, res) {
     try {
-        const { username, password, email,fullName,profile} = req.body;
+        const { username, password, email,fullName,region} = req.body;
         // Check existing user
         const existingUsername = await UserModel.findOne({ 'username': username });
         if (existingUsername) {
@@ -58,7 +58,7 @@ export async function register(req, res) {
                 password: hashedPassword,
                 email,
                 fullName,
-                profile: profile || '',
+                region
                 
             });
             const result = await newUser.save();
