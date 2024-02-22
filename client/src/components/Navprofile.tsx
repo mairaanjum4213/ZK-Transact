@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from "../store/store";
 import { RiUser2Fill } from "react-icons/ri";
 import { Link } from 'react-router-dom';
+import { useAccount} from 'wagmi';
 import "../css/ProfileDropdown.css"
 import WalletDetails from './WalletDetails';
 const Navprofile: React.FC = () => {
@@ -14,6 +15,7 @@ const Navprofile: React.FC = () => {
     localStorage.removeItem('isAuthenticated');
     navigate('/');
   };
+  const { isConnected } = useAccount();
   return (
     <>
       <div className="btn-group mx-1">
@@ -44,7 +46,8 @@ const Navprofile: React.FC = () => {
             </Link>
           </li>
 
-          <li style={{ textDecoration: 'none' }}>
+{isConnected &&  
+<li style={{ textDecoration: 'none' }}>
             <Link
               to="/walletDetails"
               style={{
@@ -55,9 +58,9 @@ const Navprofile: React.FC = () => {
             >
               Wallet Details
             </Link>
-          </li>
-
-
+  </li> 
+  }
+         
           <li>Setting</li>
           <li>Meta Mask Data</li>
           <li>Meta Mask Data</li>

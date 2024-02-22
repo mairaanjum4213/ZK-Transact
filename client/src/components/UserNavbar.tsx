@@ -3,7 +3,6 @@ import "../css/Navbar.css"
 import logo from '../assets/icon2.png';
 import logo2 from '../assets/icon3.png';
 import Notifications from './Notifications';
-import WalletDetails from './WalletDetails';
 import { Link } from 'react-router-dom';
 import Chats from './Chats';
 import Navprofile from './Navprofile';

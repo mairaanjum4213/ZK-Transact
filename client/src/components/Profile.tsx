@@ -47,7 +47,8 @@ const Profile: React.FC = () => {
       email: userData.email,
       fullName: userData.fullName,
       address: userData.address,
-      mobile: userData.mobile
+      mobile: userData.mobile,
+   
     },
     enableReinitialize: true,
     validate: profileValidation,
@@ -60,7 +61,9 @@ const Profile: React.FC = () => {
         email: values.email,
         fullName: values.fullName,
         address: values.address,
-        mobile: values.mobile
+        mobile: values.mobile,
+
+
       });
       toast.promise(updatePromise, {
         loading: 'Updating...',
@@ -76,10 +79,11 @@ const Profile: React.FC = () => {
     localStorage.removeItem('isAuthenticated');
     navigate('/');
   };
+  console.log(userData.kycStatus);
   return (
     <>
 
-<KYCrequiredModal/>
+      {userData.kycStatus === false && <KYCrequiredModal />}
 
       <Toaster position='top-center' reverseOrder={false}></Toaster>
       <BreadCrumb parentPageLink="/user" ParentPage="Home" pageName="My Profile" ChildPage="Edit Profile" imageUrl={profiling} />
