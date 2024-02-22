@@ -23,7 +23,8 @@ const Register: React.FC = () => {
       email: '',
       fullName: '',
       mobile: '',
-      address: ''
+      address: '',
+    
     },
     validate: registerValidation,
     onSubmit: async (values) => {
