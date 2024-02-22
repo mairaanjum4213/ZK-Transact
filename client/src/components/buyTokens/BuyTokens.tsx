@@ -54,7 +54,7 @@ const BuyTokens: React.FC = () => {
               data-toggle="tooltip" data-placement="top" title="Click on ZK Token Seller Name to  view local bank account details"
             >
               <div className=''>
-                Attach a reciept for transaction of <b>100</b> local currency <u>
+                Attach bank reciept for transaction of <b>100</b> local currency <u>
                   <Link to="/zkt-provider-profile">
                     Faheem
                   </Link>

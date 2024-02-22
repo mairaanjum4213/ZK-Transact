@@ -43,9 +43,18 @@ const SellTokens: React.FC = () => {
               <Link className="link hover-2 fw-bold " style={{ letterSpacing: "1px" }} to="/zkt-purchasers" > View ZK-Token Purchasers</Link></span></p>
             <input
               className='InputReg mt-4'
+              style={{ width: "60%", borderRadius: "0px" }}
               type='text'
               placeholder='Enter Your Local  Bank Account Number '
             />
+            <select
+              className="InputReg  border border-secondary"
+              style={{ width: "40%", borderRadius: "0px" }}>
+              <option>Select Bank Name</option>
+              <option value="jazz_cash">Jazz Cash</option>
+              <option value="easy_paisa">Easy Paisa</option>
+              <option value="hbl">HBL</option>
+            </select>
             <textarea
               className='InputReg mt-4'
               placeholder='Add important comments e.g., Account title'

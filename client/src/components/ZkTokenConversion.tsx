@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Loader from './Loader';
 import { toast, Toaster } from 'react-hot-toast';
 const ZkTokenConversion: React.FC = () => {
-  const [text1, setText1] = useState<number>(0);
+  const [text1, setText1] = useState<number>();
   const [localCurrencyVal, setLocalCurrencyVal] = useState<string>("");
   const [country1, setCountry1] = useState<Record<string, number>>({});
   const [inputZkTokens, setInputZkTokens] = useState<number>(0);
@@ -54,37 +54,26 @@ const ZkTokenConversion: React.FC = () => {
               style={{ width: "6~0%", borderRadius: "0px" }}
               placeholder="ZKT Amount"
               type="number"
+              style={{ width: "60%" }}
               autoComplete='false'
+              placeholder="Enter ZK Tokens Amount"
               value={text1}
               step={100}
               onChange={(e) => setText1(Number((e.target as HTMLInputElement).value))}
             />
-            <select disabled
-              className="InputReg text-center  hideSelectIcon"
-              style={{ width: "40%", borderRadius: "0px" }}
-            >
-              <option>ZK-Tokens</option>
-            </select>
-            <input
-              className="InputReg mt-4"
-              style={{ width: "60%", borderRadius: "0px" }}
-              placeholder=" Equivalent Local Currency Amount"
-              type="number"
-              autoComplete='false'
-              disabled
-              value={localCurrencyVal}
-            />
-            <select
+             <select
               className="InputReg  border border-secondary"
               style={{ width: "40%", borderRadius: "0px" }}
               onChange={zkTokenValChange}>
-              <option>Select Currency</option>
+              <option>Select Local Currency</option>
               {Object.keys(country1).map((data, index) => (
                 <option key={index} value={(country1 as Record<string, number>)[data]}>
                   {data}
                 </option>
               ))}
-            </select> <br />
+            </select>
+           
+          <br />
             <input
               className="InputReg mt-4 "
               style={{ width: "40%", borderRadius: "0px" }}
@@ -102,6 +91,17 @@ const ZkTokenConversion: React.FC = () => {
             >
               Convert
             </button>
+
+            <hr  className="mt-4"/>
+            <input
+              className="InputReg mt-4"
+              style={{borderRadius: "0px" }}
+              placeholder=" Equivalent Local Currency Amount"
+              type="number"
+              autoComplete='false'
+              disabled
+              value={localCurrencyVal}
+            />
           </form>
         )}
       </>
