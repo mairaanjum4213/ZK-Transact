@@ -1,6 +1,5 @@
-import { Route, Routes } from 'react-router-dom';
+import {Route, Routes } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-
 import AOS from 'aos';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
@@ -36,7 +35,12 @@ import SellTokensReciept from './components/sellTokens/SellTokensReciept.tsx'
 import KYCrequiredModal from './components/KYCrequiredModal';
 import WalletDetails from './components/WalletDetails.tsx';
 
+
+
+
 function App() {
+
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -50,6 +54,27 @@ function App() {
       clearTimeout(loadingTimeout);
     };
   }, []);
+
+
+/*  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      try {
+        jwt.verify(token,ENV.JWT_SECRET );
+        setIsLoggedIn(true);
+      } catch (error) {
+        setIsLoggedIn(false);
+        localStorage.removeItem('token'); // Remove invalid token
+        navigate("/login")
+
+      }
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, []); */
 
   return (
     <>
@@ -82,7 +107,7 @@ function App() {
               <Route path="/recovery" element={<Recovery />} />
               <Route path="/reset" element={<ResetPassword />} />
               <Route path="/walletDetails" element={<WalletDetails/>} />
-              <Route path="/profile" element={<Profile />} />
+              <Route path="/profile" element={ <Profile />}/>
             </Routes>
 
             <Footer />

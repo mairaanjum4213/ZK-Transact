@@ -117,7 +117,7 @@ const Register: React.FC = () => {
                 {...formik.getFieldProps('region')}
                 className="InputReg"
                 type="text"
-                placeholder="Region"
+                placeholder="Country"
               />
               {formik.touched.region && formik.errors.region ? (
                 <p className="error  text-danger" id="nameError" style={{ opacity: 1 }}>

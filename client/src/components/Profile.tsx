@@ -39,6 +39,9 @@ const Profile: React.FC = () => {
       navigate('/');
     }
   }, [isLoggedOut]); // Add isLoggedOut to dependency array to trigger effect on its change
+
+ 
+
   const formik = useFormik({
     initialValues: {
       username: userData.username,
@@ -63,7 +66,7 @@ const Profile: React.FC = () => {
         fullName: values.fullName,
         address: values.address,
         mobile: values.mobile,
-
+        region : values.region
 
       });
       toast.promise(updatePromise, {
@@ -201,8 +204,26 @@ const Profile: React.FC = () => {
                 </p>
               )}
             </div>
-              <div className="col-lg-6 col-md-6 col-sm-12">
-              </div>
+              
+            <div className="col-lg-6 col-md-6 col-sm-12">
+              <input
+                {...formik.getFieldProps('region')}
+                className="InputReg"
+                type="text"
+                placeholder="Country"
+              />
+              <br />
+              {formik.touched.region && formik.errors.region ? (
+                <p className="error  text-danger" id="nameError" style={{ opacity: 1 }}>
+                  {formik.errors.region}
+                </p>
+              ) : (
+                <p className="error  text-danger" id="nameError" style={{ opacity: 0 }}>
+                  Error
+                </p>
+              )}
+            </div>
+
             </div>
             <div className="col-12 mb-3  mt-2">
               <button type="submit" className="btnStyle " >

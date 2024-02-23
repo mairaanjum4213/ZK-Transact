@@ -23,6 +23,7 @@ const Login: React.FC = () => {
       fullName: '',
       mobile: '',
       address: '',
+      region: ''
    
     },
     validate: loginValidate,
