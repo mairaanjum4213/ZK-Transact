@@ -285,27 +285,35 @@ export async function sellToken(req, res) {
     }
 }
 
-// ------buy tokens
+// ___________buy tokens_________//
 
 export async function buyToken(req, res) {
     try {
-        const {buyer, // Assuming 'seller' is the buyer's ObjectId
+        const {
+        buyer ,// Assuming 'seller' is the buyer's ObjectId
         metamaskAddress,
         serviceProviderName,
         localCurrency,
         TokensAmount,
-        buyReceipt,
-        transactionFee} = req.body;
+        transactionFee,
+    } = req.body;
+        
    
+       // const { userId } = req.user;
         const newBuyTokens = new BuyTokenModel({
             buyer, 
-    metamaskAddress,
-    serviceProviderName,
-    localCurrency,
-    TokensAmount,
-    buyReceipt,
-    transactionFee: transactionFee,
+            metamaskAddress,
+            serviceProviderName,
+            localCurrency,
+            TokensAmount,
+            transactionFee: transactionFee,
         });
+
+        // for img
+        //if(req.file){
+           // newBuyTokens.buyReceipt = req.file.path
+       // }
+        //
 
         const result = await newBuyTokens.save();
 
@@ -313,4 +321,27 @@ export async function buyToken(req, res) {
     } catch (error) {
         return res.status(500).send({ error: error.message || "Internal server error" });
     }
+}
+
+//http://localhost:8080/api/getbuytokens/65da3585b58f58920388ad2c
+export async function userwithBuyToken(req, res) {
+    try {
+        // Extract the _id from the request parameters
+        const {id} = req.params;
+
+        // Fetch the BuyToken document by its _id
+        const buyToken = await BuyTokenModel.findById(id).populate('buyer', ['username','email']);
+
+        // If the BuyToken with the specified _id exists, respond with it
+        if (buyToken) {
+            res.status(200).json(buyToken);
+        } else {
+            // If no BuyToken with the specified _id is found, respond with a 404 error
+            res.status(404).json({ message: 'BuyToken not found' });
+        }
+    } catch (error) {
+        // If an error occurs, respond with an error message
+        res.status(500).json({ message: error.message });
+    }
+        
 }
