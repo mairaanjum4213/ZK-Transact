@@ -222,3 +222,37 @@ export async function resetPassword({ username, password }: { username: string; 
     return Promise.reject({ error });
   }
 }
+
+
+
+/** Sell Tokens */
+interface SellTokenData {
+  seller: string;
+  sellerMetamask: string;
+  purchaserName: string;
+  accountNumber: string;
+  accountName: string;
+  accountComments: string;
+  contractHash:string;
+  transactionFee?: number;
+  localCurrencyAmount: number;
+  Tokens?: number;
+}
+
+interface SellTokenResponse {
+  msg: string;
+  error?: string;
+}
+export async function sellToken(requestData: SellTokenData): Promise<string> {
+  try {
+      const { data, status } = await axios.post('/api/sellToken', requestData);
+
+      if (status === 201) {
+          return Promise.resolve(data.msg);
+      } else {
+          return Promise.reject(data.error || 'Sell Tokens request failed');
+      }
+  } catch (error) {
+      return Promise.reject('Internal server error');
+  }
+}

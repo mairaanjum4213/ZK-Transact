@@ -1,4 +1,5 @@
 import UserModel from '../model/User.model.js';
+import SellTokenModel from '../model/SellToken.model.js'
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import ENV from "../config.js";
@@ -254,3 +255,32 @@ export async function resetPassword(req, res) {
         return res.status(500).send({ error: "Internal Server Error" });
     }
 }
+
+
+//-------------------------- SELL TOKENS
+
+export async function sellToken(req, res) {
+    try {
+        const {seller,sellerMetamask, purchaserName, accountNumber, accountComments, transactionFee, localCurrencyAmount, accountName,Tokens ,contractHash,} = req.body;
+   
+        const newSellTokens = new SellTokenModel({
+            seller,
+            sellerMetamask,
+            purchaserName,
+            accountNumber,
+            accountComments,
+            accountName,
+            transactionFee,
+            contractHash,
+            localCurrencyAmount,
+            Tokens
+        });
+
+        const result = await newSellTokens.save();
+
+        return res.status(201).send({ msg: "Sell Tokens data stored Successfully" });
+    } catch (error) {
+        return res.status(500).send({ error: error.message || "Internal server error" });
+    }
+}
+

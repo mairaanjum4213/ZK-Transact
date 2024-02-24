@@ -1,13 +1,13 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
-export const SellTokenSchema = new mongoose.Schema({
-    seller : {
+const SellTokenSchema = new Schema({
+    seller: {
         type: Schema.Types.ObjectId,
         ref: "User"
     },
-    sellerMetamask : {
+    sellerMetamask: {
         type: String,
-        required : [true, "Please provide metamask address"]
+        required: [true, "Please provide a metamask address"]
     },
     purchaserName: {
         type: String,
@@ -15,16 +15,34 @@ export const SellTokenSchema = new mongoose.Schema({
     },
     accountNumber: {
         type: String,
-        required: [true, "Please provide a account number"],
+        required: [true, "Please provide an account number"],
     },
-    accountComments:{
+    accountComments: {
         type: String,
-        required: [true, "Please provide a account title or comments"],
+        required: [true, "Please provide an account title or comments"],
     },
+
+    accountName: {
+        type: String,
+        required: [true, "Please provide an account title or comments"],
+    },
+
+    contractHash: {
+        type: String,
+        required: [true, "Please provide an account title or comments"],
+    },
+
     transactionFee: {
         type: Number,
     },
-    localCurrencyAmount: { type: Number, required : [true, "Please provide local Currency Amount"]},
-    Tokens : { type : Number}, 
+    localCurrencyAmount: {
+        type: Number,
+        required: [true, "Please provide a local Currency Amount"]
+    },
+    Tokens: {
+        type: Number
+    }
+    
 });
-export default mongoose.model.SellTokens || mongoose.model('SellToken', SellTokenSchema);
+
+export default mongoose.models.SellToken || mongoose.model('SellToken', SellTokenSchema);

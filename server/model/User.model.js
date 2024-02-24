@@ -30,4 +30,4 @@ export const UserSchema = new mongoose.Schema({
 });
 
 //if already have user model in mongodb database then use exisiting model otherwise return new one
-export default mongoose.model.Users || mongoose.model('User', UserSchema);
+export default mongoose.models.Users || mongoose.model('User', UserSchema);
