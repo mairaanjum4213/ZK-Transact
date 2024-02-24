@@ -1,13 +1,15 @@
 import mongoose from "mongoose";
 
-export const BuyTokenSchema = new mongoose.Schema({
-    buyer : {
+const { Schema } = mongoose; 
+
+export const BuyTokenSchema = new Schema({
+    buyer: {
         type: Schema.Types.ObjectId,
         ref: "User"
     },
-    metamaskAddress : {
+    metamaskAddress: {
         type: String,
-        required : [true, "Please provide metamask address"]
+        required: [true, "Please provide metamask address"]
     },
     serviceProviderName: {
         type: String,
@@ -16,12 +18,21 @@ export const BuyTokenSchema = new mongoose.Schema({
     transactionFee: {
         type: Number,
     },
-
-    localCurrency: { type: Number, required : [true, "Please provide local Cuurency Amount"]},
-    TokensAmount : { type : Number},
-    buyReceipt :{
-        type : String
+    localCurrency: {
+        type: Number,
+        required: [true, "Please provide local Currency Amount"]
     },
-    dateTimeField: { type: Date, default: Date.now}   
+    TokensAmount: {
+        type: Number
+    },
+    buyReceipt: {
+        data: Buffer,
+        type: String
+    },
+    dateTimeField: {
+        type: Date,
+        default: Date.now
+    }
 });
+
 export default mongoose.model.BuyTokens || mongoose.model('BuyToken', BuyTokenSchema);

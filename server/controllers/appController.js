@@ -1,5 +1,6 @@
 import UserModel from '../model/User.model.js';
 import SellTokenModel from '../model/SellToken.model.js'
+import BuyTokenModel from '../model/BuyToken.model.js'
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import ENV from "../config.js";
@@ -284,3 +285,32 @@ export async function sellToken(req, res) {
     }
 }
 
+// ------buy tokens
+
+export async function buyToken(req, res) {
+    try {
+        const {buyer, // Assuming 'seller' is the buyer's ObjectId
+        metamaskAddress,
+        serviceProviderName,
+        localCurrency,
+        TokensAmount,
+        buyReceipt,
+        transactionFee} = req.body;
+   
+        const newBuyTokens = new BuyTokenModel({
+            buyer, 
+    metamaskAddress,
+    serviceProviderName,
+    localCurrency,
+    TokensAmount,
+    buyReceipt,
+    transactionFee: transactionFee,
+        });
+
+        const result = await newBuyTokens.save();
+
+        return res.status(201).send({ msg: "Buy Tokens data stored Successfully" });
+    } catch (error) {
+        return res.status(500).send({ error: error.message || "Internal server error" });
+    }
+}

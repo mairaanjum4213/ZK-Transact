@@ -13,6 +13,7 @@ router.route('/registerMail2').post(registerMail2); // send the email when user 
 router.route('/authenticate').post(controller.verifyUser,(req, res) => res.end()); // authenticate user
 router.route('/login').post(controller.verifyUser, controller.login); // login in app first verify user then loginnn thats why 2 controllers
 router.route('/sellToken').post(controller.sellToken);
+router.route('/buyToken').post(controller.buyToken);
 /** GET Methods */
 router.route('/user/:username').get(controller.getUser) // user with username
 router.route('/generateOTP').get(controller.verifyUser,localVariables, controller.generateOTP) // generate random OTP
