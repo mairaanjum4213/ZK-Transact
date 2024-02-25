@@ -41,6 +41,10 @@ const SellTokenSchema = new Schema({
     },
     Tokens: {
         type: Number
+    },
+    SellTokendateTimeField: {
+        type: Date,
+        default: Date.now
     }
     
 });

@@ -260,10 +260,11 @@ export async function resetPassword(req, res) {
 
 //-------------------------- SELL TOKENS
 
+// POST METHOD: SELL TOKENS
 export async function sellToken(req, res) {
     try {
-        const {seller,sellerMetamask, purchaserName, accountNumber, accountComments, transactionFee, localCurrencyAmount, accountName,Tokens ,contractHash,} = req.body;
-   
+        const { seller, sellerMetamask, purchaserName, accountNumber, accountComments, transactionFee, localCurrencyAmount, accountName, Tokens, contractHash, } = req.body;
+
         const newSellTokens = new SellTokenModel({
             seller,
             sellerMetamask,
@@ -283,6 +284,23 @@ export async function sellToken(req, res) {
     } catch (error) {
         return res.status(500).send({ error: error.message || "Internal server error" });
     }
+}
+
+//Get Method : Sell Token Details
+//http://localhost:8080/api/getselltokens/ selltokenmongodb id 65dac660422196608d384587
+export async function userwithSellToken(req, res) {
+    try {
+        const { id } = req.params;
+        const sellToken = await SellTokenModel.findById(id).populate('seller', ['username', 'email']);
+        if (sellToken) {
+            res.status(200).json(sellToken);
+        } else {
+            res.status(404).json({ message: 'SellToken Instance not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+
 }
 
 // ___________buy tokens_________//

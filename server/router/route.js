@@ -22,7 +22,7 @@ router.route('/generateOTP').get(controller.verifyUser,localVariables, controlle
 router.route('/verifyOTP').get(controller.verifyUser,controller.verifyOTP) // verify generated OTP
 router.route('/createResetSession').get(controller.createResetSession) // reset all the variables
 router.route('/getbuytokens/:id').get(controller.userwithBuyToken) 
-
+router.route('/getselltokens/:id').get(controller.userwithSellToken) 
 
 /** PUT Methods */
 router.route('/updateuser').put(Auth, controller.updateUser); // is use to update the user profile,, 
