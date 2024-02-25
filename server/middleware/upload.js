@@ -7,7 +7,7 @@ var storage = multer.diskStorage({
     },
     filename: function(req,file,cb){
         let ext = path.extname(file.originalname);
-        cb(null, Date.now + ext);
+        cb(null, Date.now() + ext);
 
     }
 })
@@ -28,4 +28,4 @@ var upload = multer({
         fileSize:1024 * 1024 * 2
     }
 })
-module.exports = upload
+export default upload;

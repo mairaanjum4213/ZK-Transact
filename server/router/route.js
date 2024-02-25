@@ -2,7 +2,7 @@ import { Router } from 'express';
 /** import all controllers */
 import * as controller from '../controllers/appController.js';
 import Auth, { localVariables } from '../middleware/auth.js';
-
+import upload from "../middleware/upload.js"
 import { registerMail } from '../controllers/mailer.js'
 import { registerMail2 } from '../controllers/mailer2.js'
 const router = Router();
@@ -14,7 +14,7 @@ router.route('/registerMail2').post(registerMail2); // send the email when user 
 router.route('/authenticate').post(controller.verifyUser,(req, res) => res.end()); // authenticate user
 router.route('/login').post(controller.verifyUser, controller.login); // login in app first verify user then loginnn thats why 2 controllers
 router.route('/sellToken').post(controller.sellToken);
-router.route('/buyToken').post(controller.buyToken);
+router.route('/buyToken').post(Auth,upload.single('buyReceipt'),controller.buyToken);
 
 /** GET Methods */
 router.route('/user/:username').get(controller.getUser) // user with username

@@ -2,8 +2,16 @@ import React, { useState, useEffect } from 'react';
 import '../css/Registration.css';
 import Loader from './Loader';
 import { Toaster, toast } from 'react-hot-toast';
-const LocalCurrencyConversion: React.FC = () => {
+
+//
+interface LocalCurrencyConversionProps {
+  onDataUpdate: (localCurrencyVal: number, zkTokenVal: string, userInputLocalVal: number, transactionFee:number) => void;
+}
+
+//const LocalCurrencyConversion: React.FC = () => {
+const LocalCurrencyConversion: React.FC<LocalCurrencyConversionProps> = ({ onDataUpdate }) => {
   const [LocalCurrencyVal, setLocalCurrencyVal] = useState<number>();
+  const [transactionfee, settransactionfee] = useState<number>(0.5);
   const [zkTokenVal, setzkTokenVal] = useState<string>("");
   const [country1, setCountry1] = useState<Record<string, number>>({});
   const [userInputLocalVal, setUserInputLocalVal] = useState<number>(0);
@@ -41,6 +49,9 @@ const LocalCurrencyConversion: React.FC = () => {
     let num = (zkTokenUniversal / userInputLocalVal) * LocalCurrencyVal!;
     let roundedNum = parseFloat(num.toFixed(5));
     setzkTokenVal(roundedNum.toString());
+    // Send data to parent component
+    onDataUpdate(LocalCurrencyVal || 0, roundedNum.toString(), userInputLocalVal,transactionfee);
+
   };
   try {
     return (
@@ -78,7 +89,8 @@ const LocalCurrencyConversion: React.FC = () => {
               type="number"
               placeholder={"ZK Token Seller Fee : " + a + " % "}
               autoComplete='false'
-              // value={a}
+              value={transactionfee}
+              onChange={(e) => settransactionfee(Number((e.target as HTMLInputElement).value))}
               disabled
             /> <br />
             <button

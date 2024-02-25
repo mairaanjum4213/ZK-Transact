@@ -308,7 +308,6 @@ export async function userwithSellToken(req, res) {
 export async function buyToken(req, res) {
     try {
         const {
-        buyer ,// Assuming 'seller' is the buyer's ObjectId
         metamaskAddress,
         serviceProviderName,
         localCurrency,
@@ -317,9 +316,9 @@ export async function buyToken(req, res) {
     } = req.body;
         
    
-       // const { userId } = req.user;
+       const { userId } = req.user;
         const newBuyTokens = new BuyTokenModel({
-            buyer, 
+            buyer : userId, 
             metamaskAddress,
             serviceProviderName,
             localCurrency,
@@ -328,9 +327,9 @@ export async function buyToken(req, res) {
         });
 
         // for img
-        //if(req.file){
-           // newBuyTokens.buyReceipt = req.file.path
-       // }
+        if(req.file){
+            newBuyTokens.buyReceipt = req.file.path
+        }
         //
 
         const result = await newBuyTokens.save();

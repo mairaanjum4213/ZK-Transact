@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { IoInformationCircle } from 'react-icons/io5';
 import BreadCrumb from '../BreadCrumb.tsx';
@@ -9,6 +9,22 @@ import buyToken from '../../assets/BreadCrumbs/buyZkTokens.png';
 import '../../css/Registration.css';
 import '../../css/TokenTraders.css';
 const BuyTokens: React.FC = () => {
+  const [localCurrencyVal, setLocalCurrencyVal] = useState<number>();
+  const [transactionfee, settransactionfee] = useState<number>();
+  const [zkTokenVal, setZkTokenVal] = useState<string>("");
+  const [userInputLocalVal, setUserInputLocalVal] = useState<number>(0);
+
+  const handleDataUpdate = (
+    localCurrencyVal: number,
+    zkTokenVal: string,
+    userInputLocalVal: number,
+    transactionFee:number
+  ) => {
+    setLocalCurrencyVal(localCurrencyVal);
+    setZkTokenVal(zkTokenVal);
+    setUserInputLocalVal(userInputLocalVal);
+    settransactionfee(transactionFee);
+  };
   return (
     <>
       <BreadCrumb
@@ -49,6 +65,7 @@ const BuyTokens: React.FC = () => {
             <div className='mt-4'>
               LocalCurrencyConversion  commented in file:"BuyTokens" to save api free trial
               {/* <LocalCurrencyConversion/> */}
+              <LocalCurrencyConversion onDataUpdate={handleDataUpdate} />
             </div>
             <div className='mt-4 d-flex align-items-center justify-content-left'
               data-toggle="tooltip" data-placement="top" title="Click on ZK Token Seller Name to  view local bank account details"
@@ -72,8 +89,10 @@ const BuyTokens: React.FC = () => {
             <Link className='my-4 btnStyle' rel="stylesheet" to="/buyTokens-reciept" >
               Generate Reciept
             </Link>
+        
           </div>
         </div>
+        
       </div>
     </>
   );

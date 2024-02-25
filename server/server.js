@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(cors());
 app.use(morgan('tiny'));
 app.disable('x-powered-by'); // less hackers know about our stack
-
+app.use('/uploads',express.static('uploads'))
 const port = 8080;
 
 /*http GET request*/

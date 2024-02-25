@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
 
 axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
@@ -254,5 +254,26 @@ export async function sellToken(requestData: SellTokenData): Promise<string> {
       }
   } catch (error) {
       return Promise.reject('Internal server error');
+  }
+}
+
+
+//__________________________________________________Buy Tokens _________________________________________//
+interface BuyTokenData {
+  metamaskAddress: string;
+  serviceProviderName: string;
+  localCurrency: string;
+  TokensAmount: number;
+  transactionFee: number;
+  // Add other properties as needed
+}
+
+export async function buyTokens(buyTokenData: BuyTokenData): Promise<string> {
+  try {
+    const response: AxiosResponse<{ msg: string }> = await axios.post('/api/buyToken', buyTokenData);
+    return response.data.msg;
+  } 
+  catch (error) {
+    return Promise.reject({ error });
   }
 }
