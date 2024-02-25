@@ -5,7 +5,7 @@ import { Toaster, toast } from 'react-hot-toast';
 
 //
 interface LocalCurrencyConversionProps {
-  onDataUpdate: (localCurrencyVal: number, zkTokenVal: string, userInputLocalVal: number, transactionFee:number) => void;
+  onDataUpdate: (localCurrencyVal: number, zkTokenVal: number, userInputLocalVal: number, transactionFee:number) => void;
 }
 
 //const LocalCurrencyConversion: React.FC = () => {

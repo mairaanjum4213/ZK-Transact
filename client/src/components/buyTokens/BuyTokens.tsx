@@ -42,7 +42,7 @@ useEffect(() => {
 
   const handleDataUpdate = (
     localCurrencyVal: number,
-    zkTokenVal: string,
+    zkTokenVal: number,
     userInputLocalVal: number,
     transactionFee: number
   ) => {
