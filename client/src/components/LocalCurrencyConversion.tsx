@@ -12,7 +12,7 @@ interface LocalCurrencyConversionProps {
 const LocalCurrencyConversion: React.FC<LocalCurrencyConversionProps> = ({ onDataUpdate }) => {
   const [LocalCurrencyVal, setLocalCurrencyVal] = useState<number>();
   const [transactionfee, settransactionfee] = useState<number>(0.5);
-  const [zkTokenVal, setzkTokenVal] = useState<string>("");
+  const [zkTokenVal, setzkTokenVal] = useState<number>(0);
   const [country1, setCountry1] = useState<Record<string, number>>({});
   const [userInputLocalVal, setUserInputLocalVal] = useState<number>(0);
   const [zkTokenUniversal, setZkTokenUniversal] = useState<number>(0);
@@ -48,7 +48,7 @@ const LocalCurrencyConversion: React.FC<LocalCurrencyConversionProps> = ({ onDat
     event.preventDefault();
     let num = (zkTokenUniversal / userInputLocalVal) * LocalCurrencyVal!;
     let roundedNum = parseFloat(num.toFixed(5));
-    setzkTokenVal(roundedNum.toString());
+    setzkTokenVal(roundedNum);
     // Send data to parent component
     onDataUpdate(LocalCurrencyVal || 0, roundedNum.toString(), userInputLocalVal,transactionfee);
 

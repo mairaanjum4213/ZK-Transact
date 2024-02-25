@@ -12,11 +12,15 @@ import toast, { Toaster } from 'react-hot-toast';
 import { registerValidation } from "../../helper/validate";
 import { jwtDecode } from "jwt-decode";
 import { getUser, sellToken } from "../../helper/helper"
+
+
+
+
 const SellTokens: React.FC = () => {
   const token = localStorage.getItem('token');
   const decodedToken: any = token ? jwtDecode(token) : {};
   const username = decodedToken.username || '';
-  const [userData, setUserData] = useState<string>("fgd");
+  const [userData, setUserData] = useState<string>("");
   const formik = useFormik({
     initialValues: {
       sellerMetamask: '',
@@ -63,6 +67,25 @@ const SellTokens: React.FC = () => {
     }
     fetchUserData();
   }, [username]);
+
+
+
+  
+  const [localCurrencyVal, setLocalCurrencyVal] = useState<number>();
+  const [transactionfee, settransactionfee] = useState<number>();
+  const [inputZKToken, setInputZKToken] = useState<string>("");
+  const [userInputLocalVal, setUserInputLocalVal] = useState<number>(0);
+
+  const handleDataUpdate = (
+    localCurrencyVal: number,
+    inputZKToken: number,
+    transactionFee: number
+  ) => {
+    setLocalCurrencyVal(localCurrencyVal);
+    setInputZKToken(inputZKToken);
+    settransactionfee(transactionFee);
+  };
+
   return (
     <>
       <BreadCrumb
@@ -123,7 +146,7 @@ const SellTokens: React.FC = () => {
               ></textarea>
               <div className='mt-4'>
                 CurrencyConversion  commented in file:"BuyTokens" to save api free trial
-                {/* <ZkTokenConversion /> */}
+                <ZkTokenConversion onDataUpdate={handleDataUpdate} />
               </div>
               <div className='mt-4 d-flex align-items-center justify-content-left'
                 data-toggle="tooltip" data-placement="top" title="Click on ZK Token Purchaser Name to  view its metamask account "

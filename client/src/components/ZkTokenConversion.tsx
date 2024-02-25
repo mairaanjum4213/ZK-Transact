@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import Loader from './Loader';
 import { toast, Toaster } from 'react-hot-toast';
-const ZkTokenConversion: React.FC = () => {
-  const [text1, setText1] = useState<number>();
-  const [localCurrencyVal, setLocalCurrencyVal] = useState<string>("");
+
+
+interface ZkTokenConversionProps {
+  onDataUpdate: (text1: number,  roundedNum: number, transactionFee:number) => void;
+}
+
+
+const ZkTokenConversion:React.FC<ZkTokenConversionProps> = ({ onDataUpdate }) => {
+  const [inputZKToken, setText1] = useState<number>();
+  const [transactionfee, settransactionfee] = useState<number>(0.5);
+  const [localCurrencyVal, setLocalCurrencyVal] = useState<number>(0);
   const [country1, setCountry1] = useState<Record<string, number>>({});
   const [inputZkTokens, setInputZkTokens] = useState<number>(0);
   const [zkTokenUniversalVal, setZkTokenUniversalVal] = useState<number>(0);
@@ -27,19 +35,22 @@ const ZkTokenConversion: React.FC = () => {
   };
   useEffect(() => {
     getData();
-    if (text1 < 0) {
+    if (inputZKToken < 0) {
       toast.error("💰 ZK-Tokens cannot be negative");
     }
-  }, [text1]);
+  }, [inputZKToken]);
   const zkTokenValChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedCurrencyRate2 = Number(event.target.value);
     setInputZkTokens(selectedCurrencyRate2);
   };
   const convert = (event: React.FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    let num = (inputZkTokens / zkTokenUniversalVal) * text1;
+    let num = (inputZkTokens / zkTokenUniversalVal) * inputZKToken;
     let roundedNum = parseFloat(num.toFixed(5));
-    setLocalCurrencyVal(roundedNum.toString());
+    setLocalCurrencyVal(roundedNum);
+    onDataUpdate(localCurrencyVal || 0,inputZKToken,transactionfee);
+
+
   };
   try {
     return (
@@ -57,7 +68,7 @@ const ZkTokenConversion: React.FC = () => {
               style={{ width: "60%" }}
               autoComplete='false'
               placeholder="Enter ZK Tokens Amount"
-              value={text1}
+              value={inputZKToken}
               step={100}
               onChange={(e) => setText1(Number((e.target as HTMLInputElement).value))}
             />
@@ -78,6 +89,8 @@ const ZkTokenConversion: React.FC = () => {
               className="InputReg mt-4 "
               style={{ width: "40%", borderRadius: "0px" }}
               type="number"
+              value={transactionfee}
+              onChange={(e) => settransactionfee(Number((e.target as HTMLInputElement).value))}
               placeholder={"ZK Token Seller Fee : " + a + " % "}
               autoComplete='false'
               // value={a}
@@ -87,7 +100,7 @@ const ZkTokenConversion: React.FC = () => {
               className="btnStyle  mt-4"
               onClick={convert}
               type="submit"
-              disabled={!inputZkTokens || (text1 < 0)}
+              disabled={!inputZkTokens || (inputZKToken < 0)}
             >
               Convert
             </button>
