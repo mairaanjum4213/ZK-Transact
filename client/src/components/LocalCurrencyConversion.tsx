@@ -50,7 +50,7 @@ const LocalCurrencyConversion: React.FC<LocalCurrencyConversionProps> = ({ onDat
     let roundedNum = parseFloat(num.toFixed(5));
     setzkTokenVal(roundedNum);
     // Send data to parent component
-    onDataUpdate(LocalCurrencyVal || 0, roundedNum.toString(), userInputLocalVal,transactionfee);
+    onDataUpdate(LocalCurrencyVal || 0, roundedNum, userInputLocalVal,transactionfee);
 
   };
   try {

@@ -308,6 +308,7 @@ export async function userwithSellToken(req, res) {
 export async function buyToken(req, res) {
     try {
         const {
+        buyer,
         metamaskAddress,
         serviceProviderName,
         localCurrency,
@@ -316,9 +317,9 @@ export async function buyToken(req, res) {
     } = req.body;
         
    
-       const { userId } = req.user;
+      // const { userId } = req.user;
         const newBuyTokens = new BuyTokenModel({
-            buyer : userId, 
+            buyer,
             metamaskAddress,
             serviceProviderName,
             localCurrency,

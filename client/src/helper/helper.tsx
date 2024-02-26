@@ -40,6 +40,9 @@ interface ResetPasswordResponse {
   error?: any;
 }
 
+interface BuyTokenResponse {
+  error?: any;
+}
 
 
 /** To get username from Token */
@@ -259,21 +262,20 @@ export async function sellToken(requestData: SellTokenData): Promise<string> {
 
 
 //__________________________________________________Buy Tokens _________________________________________//
-interface BuyTokenData {
+
+/** register user function */
+export async function storebuyToken(credentials: {
+  buyer:string;
   metamaskAddress: string;
   serviceProviderName: string;
-  localCurrency: string;
+  localCurrency: number;
   TokensAmount: number;
   transactionFee: number;
-  // Add other properties as needed
-}
-
-export async function buyTokens(buyTokenData: BuyTokenData): Promise<string> {
+}): Promise<string | BuyTokenResponse> {
   try {
-    const response: AxiosResponse<{ msg: string }> = await axios.post('/api/buyToken', buyTokenData);
-    return response.data.msg;
-  } 
-  catch (error) {
+    const { data: { msg }} = await axios.post(`/api/buyToken`, credentials);
+    return Promise.resolve(msg);
+  } catch (error) {
     return Promise.reject({ error });
   }
 }

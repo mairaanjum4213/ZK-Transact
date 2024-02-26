@@ -26,7 +26,6 @@ export const BuyTokenSchema = new Schema({
         type: Number
     },
     buyReceipt: {
-        data: Buffer,
         type: String
     },
     dateTimeField: {

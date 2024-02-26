@@ -73,7 +73,7 @@ const SellTokens: React.FC = () => {
   
   const [localCurrencyVal, setLocalCurrencyVal] = useState<number>();
   const [transactionfee, settransactionfee] = useState<number>();
-  const [inputZKToken, setInputZKToken] = useState<string>("");
+  const [inputZKToken, setInputZKToken] = useState<number>();
   const [userInputLocalVal, setUserInputLocalVal] = useState<number>(0);
 
   const handleDataUpdate = (
