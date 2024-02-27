@@ -5,8 +5,15 @@ import lightlogo from "../../assets/icon3.png"
 import darkLogo from "../../assets/icon2.png"
 import html2pdf from 'html2pdf.js';
 import { useDarkMode, useLightMode } from "color-scheme-hook";
+import axios from 'axios'
+import { useEffect, useState } from 'react';
+axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
+
 const BuyTokensReciept: React.FC = () => {
     const [isLightMode, toggleColorScheme, resetPreference] = useLightMode();
+    const [allImage, setAllImage] = useState<ImageData | null>(null);
+    const [pdfFile, setPdfFile] = useState<string | null>(null);
+
     const handleDownload = () => {
         const element = document.getElementById('printReciept');
         if (element) {
@@ -20,6 +27,24 @@ const BuyTokensReciept: React.FC = () => {
             html2pdf().from(element).set(options).save();
         }
     };
+
+    useEffect(() => {
+        fetchBuyToken();
+      }, []);
+    
+      const fetchBuyToken = async () => {
+        try {
+          const result = await axios.get(
+            '/api/getbuytokens'
+          );
+          console.log(result.data);
+          setAllImage(result.data);
+       
+       
+        } catch (error) {
+          console.error("Error fetching files:", error);
+        }
+      };
     return (
         <>
             <BreadCrumb parentPageLink='/buyTokens' ParentPage="Buy Tokens" pageName="Reciept" ChildPage="Reciept" imageUrl={aboutUs} />

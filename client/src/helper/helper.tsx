@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 
 
 axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
@@ -146,22 +146,6 @@ export async function updateUser(response: any): Promise<UpdateUserResponse> {
   }
 }
 
-/** generate OTP */
-/*export async function generateOTP(username: string): Promise<string | GenerateOTPResponse> {
-  try {
-    const { data: { code }, status } = await axios.get('/api/generateOTP', { params: { username } });
-
-    // send mail with the OTP
-    if (status === 201) {
-      let { data: { email } } = await getUser({ username });
-      let text = `Your Password Recovery OTP is ${code}. Verify and recover your password.`;
-      await axios.post('/api/registerMail', { username, userEmail: email, text, subject: "Password Recovery OTP" });
-    }
-    return Promise.resolve(code);
-  } catch (error) {
-    return Promise.reject({ error });
-  }
-}*/
 
 export interface GenerateOTPResponse {
   code: string;
@@ -261,10 +245,11 @@ export async function sellToken(requestData: SellTokenData): Promise<string> {
 }
 
 
+
 //__________________________________________________Buy Tokens _________________________________________//
 
 /** register user function */
-export async function storebuyToken(credentials: {
+/*export async function storebuyToken(credentials: {
   buyer:string;
   metamaskAddress: string;
   serviceProviderName: string;
@@ -275,6 +260,19 @@ export async function storebuyToken(credentials: {
   try {
     const { data: { msg }} = await axios.post(`/api/buyToken`, credentials);
     return Promise.resolve(msg);
+  } catch (error) {
+    return Promise.reject({ error });
+  }
+}*/
+
+export async function storebuyToken(formData: FormData): Promise<string | BuyTokenResponse> {
+  try {
+    const response = await axios.post<string | BuyTokenResponse>('/api/buyToken', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data' // Ensure to set Content-Type header for FormData
+      }
+    });
+    return Promise.resolve(response.data);
   } catch (error) {
     return Promise.reject({ error });
   }

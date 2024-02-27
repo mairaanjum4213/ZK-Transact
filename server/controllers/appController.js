@@ -286,6 +286,7 @@ export async function sellToken(req, res) {
     }
 }
 
+
 //Get Method : Sell Token Details
 //http://localhost:8080/api/getselltokens/ selltokenmongodb id 65dac660422196608d384587
 export async function userwithSellToken(req, res) {
@@ -306,8 +307,9 @@ export async function userwithSellToken(req, res) {
 // ___________buy tokens_________//
 
 export async function buyToken(req, res) {
-    try {
-        const {
+    console.log(req.file);
+
+    const {
         buyer,
         metamaskAddress,
         serviceProviderName,
@@ -315,9 +317,11 @@ export async function buyToken(req, res) {
         TokensAmount,
         transactionFee,
     } = req.body;
+
+    const buyReceipt = req.file.filename;
         
-   
-      // const { userId } = req.user;
+    
+    try{
         const newBuyTokens = new BuyTokenModel({
             buyer,
             metamaskAddress,
@@ -325,30 +329,46 @@ export async function buyToken(req, res) {
             localCurrency,
             TokensAmount,
             transactionFee: transactionFee,
+            buyReceipt
         });
-
-        // for img
-        if(req.file){
-            newBuyTokens.buyReceipt = req.file.path
-        }
-        //
 
         const result = await newBuyTokens.save();
 
         return res.status(201).send({ msg: "Buy Tokens data stored Successfully" });
+   
+       
     } catch (error) {
         return res.status(500).send({ error: error.message || "Internal server error" });
     }
 }
 
 //http://localhost:8080/api/getbuytokens/65da3585b58f58920388ad2c
-export async function userwithBuyToken(req, res) {
+/*export async function userwithBuyToken(req, res) {
     try {
         // Extract the _id from the request parameters
         const {id} = req.params;
 
         // Fetch the BuyToken document by its _id
         const buyToken = await BuyTokenModel.findById(id).populate('buyer', ['username','email']);
+
+        // If the BuyToken with the specified _id exists, respond with it
+        if (buyToken) {
+            res.status(200).json(buyToken);
+        } else {
+            // If no BuyToken with the specified _id is found, respond with a 404 error
+            res.status(404).json({ message: 'BuyToken not found' });
+        }
+    } catch (error) {
+        // If an error occurs, respond with an error message
+        res.status(500).json({ message: error.message });
+    }
+        
+}*/
+
+export async function userwithBuyToken(req, res) {
+    try {
+      // Fetch the most recent BuyToken document
+      const buyToken = await BuyTokenModel.findOne().sort({ createdAt: -1 }).populate('buyer', ['username', 'email']);
 
         // If the BuyToken with the specified _id exists, respond with it
         if (buyToken) {

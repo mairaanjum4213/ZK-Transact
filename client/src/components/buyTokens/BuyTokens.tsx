@@ -8,14 +8,14 @@ import buyTokens from '../../assets/buyTokens.png';
 import buyToken from '../../assets/BreadCrumbs/buyZkTokens.png';
 import '../../css/Registration.css';
 import '../../css/TokenTraders.css';
-
 import toast, { Toaster } from 'react-hot-toast';
 import { storebuyToken } from '../../helper/helper';
 import { useFormik } from 'formik';
-
 // FOr user data
 import { jwtDecode } from "jwt-decode";
 import { getUser } from "../../helper/helper"
+
+
 
 const BuyTokens: React.FC = () => {
   const navigate = useNavigate();
@@ -46,8 +46,8 @@ useEffect(() => {
   const [localCurrencyVal, setLocalCurrencyVal] = useState<number>();
   const [transactionfee, settransactionfee] = useState<number>();
   const [zkTokenVal, setZkTokenVal] = useState<number>();
+  const [file, setFile] = useState<File | null>(null);
   const [userInputLocalVal, setUserInputLocalVal] = useState<number>(0);
-
 
   const handleDataUpdate = (
     localCurrencyVal: number,
@@ -66,30 +66,43 @@ useEffect(() => {
       // No need to provide initial values here
     },
     onSubmit: async () => {
+      if (!file) return;
       try {
-        const values = {
-          buyer:userData._id,
-          metamaskAddress: metamask,
-          serviceProviderName: serviceProvider,
-          localCurrency: localCurrencyVal || 0,
-          TokensAmount: zkTokenVal || 0,
-          transactionFee: transactionfee || 0,
-        };
-  
-        const storebuyTokenPromise = storebuyToken(values);
+        const formData = new FormData();
+        formData.append('buyer', userData._id);
+        formData.append('metamaskAddress', metamask);
+        formData.append('serviceProviderName', serviceProvider);
+        formData.append('localCurrency', (localCurrencyVal || 0).toString()); // Convert to string
+        formData.append('TokensAmount', (zkTokenVal || 0).toString()); // Convert to string
+        formData.append('transactionFee', (transactionfee || 0).toString()); // Convert to string
+        formData.append('buyReceipt', file);
+ 
+       const storebuyTokenPromise = storebuyToken(formData);
         toast.promise(storebuyTokenPromise, {
           loading: 'Creating...',
           success: <b>Buy Tokens request sent Successfully...!</b>,
           error: <b>Error occurs while buying tokens.</b>
         });
-        storebuyTokenPromise.then(() => navigate('/login'));
+        storebuyTokenPromise.then(() => navigate('/buyTokens-reciept'));
       } catch (error) {
         console.error("Error submitting buy token data:", error);
         toast.error("Error submitting buy token data. Please try again later.");
       }
+      
     }
   });
-   
+  
+  
+ const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = event.target.files?.[0]; // Access the selected file from the file input
+    if (selectedFile && selectedFile.type === 'image/png') {
+        setFile(selectedFile); // Update the state with the selected file if it's a PNG file
+    } else {
+        toast.error('Please select a PNG file.'); // Inform the user if the selected file is not a PNG file
+    }
+};
+
+
   return (
     <>
     <Toaster position='top-center' reverseOrder={false}></Toaster>
@@ -160,7 +173,10 @@ useEffect(() => {
                 type='file'
                 placeholder='Attach Reciept'
                 name= 'buyReceipt'
+                accept='.png'
+                onChange={handleFileChange}
               />
+               {file && <p>Selected File: {file.name}</p>} {/* Display the selected file name if a file is selected */}
               <button type='submit' className='my-4 btnStyle' rel="stylesheet"> Generate Reciept
             </button>
                
