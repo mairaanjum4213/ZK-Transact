@@ -11,7 +11,7 @@ axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
 
 const BuyTokensReciept: React.FC = () => {
     const [isLightMode, toggleColorScheme, resetPreference] = useLightMode();
-    const [allImage, setAllImage] = useState<ImageData | null>(null);
+    const [allImage, setAllImage] = useState<any>(null);
     const [pdfFile, setPdfFile] = useState<string | null>(null);
 
     const handleDownload = () => {
@@ -44,6 +44,10 @@ const BuyTokensReciept: React.FC = () => {
         } catch (error) {
           console.error("Error fetching files:", error);
         }
+      };
+
+      const showreceipt = (receipt: string) => {
+        window.open(`http://localhost:8080/uploads/${receipt}`);
       };
     return (
         <>
@@ -97,18 +101,18 @@ const BuyTokensReciept: React.FC = () => {
                                             <div className="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
                                                 <div className="invoice-details">
                                                     <p className='normalTextColor fs-6   '>
-                                                        faheem_siddiqi@yahoo.com
+                                                        {allImage?.buyer?.username}
                                                     </p>
                                                     <p className='text-secondary  mt-1'>
-                                                        faheem_siddiqi@yahoo.com
+                                                        {allImage?.buyer?.email}
                                                     </p>
                                                 </div>
                                             </div>
                                             <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
                                                 <div className="invoice-details">
                                                     <div className="invoice-num">
-                                                        <div className='normalTe'>Invoice - #009</div>
-                                                        <div className='text-secondary ' style={{ fontSize: "small" }}>January 10th 2020</div>
+                                                        <div className='normalTe'>Invoice - {allImage?._id}</div>
+                                                        <div className='text-secondary ' style={{ fontSize: "small" }}>{allImage?.dateTimeField}</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -131,14 +135,22 @@ const BuyTokensReciept: React.FC = () => {
                                                         <tbody>
                                                             <tr>
                                                                 <td className='p-3 customTabletd'>
-                                                                    0x2f90CDb899A0969Dad61A81CcDFf93fbe81D03Ff
+                                                                   {allImage?.metamaskAddress}
                                                                 </td>
-                                                                <td className='p-3 customTabletd'> 50000981 pkr</td>
-                                                                <td className='p-3 customTabletd'>9% </td>
-                                                                <td className='p-3 customTabletd'>$5000.00</td>
+                                                                <td className='p-3 customTabletd'> {allImage?.localCurrency} pkr</td>
+                                                                <td className='p-3 customTabletd'>{allImage?.transactionFee}% </td>
+                                                                <td className='p-3 customTabletd'>${allImage?.TokensAmount}</td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
+
+
+                                                 
+                                                    <button className="btnStyle mt-4" onClick={()=>showreceipt(allImage?.buyReceipt)}>
+                                                       Show Attached Bank Receipt
+                                                     </button>
+
+
                                                 </div>
                                             </div>
                                         </div>
@@ -155,6 +167,12 @@ const BuyTokensReciept: React.FC = () => {
                     Request Reciept Approval
                 </button>
             </div>
+
+            <div>
+                <p>{}</p>
+
+            </div>
+
         </>
     );
 };

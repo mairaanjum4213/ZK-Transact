@@ -23,8 +23,6 @@ var upload = multer({
         }
     },
 
-    limits:{
-        fileSize:1024 * 1024 * 2
-    }
+    
 })
 export default upload;

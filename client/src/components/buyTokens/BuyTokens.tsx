@@ -152,7 +152,7 @@ useEffect(() => {
               <div className='mt-4'>
                 LocalCurrencyConversion  commented in file:"BuyTokens" to save api free trial
 
-                <LocalCurrencyConversion onDataUpdate={handleDataUpdate} />
+                {/*<LocalCurrencyConversion onDataUpdate={handleDataUpdate} />*/}
               </div>
               <div className='mt-4 d-flex align-items-center justify-content-left'
                 data-toggle="tooltip" data-placement="top" title="Click on ZK Token Seller Name to  view local bank account details"
