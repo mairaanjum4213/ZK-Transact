@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import BreadCrumb from '../BreadCrumb.tsx';
 import '../../css/Registration.css';
@@ -9,11 +10,8 @@ import buyToken from '../../assets/sellTokens.png';
 // Backend integration
 import { useFormik } from 'formik';
 import toast, { Toaster } from 'react-hot-toast';
-import { registerValidation } from "../../helper/validate";
 import { jwtDecode } from "jwt-decode";
-import { getUser, sellToken } from "../../helper/helper"
-
-
+import { getUser, storesSellToken } from "../../helper/helper"
 
 
 const SellTokens: React.FC = () => {
@@ -21,45 +19,25 @@ const SellTokens: React.FC = () => {
   const decodedToken: any = token ? jwtDecode(token) : {};
   const username = decodedToken.username || '';
   const [userData, setUserData] = useState<string>("");
-  const formik = useFormik({
-    initialValues: {
-      sellerMetamask: '',
-      accountNumber: '',
-      accountComments: '',
-      accountName: '',
-      localCurrencyAmount: '',
-      transactionFee: '',
-      contractHash:'',
-      token: '',
-      
-    },
-    validate: registerValidation,
-    onSubmit: async (values: any) => {
-      alert("Not SHOWING YYYYYYYYYYYYYYYYYYYYYYYYY")
-      console.log("NOT SHOWING YYYYYYYYYYYYYYYYYYYYYYYYY")
-      try {
-        // Make the post request
-        let postPromise = sellToken(values);
-        // Use toast.promise to handle the asynchronous promise
-        toast.promise(postPromise, {
-          loading: 'Sending Request..',
-          success: <b>Request Sent!</b>,
-          error: <b>Couldn't post at this moment.</b>
-        });
-      } catch (error) {
-        console.error('Error:', error);
-        toast.error('An error occurred while posting data.');
-      }
-    }
-  });
+  const [sellerMetamask, setSellerMetamask] = useState<string>('');
+  const [purchaserName, setPurchaserName] = useState<string>('');
+  const [accountNumber, setAccountNumber] = useState<string>('');
+  const [accountName, setAccountName] = useState<string>('');
+  const [accountComments, setAccountComments] = useState<string>('');
+  const [contractHash, setContractHash] = useState<string>('');
+  // From ZK Token Conversion
+  const [localCurrencyVal, setLocalCurrencyVal] = useState<number>();
+  const [transactionfee, settransactionfee] = useState<number>();
+  const [inputZKToken, setInputZKToken] = useState<number>();
+ // Fetching User Data for Id
   useEffect(() => {
-    // Fetching User Data for Id
     async function fetchUserData() {
       try {
         const response = await getUser({ username });
         if (response.data) {
+         // To Access Id or other data of user from db just use userData._id
           setUserData(response.data)
-          // To Access Id or other data of user from db just use userData._id
+        
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -67,25 +45,46 @@ const SellTokens: React.FC = () => {
     }
     fetchUserData();
   }, [username]);
-
-
-
-  
-  const [localCurrencyVal, setLocalCurrencyVal] = useState<number>();
-  const [transactionfee, settransactionfee] = useState<number>();
-  const [inputZKToken, setInputZKToken] = useState<number>();
-  const [userInputLocalVal, setUserInputLocalVal] = useState<number>(0);
-
   const handleDataUpdate = (
-    localCurrencyVal: number,
+    roundedNum: number,
     inputZKToken: number,
     transactionFee: number
   ) => {
-    setLocalCurrencyVal(localCurrencyVal);
+    setLocalCurrencyVal(roundedNum);
     setInputZKToken(inputZKToken);
     settransactionfee(transactionFee);
   };
-
+  const formik = useFormik({
+    initialValues: {
+      // No need to provide initial values here
+    },
+    onSubmit: async () => {
+      try {
+        const values = {
+          seller: userData._id,
+          sellerMetamask: sellerMetamask,
+          purchaserName:purchaserName,
+          accountNumber: accountNumber,
+          accountComments: accountComments,
+          accountName: accountName,
+          contractHash: contractHash,
+          localCurrencyAmount: localCurrencyVal || 0,
+          transactionFee: transactionfee || 0,
+          Tokens: inputZKToken || 0,
+        };
+        const storeSellTokenPromise = storesSellToken(values);
+        toast.promise(storeSellTokenPromise, {
+          loading: 'Creating...',
+          success: <b>Sell Tokens request sent Successfully</b>,
+          error: <b>Error Occured While Sending Request</b>
+        });
+        storeSellTokenPromise.then(() => window.location.reload());
+      } catch (error) {
+        console.error("Error submitting Selling Token Data:", error);
+        toast.error("Error Occured While Submitting Sell Token Data");
+      }
+    }
+  });
   return (
     <>
       <BreadCrumb
@@ -109,41 +108,56 @@ const SellTokens: React.FC = () => {
               <p style={{ fontSize: 'x-large', fontWeight: 'bold' }} className=''>
                 Sell ZK-Tokens
               </p>
-
               <input
                 required
-                {...formik.getFieldProps('sellerMetamask')}
                 className='InputReg mt-4'
                 type='text'
                 placeholder='Enter Your Meta Mask Wallet Address'
+                value={sellerMetamask || ''}
+                onChange={(e) => setSellerMetamask(String((e.target as HTMLInputElement).value))}
               />
               <input
+              required
                 className='InputReg mt-4'
                 type='text'
-                placeholder='Enter ZK-Token Purchaser  User Name'
+                placeholder='Enter ZK-Token Purchaser User Name'
+                value={purchaserName || ''}
+                onChange={(e) => setPurchaserName(String((e.target as HTMLInputElement).value))}
               />
-              <p  ><span className="link-wrapper">
-                <Link className="link hover-2 fw-bold " style={{ letterSpacing: "1px" }} to="/zkt-purchasers" > View ZK-Token Purchasers</Link></span></p>
+              <p>
+                <span className="link-wrapper">
+                  <Link className="link hover-2 fw-bold " style={{ letterSpacing: "1px" }} to="/zkt-purchasers" > View ZK-Token Purchasers</Link>
+                </span>
+              </p>
               <input
-                {...formik.getFieldProps('accountNumber')}
+              required
                 className='InputReg mt-4'
                 style={{ width: "60%", borderRadius: "0px" }}
                 type='text'
                 placeholder='Enter Your Local  Bank Account Number '
+                value={accountNumber || ''}
+                onChange={(e) => setAccountNumber(String((e.target as HTMLInputElement).value))}
               />
               <select
-                className="InputReg  border border-secondary"
-                style={{ width: "40%", borderRadius: "0px" }}>
+              required
+                className="InputReg border border-secondary"
+                style={{ width: "40%", borderRadius: "0px" }}
+                value={accountName || ''}
+                onChange={(e) => setAccountName(e.target.value)}
+              >
                 <option>Select Bank Name</option>
                 <option value="jazz_cash">Jazz Cash</option>
                 <option value="easy_paisa">Easy Paisa</option>
                 <option value="hbl">HBL</option>
               </select>
               <textarea
-                {...formik.getFieldProps('accountComments')}
+              required
                 className='InputReg mt-4'
                 placeholder='Add important comments e.g., Account title'
-              ></textarea>
+                value={accountComments || ''}
+                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setAccountComments(e.target.value)}
+              >
+              </textarea>
               <div className='mt-4'>
                 CurrencyConversion  commented in file:"BuyTokens" to save api free trial
                 <ZkTokenConversion onDataUpdate={handleDataUpdate} />
@@ -163,9 +177,11 @@ const SellTokens: React.FC = () => {
                 </div>
               </div>
               <input
-                {...formik.getFieldProps('contractHash')}
-                className='InputReg  recieptChose'
+                className='InputReg recieptChose'
+                required
                 type='text'
+                value={contractHash || ''}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setContractHash(e.target.value)}
                 placeholder='Attach Contract Hash'
               />
               <button type='submit' className='my-4 btnStyle' rel="stylesheet"  >
@@ -175,7 +191,7 @@ const SellTokens: React.FC = () => {
           </div>
         </div>
       </div>
-      <p className='bg-danger mx-5'>{userData._id}   - - - user id from db faheem_siddiqi </p>
+      <p className='bg-danger mx-5'>{localCurrencyVal}   - - - user id from db faheem_siddiqi </p>
     </>
   );
 };

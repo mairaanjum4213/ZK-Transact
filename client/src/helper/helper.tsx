@@ -212,38 +212,6 @@ export async function resetPassword({ username, password }: { username: string; 
 
 
 
-/** Sell Tokens */
-interface SellTokenData {
-  seller: string;
-  sellerMetamask: string;
-  purchaserName: string;
-  accountNumber: string;
-  accountName: string;
-  accountComments: string;
-  contractHash:string;
-  transactionFee?: number;
-  localCurrencyAmount: number;
-  Tokens?: number;
-}
-
-interface SellTokenResponse {
-  msg: string;
-  error?: string;
-}
-export async function sellToken(requestData: SellTokenData): Promise<string> {
-  try {
-      const { data, status } = await axios.post('/api/sellToken', requestData);
-
-      if (status === 201) {
-          return Promise.resolve(data.msg);
-      } else {
-          return Promise.reject(data.error || 'Sell Tokens request failed');
-      }
-  } catch (error) {
-      return Promise.reject('Internal server error');
-  }
-}
-
 
 
 //__________________________________________________Buy Tokens _________________________________________//
@@ -277,3 +245,72 @@ export async function storebuyToken(formData: FormData): Promise<string | BuyTok
     return Promise.reject({ error });
   }
 }
+
+
+//__________________________________________________ ↓  Sell  Tokens ↓ 
+// POST
+interface sellTokenResponse {
+  error?: any;
+}
+export async function storesSellToken(sellTokendata: {
+  seller: string;
+  sellerMetamask: string;
+  purchaserName: string;
+  accountNumber: string;
+  accountName: string;
+  accountComments: string;
+  contractHash:string;
+  transactionFee?: number;
+  localCurrencyAmount: number;
+  Tokens?: number;
+}): Promise<string | sellTokenResponse> {
+  try {
+    const { data: { msg }} = await axios.post('/api/sellToken', sellTokendata);
+    return Promise.resolve(msg);
+  } catch (error) {
+    return Promise.reject({ error });
+  }
+}
+// GET
+interface GetSellToken {
+  data?: any;
+  error?: any;
+}
+export async function getSellToken(sellTokenId: string): Promise<GetSellToken> {
+  try {
+    const { data } = await axios.get(`/api/getselltokens/${sellTokenId}`);
+    return data;
+  } catch (error) {
+    console.error("Failed to fetch sell token:", error);
+    throw new Error("Failed to fetch sell token.");
+  }
+}
+
+//_________________________________________________ ↑ Sell  Tokens  ↑ 
+
+
+//_________________________________________________ ↓  Transfer  Tokens ↓ 
+
+// POST
+interface transferTokenResponse {
+  error?: any;
+}
+export async function storesTransferToken(transferTokendata: {
+  sender: any;
+  beneficiaryMetamask: string;
+  senderMetamask:string;
+  transferContractHash: string;
+  transferTokenAmount: number;
+  transferTokendateTimeField:Date
+}): Promise<string | transferTokenResponse> {
+  try {
+    const { data: { msg }} = await axios.post('/api/sellToken', transferTokendata);
+    return Promise.resolve(msg);
+  } catch (error) {
+    return Promise.reject({ error });
+  }
+}
+
+//_________________________________________________ ↑ Transfer  Tokens  ↑ 
+
+
