@@ -15,6 +15,7 @@ router.route('/authenticate').post(controller.verifyUser,(req, res) => res.end()
 router.route('/login').post(controller.verifyUser, controller.login); // login in app first verify user then loginnn thats why 2 controllers
 router.route('/sellToken').post(controller.sellToken);
 router.route('/buyToken').post(upload.single('buyReceipt'),controller.buyToken);
+router.route('/transferToken').post(controller.transferToken);
 
 /** GET Methods */
 router.route('/user/:username').get(controller.getUser) // user with username

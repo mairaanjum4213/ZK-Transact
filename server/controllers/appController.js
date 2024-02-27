@@ -1,6 +1,7 @@
 import UserModel from '../model/User.model.js';
 import SellTokenModel from '../model/SellToken.model.js'
 import BuyTokenModel from '../model/BuyToken.model.js'
+import TransferTokenModel from '../model/TransferToken.model.js'
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import ENV from "../config.js";
@@ -258,13 +259,12 @@ export async function resetPassword(req, res) {
 }
 
 
-//-------------------------- SELL TOKENS
 
-// POST METHOD: SELL TOKENS
+//_________________________________________________ ↓  Sell  Tokens ↓ 
+// POST 
 export async function sellToken(req, res) {
     try {
         const { seller, sellerMetamask, purchaserName, accountNumber, accountComments, transactionFee, localCurrencyAmount, accountName, Tokens, contractHash, } = req.body;
-
         const newSellTokens = new SellTokenModel({
             seller,
             sellerMetamask,
@@ -277,17 +277,13 @@ export async function sellToken(req, res) {
             localCurrencyAmount,
             Tokens
         });
-
         const result = await newSellTokens.save();
-
         return res.status(201).send({ msg: "Sell Tokens data stored Successfully" });
     } catch (error) {
         return res.status(500).send({ error: error.message || "Internal server error" });
     }
 }
-
-
-//Get Method : Sell Token Details
+//GET
 //http://localhost:8080/api/getselltokens/ selltokenmongodb id 65dac660422196608d384587
 export async function userwithSellToken(req, res) {
     try {
@@ -301,8 +297,48 @@ export async function userwithSellToken(req, res) {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-
 }
+//_________________________________________________ ↑  Sell  Tokens  ↑
+
+
+
+
+//_________________________________________________ ↓  Transfer Tokens ↓ 
+//POST
+
+export async function transferToken(req, res) {
+    try {
+        const {sender, beneficiaryMetamask, senderMetamask,transferTokenAmount, transferContractHash, transferTokendateTimeField  } = req.body;
+        const newTransferTokens = new TransferTokenModel({
+            sender,
+            beneficiaryMetamask,
+            senderMetamask,
+            transferTokenAmount,
+            transferContractHash,
+            transferTokendateTimeField
+        });
+        const result = await newTransferTokens.save();
+        return res.status(201).send({ msg: "Transfer Tokens data stored Successfully" });
+    } catch (error) {
+        return res.status(500).send({ error: error.message || "Internal server error" });
+    }
+}
+//GET
+//http://localhost:8080/api/getTransferTokens/transferTokenId
+export async function userwithTransferToken(req, res) {
+    try {
+        const { id } = req.params;
+        const transferToken = await TransferTokenModel.findById(id).populate('sender', ['username', 'email']);
+        if (transferToken) {
+            res.status(200).json(transferToken);
+        } else {
+            res.status(404).json({ message: 'TransferToken Instance not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+//_________________________________________________ ↑ Transfer  Tokens ↑ 
 
 // ___________buy tokens_________//
 

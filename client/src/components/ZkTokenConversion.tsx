@@ -1,19 +1,18 @@
+
 import React, { useState, useEffect } from 'react';
 import Loader from './Loader';
 import { toast, Toaster } from 'react-hot-toast';
 
-
 interface ZkTokenConversionProps {
-  onDataUpdate: (text1: number,  roundedNum: number, transactionFee:number) => void;
+  onDataUpdate: (roundedNum: number, inputZKToken: number, transactionFee:number) => void;
 }
-
 
 const ZkTokenConversion:React.FC<ZkTokenConversionProps> = ({ onDataUpdate }) => {
   const [inputZKToken, setText1] = useState<number>();
   const [transactionfee, settransactionfee] = useState<number>(0.5);
-  const [localCurrencyVal, setLocalCurrencyVal] = useState<number>(0);
+  const [localCurrencyVal, setLocalCurrencyVal] = useState<number>();
   const [country1, setCountry1] = useState<Record<string, number>>({});
-  const [inputZkTokens, setInputZkTokens] = useState<number>(0);
+  const [inputZkTokens, setInputZkTokens] = useState<number>();
   const [zkTokenUniversalVal, setZkTokenUniversalVal] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const a = 10
@@ -48,8 +47,7 @@ const ZkTokenConversion:React.FC<ZkTokenConversionProps> = ({ onDataUpdate }) =>
     let num = (inputZkTokens / zkTokenUniversalVal) * inputZKToken;
     let roundedNum = parseFloat(num.toFixed(5));
     setLocalCurrencyVal(roundedNum);
-    onDataUpdate(localCurrencyVal || 0,inputZKToken,transactionfee);
-
+    onDataUpdate(roundedNum,inputZKToken,transactionfee);
 
   };
   try {
@@ -65,6 +63,7 @@ const ZkTokenConversion:React.FC<ZkTokenConversionProps> = ({ onDataUpdate }) =>
               style={{ width: "6~0%", borderRadius: "0px" }}
               placeholder="ZKT Amount"
               type="number"
+              required
               style={{ width: "60%" }}
               autoComplete='false'
               placeholder="Enter ZK Tokens Amount"
@@ -73,6 +72,7 @@ const ZkTokenConversion:React.FC<ZkTokenConversionProps> = ({ onDataUpdate }) =>
               onChange={(e) => setText1(Number((e.target as HTMLInputElement).value))}
             />
              <select
+              required
               className="InputReg  border border-secondary"
               style={{ width: "40%", borderRadius: "0px" }}
               onChange={zkTokenValChange}>
@@ -104,7 +104,6 @@ const ZkTokenConversion:React.FC<ZkTokenConversionProps> = ({ onDataUpdate }) =>
             >
               Convert
             </button>
-
             <hr  className="mt-4"/>
             <input
               className="InputReg mt-4"
