@@ -304,7 +304,7 @@ export async function storesTransferToken(transferTokendata: {
   transferTokendateTimeField:Date
 }): Promise<string | transferTokenResponse> {
   try {
-    const { data: { msg }} = await axios.post('/api/sellToken', transferTokendata);
+    const { data: { msg }} = await axios.post('/api/transferToken', transferTokendata);
     return Promise.resolve(msg);
   } catch (error) {
     return Promise.reject({ error });

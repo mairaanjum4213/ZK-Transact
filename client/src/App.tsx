@@ -31,6 +31,7 @@ import SellTokens from './components/sellTokens/SellTokens.tsx';
 import UserDashboard from './components/UserDashboard.tsx';
 import AdminDashboard from './components/admin/AdminDashboard.tsx';
 import BuyTokensReciept from './components/buyTokens/BuyTokensReciept.tsx';
+import BuyTokensRecieptApproved from './components/buyTokens/BuyTokensRecieptApproved.tsx';
 import SellTokensReciept from './components/sellTokens/SellTokensReciept.tsx'
 import KYCrequiredModal from './components/KYCrequiredModal';
 import WalletDetails from './components/WalletDetails.tsx';
@@ -92,6 +93,7 @@ function App() {
               <Route path="/zkt-purchaser-profile" element={<ZKtokePurchaserProfile />} />
               <Route path="/zkt-purchasers" element={<ViewZKtokensPurchasers />} />
               <Route path="/buyTokens-reciept" element={<BuyTokensReciept />} />
+              <Route path="/buyTokens-recieptapproved" element={<BuyTokensRecieptApproved/>} />
               <Route path="/sellTokens-reciept" element={<SellTokensReciept />} />
               <Route path="/zkt-provider-profile" element={<ZKtokeProviderProfile />} />
               <Route path="/zkt-providers" element={<ViewZKtokensProviders />} />

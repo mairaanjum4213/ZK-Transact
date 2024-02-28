@@ -3,6 +3,7 @@ import "../../css/BuyTokensReciept.css"
 import aboutUs from '../../assets/BreadCrumbs/buyZkTokens.png';
 import lightlogo from "../../assets/icon3.png"
 import darkLogo from "../../assets/icon2.png"
+import html2pdf from 'html2pdf.js';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { MdOutlineContentCopy } from "react-icons/md";
 import toast from 'react-hot-toast';
@@ -20,54 +21,77 @@ const BuyTokensReciept: React.FC = () => {
 
     const handleCopyToClipboardWalletAddresss = () => {
         toast.success('Wallet Address Copied');
-      };
+    };
 
+
+    const handleDownload = () => {
+        const element = document.getElementById('printReciept');
+        if (element) {
+            const options = {
+                margin: 10,
+                filename: 'Buy Token Reciept.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' },
+            };
+            html2pdf().from(element).set(options).save();
+        }
+    };
 
     useEffect(() => {
         fetchBuyToken();
-      }, []);
-    
-      const fetchBuyToken = async () => {
-        try {
-          const result = await axios.get(
-            '/api/getbuytokens'
-          );
-          console.log(result.data);
-          setAllImage(result.data);
-       
-       
-        } catch (error) {
-          console.error("Error fetching files:", error);
-        }
-      };
+    }, []);
 
-      const showreceipt = (receipt: string) => {
+    const fetchBuyToken = async () => {
+        try {
+            const result = await axios.get(
+                '/api/getbuytokens'
+            );
+            setAllImage(result.data);
+        } catch (error) {
+        }
+    };
+
+    const showreceipt = (receipt: string) => {
         window.open(`http://localhost:8080/uploads/${receipt}`);
-      };
+    };
     return (
         <>
             <BreadCrumb parentPageLink='/buyTokens' ParentPage="Buy Tokens" pageName="Reciept" ChildPage="Reciept" imageUrl={aboutUs} />
-         
-            <div className="container mt-5 mb-3" id='printReciept'>
-                <div className="row gutters"  data-aos="zoom-in-right">
+            <div className="row gutters ">
+                <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 ">
+                    <div className="text-right ">
+                        <button className="simpleButton1 mt-4 mx-5 px-3" onClick={handleDownload}>
+                            Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div className="container mt-5 mb-5" id='printReciept'>
+                <div className="row gutters  ">
                     <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 "  >
                         <div className="recieptOfPurchasingCard p-4">
                             <div className="card-body ">
                                 <div className="invoice-container">
                                     <div className="invoice-header">
-                                        {/* Row start */}
                                         <div className="row gutters">
                                             <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                                                <p className='fs-3 fw-bold my-5' style={{letterSpacing:'2px'}}>Token Purshase Request</p>
+
+                                                {isLightMode ? (
+                                                    <p className='fs-3 fw-bold my-5 text-dark' style={{ letterSpacing: '2px' }}>Token Purshase Request</p>
+                                                ) : (
+                                                    <p className='fs-3 fw-bold my-5 text-light' style={{ letterSpacing: '2px' }}>Token Purshase Request</p>
+                                                )}
+
                                                 {isLightMode ? (
                                                     <img className='mx-2' src={darkLogo} alt="" />
                                                 ) : (
                                                     <img className='mx-2' src={lightlogo} alt="" />
                                                 )}
 
-<div className='text-secondary mt-4' style={{ fontSize: "small" }}>{allImage?.dateTimeField}</div>
+                                                <div className='text-secondary mt-4' style={{ fontSize: "small" }}>{allImage?.dateTimeField}</div>
                                             </div>
-                                            
+
                                             <div className="col-lg-6 col-md-6 col-sm-6">
                                                 <p className='normalTextColor text-right fs-6'>
                                                     AdminMaira@yahoo.com
@@ -80,7 +104,7 @@ const BuyTokensReciept: React.FC = () => {
                                                 </p>
                                             </div>
                                         </div>
-                                    
+
                                         <div className="row gutters">
                                             <div className="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
                                                 <div className="invoice-details">
@@ -94,18 +118,32 @@ const BuyTokensReciept: React.FC = () => {
                                             </div>
                                             <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
                                                 <div className="invoice-details">
-                                                    <div className="invoice-num">
-                                                        <div className='normalTe' >
-                                                            <p>
-                                                            Invoice
-                                                            </p>
 
-                                                            <p>
-                                                            {allImage?._id}
-                                                            </p>
-                                                       </div>
-                                                  
-                                                    </div>
+                                                    {isLightMode ? (
+
+                                                        <div className="invoice-num">
+                                                            <div className='normalTe' >
+                                                                <p className='text-dark'>
+                                                                    Invoice
+                                                                </p>
+                                                                <p className='text-dark'>
+                                                                    {allImage?._id}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+
+                                                    ) : (
+                                                        <div className="invoice-num">
+                                                            <div className='normalTe' >
+                                                                <p className='text-white'>
+                                                                    Invoice
+                                                                </p>
+                                                                <p className='text-white'>
+                                                                    {allImage?._id}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    )}
                                                 </div>
                                             </div>
                                         </div>
@@ -127,10 +165,11 @@ const BuyTokensReciept: React.FC = () => {
                                                         <tbody>
                                                             <tr>
                                                                 <td className='p-3 customTabletd'>
-                                                                   {allImage?.metamaskAddress}
-                                                                   <CopyToClipboard text={allImage?.metamaskAddress} style={{ display:"inline",cursor: '-webkit-grabbing', cursor: 'grabbing' }}>
-                              <MdOutlineContentCopy onClick={handleCopyToClipboardWalletAddresss} className=" UsernameCopyicon mx-2" style={{ display: "inline" }} />
-                            </CopyToClipboard>
+                                                                    {allImage?.metamaskAddress}
+
+                                                                    <CopyToClipboard text={allImage?.metamaskAddress}>
+                                                                        <MdOutlineContentCopy onClick={handleCopyToClipboardWalletAddresss} className=" UsernameCopyicon mx-2" style={{ display: "inline" }} />
+                                                                    </CopyToClipboard>
                                                                 </td>
                                                                 <td className='p-3 customTabletd'> {allImage?.localCurrency} </td>
                                                                 <td className='p-3 customTabletd'>{allImage?.transactionFee}% </td>
@@ -138,32 +177,23 @@ const BuyTokensReciept: React.FC = () => {
                                                             </tr>
                                                         </tbody>
                                                     </table>
-
-                                                 <div className='link-wrapper'>
-                                                 <p className=" mt-4   hover-2" onClick={()=>showreceipt(allImage?.buyReceipt)}  style={{ cursor: '-webkit-grabbing', cursor: 'grabbing' }}>
-                                                       Show Attached Bank Receipt
-                                                     </p>
-                                                 </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+
+                                    {isLightMode ? (
+                                        <div className="invoice-footer mt-4 text-dark" >Thank you for chosing ZK-Transact.</div>
+                                    ) : (
+                                        <div className="invoice-footer mt-4 text-white" >Thank you for chosing ZK-Transact.</div>
+                                    )}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div className=" mb-4  text-center ">
-                <button className="btnStyle mt-4">
-                  Approve Transaction Request
-                </button>
-            </div>
 
-            <div>
-                <p>{}</p>
-
-            </div>
 
         </>
     );

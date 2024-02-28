@@ -112,7 +112,7 @@ const SellTokensReciept: React.FC = () => {
                                                                 <p className='text-dark'>
                                                                     Invoice
                                                                 </p>
-                                                                <p className="text-dark" style={{ fontSize: "small" }}>
+                                                                <p className="text-dark" >
                                                                     {sellTokensRecieptData._id}</p>
                                                             </div>
                                                         </div>
