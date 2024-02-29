@@ -24,7 +24,7 @@ router.route('/verifyOTP').get(controller.verifyUser,controller.verifyOTP) // ve
 router.route('/createResetSession').get(controller.createResetSession) // reset all the variables
 router.route('/getbuytokens').get(controller.userwithBuyToken) 
 router.route('/getselltokens/:id').get(controller.userwithSellToken) 
-
+router.route('/gettransfertokens/sender/:senderId').get(controller.userwithTransferToken) 
 /** PUT Methods */
 router.route('/updateuser').put(Auth, controller.updateUser); // is use to update the user profile,, 
 //                                                          first call Auth middleware to verify the jwt token only valid login user can update

@@ -308,14 +308,13 @@ export async function userwithSellToken(req, res) {
 
 export async function transferToken(req, res) {
     try {
-        const {sender, beneficiaryMetamask, senderMetamask,transferTokenAmount, transferContractHash, transferTokendateTimeField  } = req.body;
+        const {sender, beneficiaryMetamask, senderMetamask,transferTokenAmount, transferContractHash } = req.body;
         const newTransferTokens = new TransferTokenModel({
             sender,
             beneficiaryMetamask,
             senderMetamask,
             transferTokenAmount,
-            transferContractHash,
-            transferTokendateTimeField
+            transferContractHash
         });
         const result = await newTransferTokens.save();
         return res.status(201).send({ msg: "Transfer Tokens data stored Successfully" });
@@ -327,8 +326,15 @@ export async function transferToken(req, res) {
 //http://localhost:8080/api/getTransferTokens/transferTokenId
 export async function userwithTransferToken(req, res) {
     try {
-        const { id } = req.params;
-        const transferToken = await TransferTokenModel.findById(id).populate('sender', ['username', 'email']);
+       // Extract the sender ID from req.params
+       const { senderId } = req.params;
+
+       // Query the TransferTokenModel based on the extracted sender ID
+       const transferToken = await TransferTokenModel.findOne({ sender: senderId }).sort({ 
+        transferTokendateTimeField
+        : -1 }).populate('sender', ['username', 'email']);
+       ;
+
         if (transferToken) {
             res.status(200).json(transferToken);
         } else {
@@ -338,6 +344,8 @@ export async function userwithTransferToken(req, res) {
         res.status(500).json({ message: error.message });
     }
 }
+
+
 //_________________________________________________ ↑ Transfer  Tokens ↑ 
 
 // ___________buy tokens_________//

@@ -296,12 +296,11 @@ interface transferTokenResponse {
   error?: any;
 }
 export async function storesTransferToken(transferTokendata: {
-  sender: any;
+  sender: string;
   beneficiaryMetamask: string;
   senderMetamask:string;
   transferContractHash: string;
   transferTokenAmount: number;
-  transferTokendateTimeField:Date
 }): Promise<string | transferTokenResponse> {
   try {
     const { data: { msg }} = await axios.post('/api/transferToken', transferTokendata);

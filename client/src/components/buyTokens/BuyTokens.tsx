@@ -22,7 +22,7 @@ const BuyTokens: React.FC = () => {
   const token = localStorage.getItem('token');
   const decodedToken: any = token ? jwtDecode(token) : {};
   const username = decodedToken.username || '';
-  const [userData, setUserData] = useState<string>("");
+  const [userData, setUserData] = useState<any>("");
 
 // -----User Data
 useEffect(() => {

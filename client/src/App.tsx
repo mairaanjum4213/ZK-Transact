@@ -93,7 +93,7 @@ function App() {
               <Route path="/zkt-purchaser-profile" element={<ZKtokePurchaserProfile />} />
               <Route path="/zkt-purchasers" element={<ViewZKtokensPurchasers />} />
               <Route path="/buyTokens-reciept" element={<BuyTokensReciept />} />
-              <Route path="/buyTokens-recieptapproved" element={<BuyTokensRecieptApproved/>} />
+              <Route path="/buyTokens-  " element={<BuyTokensRecieptApproved/>} />
               <Route path="/sellTokens-reciept" element={<SellTokensReciept />} />
               <Route path="/zkt-provider-profile" element={<ZKtokeProviderProfile />} />
               <Route path="/zkt-providers" element={<ViewZKtokensProviders />} />

@@ -21,7 +21,8 @@ const TransferTokenSchema = new Schema({
         required: [true, "Please provide an transfer token contract hash  number"],
     },
     transferTokendateTimeField: {
-        type: Date   
+        type: Date ,
+        default: Date.now
     }
-});
+},{timestamps:true});
 export default mongoose.models.TransferToken || mongoose.model('TransferToken', TransferTokenSchema);
