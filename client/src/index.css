@@ -160,7 +160,7 @@ a {
   border: none;
   font-weight: bold;
   color: white !important;
-  font-size: large;
+
   transition: all 0.3s;
 }
 .notificationIcon:hover,

@@ -12,7 +12,6 @@
     }
 }
 
-/* Maira make width resposnove for different devices mera kial sa sahi ha yh bas test krlo */
 .profileDropdownParent {
     width: 15rem;
 }
@@ -33,4 +32,18 @@
 .profileDropdownParent li:hover {
     background-color: rgba(155, 152, 152, 0.178);
     border-left: 3px solid #269e88;
+}
+
+.dd{
+    background-color: #44ad9a;
+    transition: all 0.3s;
+    padding: 2px;
+   
+}
+
+
+.dd:hover{
+    background-color: #363f3e;
+    
+   
 }

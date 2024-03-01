@@ -143,8 +143,17 @@
 }
 /* -----------------------------------------------   Media Quries  */
 @media (prefers-color-scheme: dark) {
+
+  .radio-inputs {
+    background-color: #091113 !important;
+  }
   .InputReg {
     background-color: #091113 !important;
+    color: #666666;
+  }
+
+  .radio-inputs .radio .name {
+    
     color: #666666;
   }
 }
@@ -152,6 +161,15 @@
   .InputReg {
     background-color: #D9D9D9 !important;
     color: #555555;
+  }
+
+  .radio-inputs .radio .name {
+    
+    color: #555555;
+  }
+
+  .radio-inputs {
+    background-color: #D9D9D9 !important;
   }
 }
 @media only screen and (max-width: 767px) {
@@ -174,4 +192,50 @@
   font-size: x-large;
   display: inline ;
   color: #1C967F;
+}
+
+
+.radio-inputs {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 0.2rem;
+  box-sizing: border-box;
+  box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.06);
+  padding: 0.25rem;
+  width: 200px;
+  font-size: 14px;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  height: 3rem;
+}
+
+.radio-inputs .radio {
+  flex: 1 1 auto;
+  text-align: center;
+  
+}
+
+.radio-inputs .radio input {
+  display: none;
+ 
+}
+
+.radio-inputs .radio .name {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.2rem;
+  border: none;
+  padding: 4px;
+  transition: all .15s ease-in-out;
+}
+
+.radio-inputs .radio input:checked + .name {
+  background-color: #3eaa96cb;
+  font-weight: 400;
+  color: white !important;
+  letter-spacing: 2px;
 }

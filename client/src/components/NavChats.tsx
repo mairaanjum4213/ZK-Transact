@@ -1,8 +1,8 @@
 // // import React, { useState } from 'react';
-import "../css/Chats.css"
+
 import { FaCircle } from "react-icons/fa6";
 import { IoChatboxEllipses } from "react-icons/io5";
-const Chats: React.FC = () => {
+const NavChats: React.FC = () => {
   return (
     <>
       <div className="btn-group mx-1">
@@ -61,4 +61,4 @@ const Chats: React.FC = () => {
   );
 };
 // 
-export default Chats;
+export default NavChats;

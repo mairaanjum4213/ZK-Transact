@@ -5,7 +5,33 @@ import { Link } from 'react-router-dom';
 import { useAccount} from 'wagmi';
 import "../css/ProfileDropdown.css"
 import WalletDetails from './WalletDetails';
+import { useEffect,useState } from 'react';
+import { getUser } from "../helper/helper";
+import { jwtDecode } from "jwt-decode";
+import Profile from './Profile';
+
 const Navprofile: React.FC = () => {
+  const [userData, setUserData] = useState<boolean>(true);
+const token = localStorage.getItem('token');
+const decodedToken: any = token ? jwtDecode(token) : {};
+const username = decodedToken.username || '';
+
+  useEffect(() => {
+    async function fetchUserData() {
+      try {
+        const response = await getUser({ username });
+        if (response.data) {
+          setUserData(response.data)
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    }
+    fetchUserData();
+  }, [username]);
+
+
+
   const navigate = useNavigate();
   const setIsAuthentiacted = useAuthStore(state => state.setIsAuthenticated);
   const handleLogout = () => {
@@ -19,18 +45,17 @@ const Navprofile: React.FC = () => {
   return (
     <>
       <div className="btn-group mx-1">
-        <button
-          type="button"
-          className="btn btn-secondary   dropdown-toggle rounded-circle userProfiledp p-2 "
-          data-bs-toggle="dropdown"
-          data-bs-display="static"
-          aria-expanded="false"
-        >
-          <RiUser2Fill />
-        </button>
-        <ul className="dropdown-menu dropdown-menu-end profileDropdownParent px-2
-      "
-        >
+       {/* { userData._id} */}
+       <img
+  src={userData.gender === "male" ? "https://avatar.iran.liara.run/public/boy" : "https://avatar.iran.liara.run/public/girl"}
+  alt="User Profile"
+  className="  dropdown-toggle  dd rounded-circle"
+  style={{ width: '37px', height: '37px' }} 
+  data-bs-toggle="dropdown"
+  data-bs-display="static"
+  aria-expanded="false"
+/>
+        <ul className="dropdown-menu dropdown-menu-end profileDropdownParent px-2">
 
 
           <li style={{ textDecoration: 'none' }}>

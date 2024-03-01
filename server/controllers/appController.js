@@ -39,7 +39,7 @@ export async function verifyUser(req, res, next) {
 
 export async function register(req, res) {
     try {
-        const { username, password, email,fullName,region} = req.body;
+        const { username, password, email,fullName,region,gender} = req.body;
         // Check existing user
         const existingUsername = await UserModel.findOne({ 'username': username });
         if (existingUsername) {
@@ -56,13 +56,14 @@ export async function register(req, res) {
         if (password) {
             const hashedPassword = await bcrypt.hash(password, 10);
             //storing the data in mongodb
+           
             const newUser = new UserModel({
                 username,
                 password: hashedPassword,
                 email,
                 fullName,
-                region
-                
+                region,
+                gender,
             });
             const result = await newUser.save();
             console.log(`Username: ${username}, Email: ${email}, Full Name: ${fullName}`);

@@ -152,7 +152,6 @@ export const ERC20: React.FC = () => {
 
   useEffect(() => {
     if (transferSuccess) {
-      // Transfer data to backend upon successful transaction
       transferDataToBackend();
     }
   }, [transferSuccess]);

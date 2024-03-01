@@ -4,7 +4,7 @@ import logo from '../assets/icon2.png';
 import logo2 from '../assets/icon3.png';
 import Notifications from './Notifications';
 import { Link } from 'react-router-dom';
-import Chats from './Chats';
+import NavChats from './NavChats';
 import Navprofile from './Navprofile';
 import { Connector, useAccount, useConnect, useDisconnect } from 'wagmi';
 import { Toaster, toast } from 'react-hot-toast';
@@ -94,7 +94,7 @@ const UserNavbar: React.FC = () => {
                 {isConnected && <button className="btnStyle" onClick={handleDisconnect}>Disconnect Wallet  </button>}
                 <div className='d-flex justify-content-center align-items-center'>
                   <Notifications />
-                  <Chats />
+                  <NavChats />
                   <Navprofile />
                 </div>
               </div>

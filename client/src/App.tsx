@@ -35,6 +35,7 @@ import BuyTokensRecieptApproved from './components/buyTokens/BuyTokensRecieptApp
 import SellTokensReciept from './components/sellTokens/SellTokensReciept.tsx'
 import KYCrequiredModal from './components/KYCrequiredModal';
 import WalletDetails from './components/WalletDetails.tsx';
+import Chat from './components/chat/Chat.tsx';
 
 
 
@@ -101,7 +102,7 @@ function App() {
               <Route path="/sellTokens" element={<SellTokens />} />
               <Route path="/tokenTransfer" element={<ERC20 />} />
               <Route path="/" element={<Home />} />
-              <Route path="/testing" element={<KYCrequiredModal />} />
+              <Route path="/testing" element={<Chat />} />
               <Route path="/aboutus" element={<AboutUs />} />
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />

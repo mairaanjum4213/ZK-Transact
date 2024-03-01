@@ -1,5 +1,6 @@
 import "../css/Registration.css";
-import BreadCrumb from './BreadCrumb';
+import BreadCrumb from './BreadCrumb'
+import React, { useState } from 'react';;
 import { Link, useNavigate } from "react-router-dom";
 import registration from "../assets/BreadCrumbs/registration.png"
 import register from "../assets/Register.png"
@@ -14,6 +15,8 @@ declare var console: {
   // Add other methods if needed
 };
 const Register: React.FC = () => {
+  
+
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
@@ -24,8 +27,9 @@ const Register: React.FC = () => {
       fullName: '',
       mobile: '',
       address: '',
-      region: ''
-    
+      region: '',
+      gender:" "
+
     },
     validate: registerValidation,
     onSubmit: async (values) => {
@@ -113,7 +117,7 @@ const Register: React.FC = () => {
                 </p>
               )}
 
-            <input
+              <input
                 {...formik.getFieldProps('region')}
                 className="InputReg"
                 type="text"
@@ -129,7 +133,34 @@ const Register: React.FC = () => {
                 </p>
               )}
               <br />
-              
+              <div className="radio-inputs mb-2">
+  <label className="radio">
+    <input
+      type="radio"
+      name="gender"
+      value="male"
+      checked={formik.values.gender === 'male'}
+      onChange={formik.handleChange}
+      onBlur={formik.handleBlur}
+      required // added required attribute here
+    />
+    <span className="name">Male</span>
+  </label>
+  <label className="radio">
+    <input
+      type="radio"
+      name="gender"
+      value="female"
+      checked={formik.values.gender === 'female'}
+      onChange={formik.handleChange}
+      onBlur={formik.handleBlur}
+      required // added required attribute here
+    />
+    <span className="name">Female</span>
+  </label>
+</div>
+
+
               <button type="submit" className="standarButton-1 mt-2">
                 Register Now
               </button>

@@ -2,6 +2,7 @@ import axios from 'axios';
 
 
 axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
+import Profile from './../components/Profile';
 
 /*interface TokenDecoded {
   exp: number;
@@ -93,6 +94,8 @@ export async function registerUser(credentials: {
   email: string;
   fullName:string;
   region:string;
+  gender:string;
+  profilePic:string;
 }): Promise<string | RegisterUserResponse> {
   try {
     const { data: { msg }, status } = await axios.post(`/api/register`, credentials);
