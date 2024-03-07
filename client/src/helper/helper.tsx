@@ -230,6 +230,21 @@ export async function getUsers(userId:any): Promise<GetUser> {
 }
 
 
+interface GetAllUser {
+  data?: any;
+  error?: any;
+}
+export async function getAllUsers(): Promise<GetAllUser> {
+  try {
+    const { data } = await axios.get('/api/getAllUsers');
+    return data;
+  } catch (error) {
+    console.error("Failed to fetch user data:", error);
+    throw new Error("Failed to fetch user data.");
+  }
+}
+
+
 //__________________________________________________Buy Tokens _________________________________________//
 
 /** register user function */
@@ -333,7 +348,8 @@ export async function storesTransferToken(transferTokendata: {
 //_________________________________________________ ↓ Chat ↓ 
 
 interface ChatData {
-  data?: any;
+  senderId: string;
+  receiverId:string;
   error?: any;
 }
 
