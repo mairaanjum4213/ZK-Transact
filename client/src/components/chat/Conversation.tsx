@@ -51,9 +51,9 @@ const Conversation: React.FC<ConversationProps> = ({ data, currentUser, online})
           </p>
           <p
             className="card-text"
-            
+            style={{  fontSize: "0.7rem" }}
           >
-           <span style={{fontSize: "0.7rem" }} className={ online === true ? 'clrgreen' : 'clrred'}>{online? "Online" :"Offline"}</span>
+           <span className={online? 'clrgreen': 'clrred'}>{online? "Online" :"Offline"}</span>
           </p>
         </div>
       </div>
