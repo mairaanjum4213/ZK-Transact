@@ -64,13 +64,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({
     } 
   }, [chat]);
 
-  // Receive Message from parent component
-useEffect(() => {
-  if (receiveMessage !== null && receiveMessage.chatId === chat?._id) {
-    setMessages([...messages, receiveMessage]);
-  }
-}, [receiveMessage]);
-
+ 
 
   const getUserData = async (id:any) => {
     try {
@@ -106,6 +100,14 @@ const handleSend = async (e: React.FormEvent) => {
     console.log("error");
   }
 };
+
+ // Receive Message from parent component
+ useEffect(() => {
+  if (receiveMessage !== null && receiveMessage.chatId === chat?._id) {
+    setMessages([...messages, receiveMessage]);
+  }
+}, [receiveMessage]);
+
 
   return (
     <>
