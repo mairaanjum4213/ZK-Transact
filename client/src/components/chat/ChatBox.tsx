@@ -79,6 +79,13 @@ const ChatBox: React.FC<ChatBoxProps> = ({
     setNewMessage(newMessage);
   };
 
+// Always scroll to last Message
+useEffect(() => {
+  scroll.current?.scrollIntoView({ behavior: "smooth" });
+}, [messages]);
+
+const scroll = useRef<HTMLDivElement>(null);
+
   // Send Message
 const handleSend = async (e: React.FormEvent) => {
   e.preventDefault();
@@ -156,7 +163,7 @@ const handleSend = async (e: React.FormEvent) => {
                       | undefined;
                   }) => (
                     <div
-                     
+                      ref={scroll}
                       key={message?._id}
                       className={
                         message?.senderId === currentUser
