@@ -2,6 +2,7 @@ import MessageModel from "../model/messageModel.js";
 
 export const addMessage = async (req, res) => {
   const { chatId, senderId, text } = req.body;
+  //const imageUrl = req.file.filename;
   const message = new MessageModel({
     chatId,
     senderId,

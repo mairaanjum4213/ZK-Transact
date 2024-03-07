@@ -108,6 +108,7 @@ const handleSend = async (e: React.FormEvent) => {
   }
 };
 
+
  // Receive Message from parent component
  useEffect(() => {
   if (receiveMessage !== null && receiveMessage.chatId === chat?._id) {
@@ -116,6 +117,17 @@ const handleSend = async (e: React.FormEvent) => {
 }, [receiveMessage]);
 
 const imageRef = useRef<HTMLInputElement | null>(null);
+const [file, setFile] = useState<File | null>(null);
+const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const selectedFile = event.target.files?.[0]; // Access the selected file from the file input
+  if (selectedFile && selectedFile.type === 'image/png') {
+      setFile(selectedFile);
+  } else {
+      toast.error('Please select a PNG file.'); // Inform the user if the selected file is not a PNG file
+  }
+};
+
+
   return (
     <>
       <Toaster position="top-center" reverseOrder={false}></Toaster>
@@ -152,6 +164,7 @@ const imageRef = useRef<HTMLInputElement | null>(null);
                       | ReactPortal
                       | null
                       | undefined;
+                    imageUrl:any;
                     createdAt:
                       | string
                       | number
@@ -181,6 +194,7 @@ const imageRef = useRef<HTMLInputElement | null>(null);
             {/* chat-sender */}
             <div className="chat-sender  px-3 ">
               <div onClick={() => imageRef.current?.click()}>+</div>
+              {file && <p> {file.name}</p>}
               <InputEmoji value={newMessage} onChange={handleChange} />
               <div className="send-button button  mt-4 ">
                 <BsFillSendFill
@@ -191,10 +205,11 @@ const imageRef = useRef<HTMLInputElement | null>(null);
               </div>
               <input
                 type="file"
-                name=""
-                id=""
+                name="imageUrl"
+                id="imageUrl"
                 style={{ display: "none" }}
                 ref={imageRef}
+                onChange={handleFileChange}
               />
             </div>{" "}
             <div className="container"></div>
