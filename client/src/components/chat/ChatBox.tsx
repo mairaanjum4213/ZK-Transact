@@ -115,7 +115,7 @@ const handleSend = async (e: React.FormEvent) => {
   }
 }, [receiveMessage]);
 
-
+const imageRef = useRef<HTMLInputElement | null>(null);
   return (
     <>
       <Toaster position="top-center" reverseOrder={false}></Toaster>
@@ -180,7 +180,7 @@ const handleSend = async (e: React.FormEvent) => {
 
             {/* chat-sender */}
             <div className="chat-sender  px-3 ">
-              <div>+</div>
+              <div onClick={() => imageRef.current?.click()}>+</div>
               <InputEmoji value={newMessage} onChange={handleChange} />
               <div className="send-button button  mt-4 ">
                 <BsFillSendFill
@@ -189,7 +189,14 @@ const handleSend = async (e: React.FormEvent) => {
                   style={{ fontSize: "x-large", display: "block" }}
                 />
               </div>
-            </div>
+              <input
+                type="file"
+                name=""
+                id=""
+                style={{ display: "none" }}
+                ref={imageRef}
+              />
+            </div>{" "}
             <div className="container"></div>
           </>
         ) : (
