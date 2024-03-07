@@ -42,6 +42,15 @@
   padding: 10px;
   width: fit-content;
 }
+
+.clrred{
+  color:red;
+}
+
+.clrgreen{
+  color: #51e200;
+}
+
 .followerImage {
   width: 3.2rem;
   height: 3.2rem;

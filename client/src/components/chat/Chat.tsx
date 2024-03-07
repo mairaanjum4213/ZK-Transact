@@ -91,6 +91,12 @@ const Chat: React.FC = () => {
   }, []);
 
 
+  const checkOnlineStatus = (chat: Chat): boolean => {
+    const chatMember = chat.members.find((member: string) => member !== userData._id);
+    const online = onlineUsers.find((user) => user.userId === chatMember);
+    return online ? true : false;
+};
+
 
 
   return (
@@ -109,7 +115,7 @@ const Chat: React.FC = () => {
               <div className="Chat-list">
                 {chats.map((chat, index) => (
                   <div key={index} onClick={() => setCurrentChat(chat)}>
-                    <Conversation data={chat} currentUser={userData._id} />
+                    <Conversation data={chat} currentUser={userData._id} online={checkOnlineStatus} />
                   </div>
                 ))}
               </div>

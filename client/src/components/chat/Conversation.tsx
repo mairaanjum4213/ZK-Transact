@@ -10,10 +10,11 @@ interface Chat {
 interface ConversationProps {
   data: Chat;
   currentUser: string;
+  online: any;
 }
 axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
 
-const Conversation: React.FC<ConversationProps> = ({ data, currentUser }) => {
+const Conversation: React.FC<ConversationProps> = ({ data, currentUser, online}) => {
   const [userData, setUserData] = useState<any>(null);
 
   useEffect(() => {
@@ -50,9 +51,9 @@ const Conversation: React.FC<ConversationProps> = ({ data, currentUser }) => {
           </p>
           <p
             className="card-text"
-            style={{ color: "#51e200", fontSize: "0.7rem" }}
+            
           >
-            Online
+           <span style={{fontSize: "0.7rem" }} className={ online === true ? 'clrgreen' : 'clrred'}>{online? "Online" :"Offline"}</span>
           </p>
         </div>
       </div>
