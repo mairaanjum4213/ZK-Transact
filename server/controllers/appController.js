@@ -66,8 +66,15 @@ export async function register(req, res) {
                 gender,
             });
             const result = await newUser.save();
-            console.log(`Username: ${username}, Email: ${email}, Full Name: ${fullName}`);
+             // create jwt token for authentication
+             const token = jwt.sign({
+                userId: user._id,  //payload
+                username: user.username
+            }, ENV.JWT_SECRET, { expiresIn: "10m" });
+
+             res.status(200).json({result, token});
             return res.status(201).send({ msg: "User registered successfully" });
+
         }
     } catch (error) {
         return res.status(500).send({ error: error.message || "Internal server error" });
@@ -149,6 +156,37 @@ export async function getUser(req, res) {
     }
 }
 
+
+//get user by id//
+export const getUserById = async (req, res) => {
+    const id = req.params.id;
+  
+    try {
+      const user = await UserModel.findById(id);
+      if (user) {
+        res.status(200).json(user);
+        } 
+    else {
+        res.status(404).json({ message: 'No user found' });
+        }
+      
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  };
+
+
+//get all users//
+
+export const getAllUsers = async (req, res) => {
+
+  try {
+    let users = await UserModel.find();
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
 
 /** PUT: http://localhost:8080/api/updateuser 
  * @param: {

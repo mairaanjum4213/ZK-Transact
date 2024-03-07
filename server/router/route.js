@@ -1,6 +1,8 @@
 import { Router } from 'express';
 /** import all controllers */
 import * as controller from '../controllers/appController.js';
+import * as chatController from '../controllers/ChatController.js';
+import * as messageController from '../controllers/MessageController.js';
 import Auth, { localVariables } from '../middleware/auth.js';
 import upload from "../middleware/upload.js"
 import { registerMail } from '../controllers/mailer.js'
@@ -21,34 +23,31 @@ router.route('/transferToken').post(controller.transferToken);
 router.route('/user/:username').get(controller.getUser) // user with username
 router.route('/generateOTP').get(controller.verifyUser,localVariables, controller.generateOTP) // generate random OTP
 router.route('/verifyOTP').get(controller.verifyUser,controller.verifyOTP) // verify generated OTP
+router.route('/getUserById/:id').get(controller.getUserById) 
+router.route('/getAllUsers').get(controller.getAllUsers)
 router.route('/createResetSession').get(controller.createResetSession) // reset all the variables
 router.route('/getbuytokens').get(controller.userwithBuyToken) 
 router.route('/getselltokens/:id').get(controller.userwithSellToken) 
 router.route('/gettransfertokens/sender/:senderId').get(controller.userwithTransferToken) 
+
 /** PUT Methods */
 router.route('/updateuser').put(Auth, controller.updateUser); // is use to update the user profile,, 
-//                                                          first call Auth middleware to verify the jwt token only valid login user can update
+//first call Auth middleware to verify the jwt token only valid login user can update
 router.route('/resetPassword').put(controller.verifyUser,controller.resetPassword); // use to reset password
 
-/*router.get('/verifyaccount', async (req, res) => {
-    try {
-      const { username } = req.query;
-  
-      // Find the user by username in the database
-      const user = await UserModel.findOne({ username });
-  
-      if (!user) {
-        return res.status(404).send('User not found'); // If user not found, handle appropriately
-      }
-  
-      // Update the user's account status to 'verified' (Assuming you have a 'verified' field in your schema)
-      user.verified = true; // Set the 'verified' field to true or update any other field as needed
-      await user.save(); // Save the updated user
-  
-      res.send(`Account for username ${username} has been verified successfully!`);
-    } catch (error) {
-      console.error('Error occurred during account verification:', error);
-      res.status(500).send('Error occurred during account verification');
-    }
-  });*/
+
+
+
+/*________________________Chat Routes____________________________*/
+
+router.route('/createChat').post(chatController.createChat);
+router.route('/getChats/:userId').get(chatController.userChats);
+router.route('/find/:firstId/:secondId').get(chatController.findChat);
+
+
+/*_______________________Message Routes ________________________*/
+router.route('/addMessage').post(messageController.addMessage);
+router.route('/getMessages/:chatId').get(messageController.getMessages);
+
+
 export default router;

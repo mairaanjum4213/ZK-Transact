@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
 
 axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
@@ -215,6 +215,19 @@ export async function resetPassword({ username, password }: { username: string; 
 
 
 
+interface GetUser {
+  mydata?: any;
+  error?: any;
+}
+export async function getUsers(userId:any): Promise<GetUser> {
+  try {
+    const { data } = await axios.get(`/api/getUserById/${userId}`);
+    return data;
+  } catch (error) {
+    console.error("Failed to fetch user data:", error);
+    throw new Error("Failed to fetch user data.");
+  }
+}
 
 
 //__________________________________________________Buy Tokens _________________________________________//
@@ -316,3 +329,43 @@ export async function storesTransferToken(transferTokendata: {
 //_________________________________________________ ↑ Transfer  Tokens  ↑ 
 
 
+
+//_________________________________________________ ↓ Chat ↓ 
+
+interface ChatData {
+  data?: any;
+  error?: any;
+}
+
+interface ChatModel {
+  _id:string
+  members: string[];
+  error?: any;
+}
+
+export const createChat = (data: ChatData): Promise<AxiosResponse<ChatModel>> => axios.post<ChatModel>('/api/createChat', data);
+
+export const userChats = (id: string): Promise<AxiosResponse<ChatModel[]>> => axios.get<ChatModel[]>(`/api/getChats/${id}`);
+
+export const findChat = (firstId: string, secondId: string): Promise<AxiosResponse<ChatModel | null>> => axios.get<ChatModel | null>(`/api/find/${firstId}/${secondId}`);
+
+//_________________________________________________ ↑ Chat ↑ 
+
+
+
+//_________________________________________________ ↓ Messages ↓ 
+
+
+
+interface MessageModel {
+  data?: any;
+  error?: any;
+}
+
+export const addMessage = (data: any): Promise<AxiosResponse<MessageModel>> => axios.post<MessageModel>('/api/addMessage', data);
+
+export const getMessages = (id: string): Promise<AxiosResponse<MessageModel[]>> => axios.get<MessageModel[]>(`/api/getMessages/${id}`);
+
+
+
+//_________________________________________________ ↑ Messages↑ 
