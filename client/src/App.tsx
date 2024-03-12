@@ -36,6 +36,7 @@ import SellTokensReciept from './components/sellTokens/SellTokensReciept.tsx'
 import KYCrequiredModal from './components/KYCrequiredModal';
 import WalletDetails from './components/WalletDetails.tsx';
 import Chat from './components/chat/Chat.tsx';
+import ChatBotFrontend from './components/chatBot/chatBotFrontend.tsx';
 
 
 
@@ -111,6 +112,7 @@ function App() {
               <Route path="/reset" element={<ResetPassword />} />
               <Route path="/walletDetails" element={<WalletDetails/>} />
               <Route path="/profile" element={ <Profile />}/>
+              <Route path="/bot" element={ <ChatBotFrontend />}/>
             </Routes>
 
             <Footer />

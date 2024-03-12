@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Frontend</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        #chatForm {
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        #userInput {
+            flex: 1;
+            padding: 8px;
+            margin-right: 10px;
+        }
+
+        #chatOutput {
+            border: 1px solid #ccc;
+            padding: 10px;
+            max-width: 400px;
+            word-wrap: break-word;
+        }
+
+        p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Chatbot Frontend</h1>
+
+<form id="chatForm">
+    <input type="text" id="userInput" name="userInput" required>
+    <button type="submit">Send</button>
+</form>
+
+<div id="chatOutput"></div>
+
+<script>
+   document.getElementById('chatForm').addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    const userInput = document.getElementById('userInput').value;
+
+    fetch('http://127.0.0.1:8000/chat', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            session: '123',  // Replace with your session ID
+            input: userInput,
+        }),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Log the received data to the console
+        console.log('Received data:', data);
+
+        const chatOutput = document.getElementById('chatOutput');
+        const userMessage = document.createElement('p');
+        userMessage.textContent = `User: ${userInput}`;
+        const aiMessage = document.createElement('p');
+
+        // Check if the received data is not null
+        if (data !== null) {
+    aiMessage.textContent = `Chatbot: ${data}`;
+} else {
+    aiMessage.textContent = "Chatbot response is currently unavailable";
+}
+
+
+        chatOutput.appendChild(userMessage);
+        chatOutput.appendChild(aiMessage);
+    })
+    .catch(error => {
+        // Log any errors to the console
+        console.error('Error:', error);
+    });
+});
+
+</script>
+
+
+</body>
+</html>

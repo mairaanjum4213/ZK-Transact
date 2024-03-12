@@ -1,0 +1,98 @@
+import { useState, useEffect } from "react";
+import { BsFillSendFill } from "react-icons/bs";
+import "../chat/chatCss/ChatBox.css";
+import axios, { AxiosResponse } from "axios";
+import { jwtDecode } from "jwt-decode";
+import toast, { Toaster } from "react-hot-toast";
+import { getUser } from "../../helper/helper";
+const ChatBotFrontend: React.FC = () => {
+  const token = localStorage.getItem("token");
+  const decodedToken: any = token ? jwtDecode(token) : {};
+  const username = decodedToken.username || "";
+  const [userData, setUserData] = useState<any>("");
+
+  const [query, setQuery] = useState("");
+  const [responseAI, setresponseAI] = useState<any>("");
+  const [userInput, setUserInput] = useState<any>("");
+  // -----User Data
+  useEffect(() => {
+    // Fetching User Data for Id
+    async function fetchUserData() {
+      try {
+        const response = await getUser({ username });
+        if (response.data) {
+          setUserData(response.data);
+          // To Access Id or other data of user from db just use userData._id
+        }
+      } catch (error) {
+        toast.error("Error fetching user data");
+      }
+    }
+    fetchUserData();
+  }, [username]);
+
+  const handleSend = async () => {
+    if (!query.trim()) {
+      toast.error("Input field can't be empty");
+    }
+    const data = {
+      input: query,
+      session: username,
+    };
+
+    try {
+      const response: AxiosResponse = await axios.post(
+        "http://localhost:8000/chat",
+        data
+      );
+      if (response.data !== null) {
+        setresponseAI(response.data);
+        setUserInput(query);
+        setQuery("");
+      } else {
+        setresponseAI("Chatbot is not currently available");
+        setUserInput(query);
+        setQuery("");
+      }
+    } catch (error) {
+      console.log("error:", error);
+    }
+  };
+
+  return (
+    <>
+      <Toaster position="top-center" reverseOrder={false}></Toaster>
+      <div className="ChatBox-container container">
+        {/* Header content */}
+
+        <div className="chat-sender px-3">
+          <input
+            type="text"
+            placeholder="Write your query here..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+          <div className="send-button button mt-4">
+            <BsFillSendFill
+              className="iconSend"
+              style={{ fontSize: "x-large" }}
+              onClick={handleSend}
+            />
+          </div>
+        </div>
+
+        <div className="chat-body">
+          <div className="my-3 message own">
+            <span id="userInput">{userInput}</span>
+          </div>
+
+          <div className="my-3 message">
+            <span>{responseAI}</span>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default ChatBotFrontend;
