@@ -16,7 +16,8 @@ axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
 
 const Conversation: React.FC<ConversationProps> = ({ data, currentUser, online}) => {
   const [userData, setUserData] = useState<any>(null);
-
+  
+console.log(data)
   useEffect(() => {
     const userId = data.members.find((id) => id !== currentUser);
     getUserData(userId);
@@ -30,6 +31,8 @@ const Conversation: React.FC<ConversationProps> = ({ data, currentUser, online})
       console.error("Error fetching files:", error);
     }
   };
+
+  console.log("hi data",userData);
 
   return (
     <>

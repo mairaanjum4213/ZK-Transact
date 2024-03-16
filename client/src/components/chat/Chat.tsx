@@ -127,10 +127,11 @@ const Chat: React.FC = () => {
       );
       if (user) {
         // Create a chat with the user's ID as the receiver ID
-        // Call the createChat function to create a chat with the entered username
+
+        
         const response = await createChat({
           senderId: userData._id,
-          receiverId: searchUsername,
+          receiverId: user._id,
         });
         const newChat = response.data;
         setChats([...chats, newChat])

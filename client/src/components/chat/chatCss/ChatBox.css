@@ -1,24 +1,20 @@
 .ChatBox-container {
-    /* background: rgba(65, 45, 45, 0.705); */
     border-radius: 1rem;
     display: grid;
-    grid-template-rows: 14vh 60vh 20vh;
+    /* grid-template-rows: 14vh 60vh 20vh; */
+    grid-template-rows: 14vh 80vh 20vh;
 }
-/* CSS for chatbox empty message */
 .chatbox-empty-message {
     display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    height: 100%; /* Ensure the message takes up the full height of the container */
-  }
-  
-  /* Optional: Additional styling */
-  .chatbox-empty-message-text {
-    text-align: center; /* Center the text */
-    font-size: 16px; /* Adjust the font size as needed */
-    color: #888; /* Set the color of the text */
-  }
-  
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.chatbox-empty-message-text {
+    text-align: center;
+    font-size: 16px;
+    color: #888;
+}
 .chat-header {
     display: flex;
     flex-direction: column;
@@ -35,7 +31,7 @@
 }
 .message {
     /* background: linear-gradient(98.63deg, #24665adc 0%,#6d1cacdc 100%); */
-    background-color:#3e0c64dc !important;
+    background-color: #3e0c64dc !important;
     color: white;
     padding: 0.7rem;
     border-radius: 1rem 1rem 1rem 0;
@@ -45,7 +41,6 @@
     flex-direction: column;
     gap: 0.5rem;
 }
-
 .message>span:nth-child(2) {
     font-size: 0.7rem;
     align-self: end;
@@ -53,7 +48,6 @@
 .own {
     align-self: flex-end;
     border-radius: 1rem 1rem 0 1rem;
-    /* background: linear-gradient(98.63deg, #24665adc 0%, rgba(160, 50, 132, 0.877) 100%); */
     background: #269e88dc !important;
 }
 .chat-sender {
@@ -94,12 +88,21 @@
     .chat-sender {
         background-color: #28383d56 !important;
     }
+    .chatBg {
+        background-color: #28383d56 !important;
+        box-shadow: rgba(0, 0, 0, 0.11) 0 5px 15px, rgba(0, 0, 0, 0.363) 0 3px 3px;
+    }
 }
 @media (prefers-color-scheme: light) {
-    .chat-header {
+    .chat-header,
+    .chatBg {
         box-shadow: rgba(255, 255, 255, 0.11) 0 5px 15px, rgba(0, 0, 0, 0.226) 0 3px 3px;
     }
     .chat-sender {
+        box-shadow: rgba(0, 0, 0, .068) 0 10px 20px, rgba(0, 0, 0, .085) 0 6px 6px;
+        background-color: #40424256 !important;
+    }
+    .chatBg {
         box-shadow: rgba(0, 0, 0, .068) 0 10px 20px, rgba(0, 0, 0, .085) 0 6px 6px;
         background-color: #40424256 !important;
     }
