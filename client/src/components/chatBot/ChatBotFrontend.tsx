@@ -60,7 +60,7 @@ const ChatBotFrontend: React.FC = () => {
     <>
       <BreadCrumb parentPageLink='/' ParentPage="Chats" pageName="Zeeku" ChildPage="AI Chatbot" imageUrl={ChatBreadCrumb} />
       <Toaster position="top-center" reverseOrder={false}></Toaster>
-      <div className="ChatBox-container container px-11">
+      <div className="chatAi-container  container px-11">
         {/* Header content */}
         <div className="chat-sender px-3">
           <input

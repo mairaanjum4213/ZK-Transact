@@ -12,26 +12,22 @@ import {
 import toast, { Toaster } from "react-hot-toast";
 import { io, Socket } from "socket.io-client";
 import "./chatCss/LogoSearch.css";
-
 interface Chat {
   _id: string;
   members: string[];
   // Add any other properties your chat object has
 }
-
 const Chat: React.FC = () => {
   const token = localStorage.getItem("token");
   const decodedToken: any = token ? jwtDecode(token) : {};
   const username = decodedToken.username || "";
   const socket = useRef<Socket | null>(null);
-
   const [userData, setUserData] = useState<any>("");
   const [chats, setChats] = useState<Chat[]>([]);
   const [currentChat, setCurrentChat] = useState<Chat | null>(null);
   const [onlineUsers, setOnlineUsers] = useState<any[]>([]);
   const [sendMessage, setSendMessage] = useState<any>(null);
   const [receivedMessage, setReceivedMessage] = useState<any>(null);
-
   // -----User Data
   useEffect(() => {
     // Fetching User Data for Id
@@ -48,7 +44,6 @@ const Chat: React.FC = () => {
     }
     fetchUserData();
   }, [username]);
-
   // Get the chat in chat section
   useEffect(() => {
     const getChats = async () => {
@@ -61,7 +56,6 @@ const Chat: React.FC = () => {
     };
     getChats();
   }, [userData]);
-
   const [allUsers, setAllUsers] = useState<any>();
   useEffect(() => {
     // Fetch all users when component mounts
@@ -77,10 +71,8 @@ const Chat: React.FC = () => {
         toast.error("Error fetching all users");
       }
     };
-
     fetchAllUsers();
   }, []);
-
   // Connect to Socket.io
   useEffect(() => {
     socket.current = io("http://localhost:8800");
@@ -89,21 +81,18 @@ const Chat: React.FC = () => {
       setOnlineUsers(users);
     });
   }, [userData]);
-
   // Send Message to socket server
   useEffect(() => {
     if (sendMessage !== null) {
       socket?.current?.emit("send-message", sendMessage);
     }
   }, [sendMessage]);
-
   // Get the message from socket server
   useEffect(() => {
     socket?.current?.on("recieve-message", (data) => {
       setReceivedMessage(data);
     });
   }, []);
-
   const checkOnlineStatus = (chat: any): boolean => {
     const chatMember = chat.members.find(
       (member: string) => member !== userData._id
@@ -111,9 +100,7 @@ const Chat: React.FC = () => {
     const online = onlineUsers.find((user) => user.userId === chatMember);
     return online ? true : false;
   };
-
   const [searchUsername, setSearchUsername] = useState<any>("");
-
   const handleSearch = async () => {
     try {
       const trimmedUsername = searchUsername.trim();
@@ -127,8 +114,6 @@ const Chat: React.FC = () => {
       );
       if (user) {
         // Create a chat with the user's ID as the receiver ID
-
-        
         const response = await createChat({
           senderId: userData._id,
           receiverId: user._id,
@@ -145,7 +130,6 @@ const Chat: React.FC = () => {
       toast.error("Error creating chat");
     }
   };
-
   return (
     <>
       <Toaster position="top-center" reverseOrder={false}></Toaster>
@@ -163,14 +147,12 @@ const Chat: React.FC = () => {
             </div>
           </div>
         </div>
-
         <div className="Chat">
           <div className="Left-side-chat">
-            <div className="Chat-container">
+            <div className="Chat-container h-full">
               <h2 className="fs-4" style={{ letterSpacing: "2px" }}>
                 Chats
               </h2>
-
               <div className="Chat-list">
                 {chats.map((chat, index) => (
                   <div key={index} onClick={() => setCurrentChat(chat)}>
@@ -184,10 +166,8 @@ const Chat: React.FC = () => {
               </div>
             </div>
           </div>
-
           {/* Right Side */}
-
-          <div className="Right-side-chat  ">
+          <div className="Right-side-chat">
             <ChatBox
               chat={currentChat}
               currentUser={userData?._id}

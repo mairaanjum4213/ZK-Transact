@@ -2,19 +2,15 @@
     border-radius: 1rem;
     display: grid;
     /* grid-template-rows: 14vh 60vh 20vh; */
+    grid-template-rows: 14vh 60vh 20vh;
+}
+
+.chatAi-container {
+    border-radius: 1rem;
+    display: grid;
     grid-template-rows: 14vh 80vh 20vh;
 }
-.chatbox-empty-message {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-}
-.chatbox-empty-message-text {
-    text-align: center;
-    font-size: 16px;
-    color: #888;
-}
+
 .chat-header {
     display: flex;
     flex-direction: column;
@@ -30,7 +26,6 @@
     display: none;
 }
 .message {
-    /* background: linear-gradient(98.63deg, #24665adc 0%,#6d1cacdc 100%); */
     background-color: #3e0c64dc !important;
     color: white;
     padding: 0.7rem;

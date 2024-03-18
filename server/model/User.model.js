@@ -35,7 +35,16 @@ export const UserSchema = new mongoose.Schema({
     profilePic: {
         type: String,
         default: "male",
+    },
+    isMerchant: {
+        type: Boolean,
+        default: "false"
+    },
+    merchantFee: {
+        type: Number,
+        default: 0
     }
-});
+    
+},{timestamps:true});
 //if already have user model in mongodb database then use exisiting model otherwise return new one
 export default mongoose.models.Users || mongoose.model('User', UserSchema);
