@@ -20,7 +20,7 @@ export const UserSchema = new mongoose.Schema({
     address: { type: String },
     kycStatus: {
         type: Boolean,
-        default: false
+        default: true
     },
     region: {
         type: String,
