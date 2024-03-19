@@ -30,20 +30,19 @@ export const UserSchema = new mongoose.Schema({
         type: String,
         default: "male",
         enum: ["male", "female"]
-    }
-    ,
+    },
     profilePic: {
         type: String,
-        default: "male",
+        default: "pic",
     },
     isMerchant: {
         type: Boolean,
-        default: "false"
+        default: false
     },
     merchantFee: {
         type: Number,
         default: 0
-    }
+    },
     
 },{timestamps:true});
 //if already have user model in mongodb database then use exisiting model otherwise return new one

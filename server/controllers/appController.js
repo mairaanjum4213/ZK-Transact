@@ -40,12 +40,12 @@ export async function verifyUser(req, res, next) {
 export async function register(req, res) {
     try {
         const { username, password, email,fullName,region,gender} = req.body;
+
         // Check existing user
         const existingUsername = await UserModel.findOne({ 'username': username });
         if (existingUsername) {
             return res.status(400).send({ error: "Please provide a unique username" });
         }
-
         // Check existing email
         const existingEmail = await UserModel.findOne({ 'email': email });
         if (existingEmail) {
@@ -65,14 +65,7 @@ export async function register(req, res) {
                 region,
                 gender,
             });
-            const result = await newUser.save();
-             // create jwt token for authentication
-             const token = jwt.sign({
-                userId: user._id,  //payload
-                username: user.username
-            }, ENV.JWT_SECRET, { expiresIn: "10m" });
-
-             res.status(200).json({result, token});
+            const result = await newUser.save();         
             return res.status(201).send({ msg: "User registered successfully" });
 
         }
@@ -466,3 +459,31 @@ export async function userwithBuyToken(req, res) {
     }
         
 }
+
+
+
+
+//_________________________________________________ ↓ Merchant Controllers ↓ 
+
+
+/*export async function becomeAdmin (req, res) {
+    try {
+        const { userId } = req.user; 
+        // Fetch the user from the database based on the user ID or any unique identifier
+        const user = await UserModel.findById(userId); 
+
+        // Check if user meets the conditions to become an admin
+        if (user.kycStatus == true && user.email && user.mobile && user.address && user.fullName) {
+            user.isAdmin = true;
+            await user.save();
+            res.json({ success: true, message: "User has become an admin successfully." });
+        } else {
+            res.status(400).json({ success: false, message: "User does not meet the requirements to become an admin." });
+        }
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Internal Server Error" });
+    }
+}
+
+
+//_________________________________________________ ↑ Merchant Controller↑ */
