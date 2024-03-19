@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import "./chatCss/Chats.css";
 import ChatBox from "./ChatBox.tsx";
+import ChatBreadCrumb from "../../assets/BreadCrumbs/personalChat.png";
 import Conversation from "./Conversation.tsx";
+import BreadCrumb from "../BreadCrumb.tsx";
 import { jwtDecode } from "jwt-decode";
 import {
   createChat,
@@ -132,6 +134,8 @@ const Chat: React.FC = () => {
   };
   return (
     <>
+
+<BreadCrumb parentPageLink='/' ParentPage="Home" pageName="Home" ChildPage="Chats" imageUrl={ChatBreadCrumb} />
       <Toaster position="top-center" reverseOrder={false}></Toaster>
       <div className="mb-5">
         <div className="LogoSearch  px-4 py-4">
@@ -177,6 +181,9 @@ const Chat: React.FC = () => {
           </div>
         </div>
       </div>
+
+
+
     </>
   );
 };

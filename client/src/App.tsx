@@ -37,6 +37,7 @@ import KYCrequiredModal from './components/KYCrequiredModal';
 import WalletDetails from './components/WalletDetails.tsx';
 import Chat from './components/chat/Chat.tsx';
 import ChatBotFrontend from './components/chatBot/chatBotFrontend.tsx';
+import Consent from './components/admin/Consent.tsx';
 
 
 
@@ -103,7 +104,7 @@ function App() {
               <Route path="/sellTokens" element={<SellTokens />} />
               <Route path="/tokenTransfer" element={<ERC20 />} />
               <Route path="/" element={<Home />} />
-              <Route path="/testing" element={<Chat />} />
+              <Route path="/chats" element={<Chat />} />
               <Route path="/aboutus" element={<AboutUs />} />
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
@@ -113,6 +114,10 @@ function App() {
               <Route path="/walletDetails" element={<WalletDetails/>} />
               <Route path="/profile" element={ <Profile />}/>
               <Route path="/bot" element={ <ChatBotFrontend />}/>
+              <Route path="/consent" element={ <Consent />}/>
+
+
+              
             </Routes>
 
             <Footer />

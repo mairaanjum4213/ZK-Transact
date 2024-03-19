@@ -1,0 +1,12 @@
+.sidebarOption{
+    background-color: #28383d56 !important;
+}
+
+#adminSideBar::-webkit-scrollbar {
+    display: none !important;
+}
+
+/* Hide scrollbar for Firefox */
+#adminSideBar {
+    scrollbar-width: none !important;
+}

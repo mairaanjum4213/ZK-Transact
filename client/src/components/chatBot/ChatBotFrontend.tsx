@@ -58,7 +58,7 @@ const ChatBotFrontend: React.FC = () => {
   };
   return (
     <>
-      <BreadCrumb parentPageLink='/' ParentPage="Chats" pageName="Zeeku" ChildPage="AI Chatbot" imageUrl={ChatBreadCrumb} />
+      <BreadCrumb parentPageLink='/chats' ParentPage="Chats" pageName="Zeeku" ChildPage="AI Chatbot" imageUrl={ChatBreadCrumb} />
       <Toaster position="top-center" reverseOrder={false}></Toaster>
       <div className="chatAi-container  container px-11">
         {/* Header content */}

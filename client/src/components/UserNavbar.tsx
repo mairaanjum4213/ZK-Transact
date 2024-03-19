@@ -84,7 +84,7 @@ const UserNavbar: React.FC = () => {
                 {!isConnected && connectors.map(connector => {
                   const { id } = connector;
                   return (
-                    <button className="btnStyle " disabled={!connector.ready} key={id} onClick={() => handleWalletConnect(connector)}>
+                    <button className="btnStyle w-fit h-fit  py-3 px-3" disabled={!connector.ready} key={id} onClick={() => handleWalletConnect(connector)}>
                       Connect Wallet
                       {isLoading &&
                         connector.id === pendingConnector?.id &&

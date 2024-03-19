@@ -60,9 +60,9 @@ const BuyTokensReciept: React.FC = () => {
                                             <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                                                 <p className='fs-3 fw-bold my-5' style={{letterSpacing:'2px'}}>Token Purshase Request</p>
                                                 {isLightMode ? (
-                                                    <img className='mx-2' src={darkLogo} alt="" />
+                                                    <img className='mx-2' src={darkLogo} alt="DarkLogo" />
                                                 ) : (
-                                                    <img className='mx-2' src={lightlogo} alt="" />
+                                                    <img className='mx-2' src={lightlogo} alt="LightLogo" />
                                                 )}
 
 <div className='text-secondary mt-4' style={{ fontSize: "small" }}>{allImage?.dateTimeField}</div>
