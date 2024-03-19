@@ -3,10 +3,53 @@ import lightlogo from "../../assets/icon3.png"
 import { FaCircleDot } from "react-icons/fa6"
 import darkLogo from "../../assets/icon2.png"
 import { useLightMode } from "color-scheme-hook";
+import { useEffect, useState } from "react";
+import { getUser } from "../../helper/helper";
+import { jwtDecode } from "jwt-decode";
+import toast, { Toaster } from 'react-hot-toast';
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
+
 const Consent: React.FC = () => {
   const [isLightMode] = useLightMode();
+  const token = localStorage.getItem('token');
+  const decodedToken: any = token ? jwtDecode(token) : {};
+  const username = decodedToken.username || '';
+  const [userData, setUserData] = useState<any>("");
+  const navigate = useNavigate();
+
+// -----User Data
+useEffect(() => {
+  // Fetching User Data for Id
+  async function fetchUserData() {
+    try {
+      const response = await getUser({ username });
+      if (response.data) {
+        setUserData(response.data)
+        // To Access Id or other data of user from db just use userData._id
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  }
+  fetchUserData();
+}, [username]);
+
+
+const handleBecomeMerchant = async () => {
+  try {
+    const response = await axios.post(`/api/becomeMerchant?id=${userData._id}`);
+    toast.success(response.data.message); // Display success message
+    navigate('/admin');
+  } catch (error) {
+    toast.error('Make sure your KYC Status is true and all fields are filled'); // Display error message
+  }
+};
+
   return (
     <>
+     <Toaster position='top-center' reverseOrder={false}></Toaster>
       <div className="container my-11 py-10 rounded-md genericBg w-[50%] ">
         <div className="flex justify-center items-center mb-2">
           <>
@@ -59,8 +102,8 @@ const Consent: React.FC = () => {
             </li>
           </ul>
         </div>
-        <div className="flex gap-3 flex-col items-center justify-center mt-4">
-          <button className="block rounded-full w-44 py-2 px-4 bg-blue-600 hover:bg-blue-800 duration-700">
+        <div className="flex gap-3 flex-col items-center justify-center mt-4 ">
+          <button className="block rounded-full w-44 py-2 px-4 bg-blue-600 hover:bg-blue-800 duration-700" onClick={handleBecomeMerchant}>
             I consent
           </button>
           <button className="block rounded-full w-44 py-2 px-4 bg-blue-600 hover:bg-blue-800 duration-700">

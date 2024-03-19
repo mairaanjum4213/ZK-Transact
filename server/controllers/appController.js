@@ -466,19 +466,19 @@ export async function userwithBuyToken(req, res) {
 //_________________________________________________ ↓ Merchant Controllers ↓ 
 
 
-/*export async function becomeAdmin (req, res) {
+export async function becomeMerchant (req, res) {
     try {
-        const { userId } = req.user; 
-        // Fetch the user from the database based on the user ID or any unique identifier
-        const user = await UserModel.findById(userId); 
-
+        //const { userId } = req.user; 
+        const id = req.query.id;
+      
+        const user = await UserModel.findById(id); 
         // Check if user meets the conditions to become an admin
         if (user.kycStatus == true && user.email && user.mobile && user.address && user.fullName) {
-            user.isAdmin = true;
+            user.isMerchant = true;
             await user.save();
-            res.json({ success: true, message: "User has become an admin successfully." });
+            res.json({ success: true, message: "You become a merchant successfully." });
         } else {
-            res.status(400).json({ success: false, message: "User does not meet the requirements to become an admin." });
+            res.status(400).json({ success: false, message: "You do not meet the requirements to become an merchant." });
         }
     } catch (error) {
         res.status(500).json({ success: false, message: "Internal Server Error" });
@@ -486,4 +486,4 @@ export async function userwithBuyToken(req, res) {
 }
 
 
-//_________________________________________________ ↑ Merchant Controller↑ */
+//_________________________________________________ ↑ Merchant Controller↑ 

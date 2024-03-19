@@ -50,4 +50,7 @@ router.route('/addMessage').post(messageController.addMessage);
 router.route('/getMessages/:chatId').get(messageController.getMessages);
 
 
+/*___________________Merchant Route ____________________*/
+router.route('/becomeMerchant').post(controller.becomeMerchant); // is use to update the user profile,, 
+
 export default router;
