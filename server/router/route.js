@@ -51,6 +51,11 @@ router.route('/getMessages/:chatId').get(messageController.getMessages);
 
 
 /*___________________Merchant Route ____________________*/
-router.route('/becomeMerchant').post(controller.becomeMerchant); // is use to update the user profile,, 
+router.route('/becomeMerchant').post(controller.becomeMerchant);
+router.route('/getMerchants').get(controller.getMerchants);
+
+/*___________________Account Route ____________________*/
+router.route('/accounts').post(controller.createAccountDetails);
+router.route('/users/:userId/accounts/:accountId').put(controller.assignAccountToUser);
 
 export default router;

@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose , {Schema} from "mongoose";
 export const UserSchema = new mongoose.Schema({
     username: {
         type: String,
@@ -42,8 +42,12 @@ export const UserSchema = new mongoose.Schema({
     merchantFee: {
         type: Number,
         default: 0
-    },
-    
+    },  
+    accounts: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Account'
+    }]
 },{timestamps:true});
+
 //if already have user model in mongodb database then use exisiting model otherwise return new one
 export default mongoose.models.Users || mongoose.model('User', UserSchema);

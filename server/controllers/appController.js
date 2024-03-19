@@ -2,6 +2,7 @@ import UserModel from '../model/User.model.js';
 import SellTokenModel from '../model/SellToken.model.js'
 import BuyTokenModel from '../model/BuyToken.model.js'
 import TransferTokenModel from '../model/TransferToken.model.js'
+import AccountModel from "../model/Account.model.js"
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import ENV from "../config.js";
@@ -486,4 +487,92 @@ export async function becomeMerchant (req, res) {
 }
 
 
+/*export async function getMerchants(req, res) {
+    try {
+      // Assuming the logged-in user's region is available in req.body.loggedInUserRegion
+      const region = req.query.region;
+  
+      // Fetch admins based on conditions
+      const admins = await UserModel.find({
+        isMerchant: true,
+        region: region
+      });
+      res.json({ admins });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }*/
+
+ 
+
+export async function getMerchants(req, res) {
+  try {
+    const region = req.query.region;
+    const userId = req.query.id; // Assuming this represents the ID of the logged-in user
+
+    let admins;
+    const loggedInUser = await UserModel.findById(userId); // Fetch logged-in user by ID
+    if (loggedInUser && loggedInUser.isMerchant) {
+      // If the logged-in user is themselves an admin, exclude them from the response
+      admins = await UserModel.find({
+        isMerchant: true,
+        region: region,
+        _id: { $ne: loggedInUser._id } // Exclude the logged-in user from the response
+      });
+    } else {
+      // If the logged-in user is not an admin or not found, fetch admins as usual
+      admins = await UserModel.find({
+        isMerchant: true,
+        region: region
+      });
+    }
+
+    res.json({ admins });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+
 //_________________________________________________ ↑ Merchant Controller↑ 
+
+
+
+//_________________________________________________ ↓ Account Controller↓ 
+
+// Create account details
+export async function createAccountDetails(req, res) {
+    try {
+      const { accountNumber, accountType, accountName } = req.body;
+      const account = await AccountModel.create({ accountNumber, accountType, accountName });
+      res.status(201).json({ account });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+  
+// Assign account to user
+export async function assignAccountToUser(req, res) {
+    try {
+      const { userId, accountId } = req.params;
+      const user = await UserModel.findById(userId);
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+      // Find account by ID
+      const account = await AccountModel.findById(accountId);
+      if (!account) {
+        return res.status(404).json({ error: "Account not found" });
+      } 
+      // Add account to user's accounts array
+      user.accounts.push(accountId);
+      await user.save();
+  
+      res.json({ user });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+  
+
+//_________________________________________________ ↑Account Controller↑ 
