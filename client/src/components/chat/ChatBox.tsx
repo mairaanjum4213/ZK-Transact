@@ -129,7 +129,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({
                 </div>
               </div>
             </div>
-            <div className="chat-body">
+            <div className="chat-body ">
               {messages &&
                 messages.map(
                   (message: {
@@ -171,7 +171,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({
                 )}
             </div>
             {/* chat-sender */}
-            <div className="chat-sender  px-3 ">
+            <div className="chat-sender px-3">
               <div onClick={() => imageRef.current?.click()}>+</div>
               {file && <p> {file.name}</p>}
               <InputEmoji value={newMessage} onChange={handleChange} />
@@ -195,7 +195,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({
           </>
         ) : (
           <>
-            <div className="flex flex-col  mt-[15%]">
+            <div className="flex flex-col mt-[15%]">
               <span className=" font-extrabold inset-0 text-[4rem]  w-full h-fit text-center" style={{
                 backgroundImage: `linear-gradient(45deg, #FF3BFF, #FF3BFF, #5C24FF, #D94FD5)`,
                 WebkitBackgroundClip: 'text',
@@ -203,10 +203,10 @@ const ChatBox: React.FC<ChatBoxProps> = ({
               }}>
                 Use Our AI Chat Bot
               </span>
-              <Link to="/bot" className=" w-full h-fit text-center  text-2xl   text-white font-normal  tracking-wide ">
+              <Link to="/bot" className=" w-full h-fit text-center  text-2xl    font-normal  tracking-wide ">
                 <span className="border-b border-transparent hover:border-b hover:border-gray-700 duration-700"> Chat Now</span>
               </Link>
-              <span className=" w-full h-fit text-center mt-5 text-white font-normal text-lg tracking-wide">
+              <span className=" w-full h-fit text-center mt-5  font-normal text-lg tracking-wide">
                 Tap on a chat to start conversation...
               </span>
             </div>
