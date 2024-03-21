@@ -1,10 +1,15 @@
 import "../css/Footer.css";
+import { BrowserRouter as Router, Route, useLocation } from 'react-router-dom';
 import logo from "../assets/ICON.png"
 import { Link } from "react-router-dom";
 import { FaFacebookF } from "react-icons/fa6";
 import { FaLinkedinIn, FaTwitter, FaInstagramSquare } from "react-icons/fa";
 import { TfiAngleRight } from "react-icons/tfi";
 const Footer: React.FC = () => {
+  const location = useLocation();
+  if (location.pathname === '/admin') {
+    return null;
+  }
   return (
     <>
       <div className="container-fluid " id="BoxPurp">
@@ -13,7 +18,7 @@ const Footer: React.FC = () => {
             <div className="col-lg-3 col-md-6 col-sm-12  mt-4 ">
               <div className="Logo-alignment">
                 <img width="10%" src={logo} alt="" />
-                <span className="mx-2 fs-5 fw-bold" style={{letterSpacing:"2px"}} >
+                <span className="mx-2 fs-5 fw-bold" style={{ letterSpacing: "2px" }} >
                   ZK-Transact
                 </span>
               </div>

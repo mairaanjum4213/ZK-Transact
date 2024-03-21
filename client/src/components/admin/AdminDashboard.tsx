@@ -3,7 +3,6 @@ import { IoStatsChart } from "react-icons/io5";
 import { MdSell } from "react-icons/md";
 import { PiCoinsFill } from "react-icons/pi";
 import { FaWallet } from "react-icons/fa6";
-import { CgLogOut } from "react-icons/cg";
 import "../chat/Admindashboard.css";
 import WalletDetails from '../WalletDetails';
 import Chat from '../chat/Chat';
@@ -11,6 +10,7 @@ import Dashboard from './Dashboard';
 import BuyTokensRequest from './BuyTokensRequest';
 import SellTokensRequest from './SellTokensRequest';
 import Accounts from '../Accounts';
+import UserNavbar from './../UserNavbar';
 const AdminDashboard: React.FC = () => {
   const [selectedContent, setSelectedContent] = useState('Dashboard');
   const [focusedDiv, setFocusedDiv] = useState('Dashboard');
@@ -20,14 +20,17 @@ const AdminDashboard: React.FC = () => {
   };
   return (
     <>
-    
-      <div className="d-flex flex-lg-row flex-column   ">
+      <div>
+      </div>
+      <div className="d-flex flex-lg-row flex-column gap-1">
+        <div className=" relative w-full  lg:w-fit   py-md-5 py-3 px-[1.8rem] adminSide    }  ">
 
-        
-
-       
-        <div className="w-full  lg:w-fit py-md-0 py-3 px-5 adminSide   top-0  }  ">
-          <div id="adminSideBar" className="d-flex flex-lg-column h-full flex-row my-lg-5 gap-3 align-items-lg-start align-items-center overflow-auto  ">
+          <div className="absolute bottom-0 ">
+            Add Logout Button <br />
+            add connect meta mask btn 
+            creata a mini nav bar 
+          </div>
+          <div id="adminSideBar" className="d-flex flex-lg-column h-full flex-row  gap-3 align-items-lg-start align-items-center overflow-auto  ">
             <div className={`flex w-full cursor-pointer   gap-2 justify-start align-items-center text-white sidebarOptions ${focusedDiv === 'Dashboard' ? 'focusedDiv' : ''}`}
               onClick={() => handleMenuClick('Dashboard')}
             >
@@ -77,11 +80,8 @@ const AdminDashboard: React.FC = () => {
               </div>
             </div>
           </div>
-       
-
         </div>
-
-        <div className="w-full lg:w-full">
+        <div className=" w-full h-screen overflow-y-auto" >
           {!selectedContent || selectedContent === 'Dashboard' && (
             <Dashboard />
           )}
