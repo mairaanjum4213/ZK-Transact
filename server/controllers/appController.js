@@ -510,13 +510,13 @@ export async function getMerchants(req, res) {
     const userId = req.query.id; // Assuming this represents the ID of the logged-in user
 
     let admins;
-    const loggedInUser = await UserModel.findById(userId); // Fetch logged-in user by ID
+    const loggedInUser = await UserModel.findById(userId); 
     if (loggedInUser && loggedInUser.isMerchant) {
       // If the logged-in user is themselves an admin, exclude them from the response
       admins = await UserModel.find({
         isMerchant: true,
         region: region,
-        _id: { $ne: loggedInUser._id } // Exclude the logged-in user from the response
+        _id: { $ne: loggedInUser._id } 
       });
     } else {
       // If the logged-in user is not an admin or not found, fetch admins as usual
