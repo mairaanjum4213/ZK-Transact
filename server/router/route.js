@@ -58,4 +58,9 @@ router.route('/getMerchants').get(controller.getMerchants);
 router.route('/accounts').post(controller.createAccountDetails);
 router.route('/users/:userId/accounts/:accountId').put(controller.assignAccountToUser);
 
+
+/*______________________Wallet Routes ______________________*/
+router.route('/wallet').post(controller.createWalletDetails);
+router.route('/users/:userId/wallet/:walletId').put(controller.assignWalletToUser);
+
 export default router;

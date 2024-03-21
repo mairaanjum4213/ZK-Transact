@@ -45,13 +45,17 @@ export const UserSchema = new mongoose.Schema({
     },  
     accounts: [{
         type: Schema.Types.ObjectId,
-        ref: 'Accounts'
+        ref: 'Account'
     }],
     allowServices: {
         type: Boolean,
         default: false
     },
-
+    wallet: {
+        type: Schema.Types.ObjectId,
+        ref: 'Wallet',
+        default: null
+    }
 },{timestamps:true});
 
 //if already have user model in mongodb database then use exisiting model otherwise return new one

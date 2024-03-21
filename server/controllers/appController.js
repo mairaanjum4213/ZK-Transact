@@ -7,6 +7,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import ENV from "../config.js";
 import otpGenerator from 'otp-generator';
+import WalletModel from '../model/Wallet.model.js';
 
 
 /** middleware for verify user */
@@ -133,7 +134,7 @@ export async function getUser(req, res) {
             return res.status(400).send({ error: "Invalid Username" });
         }
         //lean return js object instead of mongoose doc
-        const user = await UserModel.findOne({ username }).populate('accounts').lean();
+        const user = await UserModel.findOne({ username }).populate('accounts').populate('wallet').lean();
 
         if (!user) {
             return res.status(404).send({ error: "User not found" });
@@ -516,14 +517,18 @@ export async function getMerchants(req, res) {
       admins = await UserModel.find({
         isMerchant: true,
         region: region,
-        _id: { $ne: loggedInUser._id } 
-      });
+        _id: { $ne: loggedInUser._id } ,
+        accounts: { $exists: true, $ne: [] }, 
+        wallet: { $exists: true }
+      }).populate('accounts').populate('wallet');;
     } else {
       // If the logged-in user is not an admin or not found, fetch admins as usual
       admins = await UserModel.find({
         isMerchant: true,
-        region: region
-      });
+        region: region,
+        accounts: { $exists: true, $ne: [] }, 
+        wallet: { $exists: true }
+      }).populate('accounts').populate('wallet');
     }
 
     res.json({ admins });
@@ -539,7 +544,6 @@ export async function getMerchants(req, res) {
 
 //_________________________________________________ ↓ Account Controller↓ 
 
-// Create account details
 export async function createAccountDetails(req, res) {
     try {
       const { accountNumber, accountType, accountName } = req.body;
@@ -550,7 +554,7 @@ export async function createAccountDetails(req, res) {
     }
   }
   
-// Assign account to user
+
 export async function assignAccountToUser(req, res) {
     try {
       const { userId, accountId } = req.params;
@@ -575,3 +579,41 @@ export async function assignAccountToUser(req, res) {
   
 
 //_________________________________________________ ↑Account Controller↑ 
+
+export async function createWalletDetails(req, res) {
+    try {
+      const { metamaskAddress, zkTokens } = req.body;
+      const wallet = await WalletModel.create({ metamaskAddress, zkTokens });
+      res.status(201).json({ wallet});
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+  
+
+export async function assignWalletToUser(req, res) {
+    try {
+      const { userId, walletId } = req.params;
+      const user = await UserModel.findById(userId);
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+
+      const wallet = await WalletModel.findById(walletId);
+      if (!wallet) {
+        return res.status(404).json({ error: "Wallet not found" });
+      } 
+      user.wallet = walletId;
+      await user.save();
+  
+      res.json({ user });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+
+//_________________________________________________ ↓Wallet Controller↓ 
+
+
+
+//_________________________________________________ ↑Wallet  Controller↑ 

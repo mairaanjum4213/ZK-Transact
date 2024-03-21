@@ -12,8 +12,7 @@ const Accounts: React.FC = () => {
   const decodedToken: any = token ? jwtDecode(token) : {};
   const username = decodedToken.username || "";
   const [userData, setUserData] = useState<any>("");
-  const [shouldReloadUserData, setShouldReloadUserData] = useState(false);
-  // -----User Data
+  
   useEffect(() => {
     // Fetching User Data for Id
     async function fetchUserData() {
@@ -28,12 +27,23 @@ const Accounts: React.FC = () => {
       }
     }
     fetchUserData();
-    setShouldReloadUserData(false);
-  }, [shouldReloadUserData,username]);
+  }, [username]);
 
   const [accountNumber, setAccountNumber] = useState("");
   const [accountType, setAccountType] = useState("");
   const [accountName, setAccountName] = useState("");
+
+  const fetchUserData = async () => {
+    try {
+      const response = await getUser({ username });
+      if (response.data) {
+        setUserData(response.data);
+        // To Access Id or other data of user from db just use userData._id
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  }
 
   const handleAddAccount = async () => {
     try {
@@ -45,7 +55,7 @@ const Accounts: React.FC = () => {
       const createdAccountId = response.data.account._id; // Get the created account id
       assignAccountToUser(createdAccountId); // Automatically assign account to user
       toast.success("Account added!");
-      setShouldReloadUserData(true);  
+      await fetchUserData();      
     } catch (error) {
       toast.error("Problem adding account.");
     }

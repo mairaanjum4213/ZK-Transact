@@ -35,7 +35,7 @@ const Navprofile: React.FC = () => {
     navigate("/");
   };
   const { isConnected } = useAccount();
- 
+
   return (
     <>
       <div className="btn-group mx-1">
@@ -85,10 +85,8 @@ const Navprofile: React.FC = () => {
 
           <li className="flex items-center gap-2">
             {userData?.isMerchant === true ? (
-              // If isAdmin is true, render Admin Dashboard link
               <Link to="/admin">Admin Dashboard</Link>
             ) : (
-              // If isAdmin is false, render Become Merchant link
               <>
                 <MdOutlineBusinessCenter className="text-yellow-600 text-lg" />
                 <Link to="/consent">Become Merchant</Link>
