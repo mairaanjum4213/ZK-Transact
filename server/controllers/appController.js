@@ -504,7 +504,6 @@ export async function becomeMerchant (req, res) {
   }*/
 
  
-
 export async function getMerchants(req, res) {
   try {
     const region = req.query.region;
