@@ -133,7 +133,7 @@ export async function getUser(req, res) {
             return res.status(400).send({ error: "Invalid Username" });
         }
         //lean return js object instead of mongoose doc
-        const user = await UserModel.findOne({ username }).lean();
+        const user = await UserModel.findOne({ username }).populate('accounts').lean();
 
         if (!user) {
             return res.status(404).send({ error: "User not found" });

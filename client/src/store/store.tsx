@@ -5,6 +5,7 @@ type AuthState = {
   active: boolean;
   isAuthenticated: boolean; // New property to indicate if the user is authenticated
   isRecovery:boolean;
+  isAdmin: boolean;
 };
 
 type AuthStore = {
@@ -12,6 +13,7 @@ type AuthStore = {
   setUsername: (name: string) => void;
   setIsAuthenticated: (status: boolean) => void; // New method to update isAuthenticated
   setIsRecovery: (status: boolean) => void; 
+  setIsAdmin: (status: boolean) => void; 
 };
 
 export const useAuthStore = create<AuthStore>((set) => ({
@@ -20,6 +22,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
     active: false,
     isAuthenticated: false,// Initialize isAuthenticated as false
     isRecovery:false,
+    isAdmin:false,
   },
   setUsername: (name) =>
     set((state) => ({ auth: { ...state.auth, username: name } })),
@@ -27,4 +30,6 @@ export const useAuthStore = create<AuthStore>((set) => ({
     set((state) => ({ auth: { ...state.auth, isAuthenticated: status } })), // Update isAuthenticated
   setIsRecovery: (status) =>
     set((state) => ({ auth: { ...state.auth, isRecovery: status } })), 
+  setIsAdmin: (status) =>
+    set((state) => ({ auth: { ...state.auth, isAdmin: status } })), 
 }));

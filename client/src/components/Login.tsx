@@ -12,6 +12,7 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
   const setUsername = useAuthStore(state => state.setUsername);
   const setIsAuthenticated = useAuthStore(state => state.setIsAuthenticated);
+
   //const [dataState] = useFetch(`user/${username}`);
   //const { isLoading, serverError } = dataState;
   const formik = useFormik({
@@ -37,9 +38,14 @@ const Login: React.FC = () => {
       });
       loginPromise.then(res => {
         let { token } = res.data;
+        console.log(res);
         localStorage.setItem('token', token);
         navigate('/profile')
         setIsAuthenticated(true);
+         // Set isAdmin to true if the user is an admin (example condition)
+         //if (res.data.isAdmin) {
+         // setIsAdmin(true);
+       // }
         // Save to localStorage
         localStorage.setItem('isAuthenticated', 'true');
       })
@@ -48,6 +54,8 @@ const Login: React.FC = () => {
   setUsername(formik.values.username);
   //if(isLoading) return <h1 className='text-2xl font-bold'>isLoading</h1>;
   //if(serverError) return <h1 className='text-xl text-red-500'>{serverError.message}</h1>
+
+
   return (
     <>
       <Toaster position='top-center' reverseOrder={false}></Toaster>

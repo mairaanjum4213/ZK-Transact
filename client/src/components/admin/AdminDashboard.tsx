@@ -10,7 +10,7 @@ import Dashboard from './Dashboard';
 import BuyTokensRequest from './BuyTokensRequest';
 import SellTokensRequest from './SellTokensRequest';
 import Accounts from '../Accounts';
-import UserNavbar from './../UserNavbar';
+
 const AdminDashboard: React.FC = () => {
   const [selectedContent, setSelectedContent] = useState('Dashboard');
   const [focusedDiv, setFocusedDiv] = useState('Dashboard');

@@ -9,6 +9,7 @@ import { jwtDecode } from "jwt-decode";
 import toast, { Toaster } from 'react-hot-toast';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+
 axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
 
 const Consent: React.FC = () => {

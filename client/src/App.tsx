@@ -33,12 +33,11 @@ import AdminDashboard from './components/admin/AdminDashboard.tsx';
 import BuyTokensReciept from './components/buyTokens/BuyTokensReciept.tsx';
 import BuyTokensRecieptApproved from './components/buyTokens/BuyTokensRecieptApproved.tsx';
 import SellTokensReciept from './components/sellTokens/SellTokensReciept.tsx'
-import KYCrequiredModal from './components/KYCrequiredModal';
 import WalletDetails from './components/WalletDetails.tsx';
 import Chat from './components/chat/Chat.tsx';
 import ChatBotFrontend from './components/chatBot/chatBotFrontend.tsx';
 import Consent from './components/admin/Consent.tsx';
-
+import { useAuthStore } from './store/store';
 
 
 
@@ -79,7 +78,7 @@ function App() {
       setIsLoggedIn(false);
     }
   }, []); */
-
+  const isAuthenticated = useAuthStore((state) => state.auth.isAuthenticated);
   return (
     <>
       <WagmiProvider>
@@ -90,31 +89,44 @@ function App() {
             <Navbar />
             <ScrollUp />
             <Routes>
-
-              <Route path="/user" element={<UserDashboard />} />
-              <Route path="/admin" element={<AdminDashboard />} />
-              <Route path="/zkt-purchaser-profile" element={<ZKtokePurchaserProfile />} />
-              <Route path="/zkt-purchasers" element={<ViewZKtokensPurchasers />} />
-              <Route path="/buyTokens-reciept" element={<BuyTokensReciept />} />
-              <Route path="/buyTokens-  " element={<BuyTokensRecieptApproved/>} />
-              <Route path="/sellTokens-reciept" element={<SellTokensReciept />} />
-              <Route path="/zkt-provider-profile" element={<ZKtokeProviderProfile />} />
-              <Route path="/zkt-providers" element={<ViewZKtokensProviders />} />
-              <Route path="/buyTokens" element={<BuyTokens />} />
-              <Route path="/sellTokens" element={<SellTokens />} />
-              <Route path="/tokenTransfer" element={<ERC20 />} />
-              <Route path="/" element={<Home />} />
-              <Route path="/chats" element={<Chat />} />
-              <Route path="/aboutus" element={<AboutUs />} />
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
               <Route path="*" element={<PageNotFound />} />
+              <Route path="/" element={<Home />} />
+              <Route path="/aboutus" element={<AboutUs />} />
               <Route path="/recovery" element={<Recovery />} />
               <Route path="/reset" element={<ResetPassword />} />
-              <Route path="/walletDetails" element={<WalletDetails/>} />
               <Route path="/profile" element={ <Profile />}/>
-              <Route path="/bot" element={ <ChatBotFrontend />}/>
-              <Route path="/consent" element={ <Consent />}/>
+
+
+              <Route path="/admin" element={<AdminDashboard />} />
+
+              
+              <Route path="/user" element={isAuthenticated? <UserDashboard /> : <Login/>} />
+
+              <Route path="/buyTokens" element={isAuthenticated? <BuyTokens/> : <Login/>} />
+              <Route path="/buyTokens-reciept" element={isAuthenticated? <BuyTokensReciept /> : <Login/>} />
+              <Route path="/buyTokens-  " element={isAuthenticated? <BuyTokensRecieptApproved/> : <Login/>} />
+
+              <Route path="/sellTokens-reciept" element={isAuthenticated? <SellTokensReciept/> : <Login/>} />
+              <Route path="/sellTokens" element={isAuthenticated? <SellTokens /> : <Login/>} />
+
+           
+              <Route path="/zkt-purchaser-profile" element={isAuthenticated? <ZKtokePurchaserProfile/> : <Login/>} />
+              <Route path="/zkt-purchasers" element={isAuthenticated? <ViewZKtokensPurchasers/> : <Login/>} />
+            
+              <Route path="/zkt-provider-profile" element={isAuthenticated? <ZKtokeProviderProfile/> : <Login/>} />
+              <Route path="/zkt-providers" element={isAuthenticated? <ViewZKtokensProviders/> : <Login/>} />
+             
+              
+              <Route path="/tokenTransfer" element={isAuthenticated? <ERC20 /> : <Login/>} />
+             
+              <Route path="/chats" element={isAuthenticated? <Chat/> : <Login/>} />
+              <Route path="/bot" element={ isAuthenticated? <ChatBotFrontend /> : <Login/>}/>
+              <Route path="/consent" element={isAuthenticated? <Consent /> : <Login/>}/>
+              <Route path="/walletDetails" element={isAuthenticated? <WalletDetails/> : <Login/>} />
+          
+         
 
 
               

@@ -45,7 +45,7 @@ export const UserSchema = new mongoose.Schema({
     },  
     accounts: [{
         type: Schema.Types.ObjectId,
-        ref: 'Account'
+        ref: 'Accounts'
     }]
 },{timestamps:true});
 
