@@ -470,11 +470,9 @@ export async function userwithBuyToken(req, res) {
 
 export async function becomeMerchant (req, res) {
     try {
-        //const { userId } = req.user; 
         const id = req.query.id;
       
         const user = await UserModel.findById(id); 
-        // Check if user meets the conditions to become an admin
         if (user.kycStatus == true && user.email && user.mobile && user.address && user.fullName) {
             user.isMerchant = true;
             await user.save();
@@ -508,7 +506,7 @@ export async function becomeMerchant (req, res) {
 export async function getMerchants(req, res) {
   try {
     const region = req.query.region;
-    const userId = req.query.id; // Assuming this represents the ID of the logged-in user
+    const userId = req.query.id; 
 
     let admins;
     const loggedInUser = await UserModel.findById(userId); 
@@ -530,7 +528,6 @@ export async function getMerchants(req, res) {
         wallet: { $exists: true }
       }).populate('accounts').populate('wallet');
     }
-
     res.json({ admins });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -562,12 +559,10 @@ export async function assignAccountToUser(req, res) {
       if (!user) {
         return res.status(404).json({ error: "User not found" });
       }
-      // Find account by ID
       const account = await AccountModel.findById(accountId);
       if (!account) {
         return res.status(404).json({ error: "Account not found" });
       } 
-      // Add account to user's accounts array
       user.accounts.push(accountId);
       await user.save();
   
@@ -579,6 +574,9 @@ export async function assignAccountToUser(req, res) {
   
 
 //_________________________________________________ ↑Account Controller↑ 
+
+
+//_________________________________________________ ↓Wallet Controller↓ 
 
 export async function createWalletDetails(req, res) {
     try {
@@ -611,9 +609,6 @@ export async function assignWalletToUser(req, res) {
       res.status(500).json({ error: error.message });
     }
   }
-
-//_________________________________________________ ↓Wallet Controller↓ 
-
 
 
 //_________________________________________________ ↑Wallet  Controller↑ 

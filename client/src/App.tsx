@@ -105,7 +105,7 @@ function App() {
               <Route path="/user" element={isAuthenticated? <UserDashboard /> : <Login/>} />
 
               <Route path="/buyTokens" element={isAuthenticated? <BuyTokens/> : <Login/>} />
-              <Route path="/buyTokens-reciept" element={isAuthenticated? <BuyTokensReciept /> : <Login/>} />
+              <Route path="/buyTokens-reciept" element={<BuyTokensReciept/>} />
               <Route path="/buyTokens-  " element={isAuthenticated? <BuyTokensRecieptApproved/> : <Login/>} />
 
               <Route path="/sellTokens-reciept" element={isAuthenticated? <SellTokensReciept/> : <Login/>} />
@@ -115,8 +115,8 @@ function App() {
               <Route path="/zkt-purchaser-profile" element={isAuthenticated? <ZKtokePurchaserProfile/> : <Login/>} />
               <Route path="/zkt-purchasers" element={isAuthenticated? <ViewZKtokensPurchasers/> : <Login/>} />
             
-              <Route path="/zkt-provider-profile" element={isAuthenticated? <ZKtokeProviderProfile/> : <Login/>} />
-              <Route path="/zkt-providers" element={isAuthenticated? <ViewZKtokensProviders/> : <Login/>} />
+              <Route path="/user/:username" element={<ZKtokeProviderProfile/>} />
+              <Route path="/zkt-providers" element={<ViewZKtokensProviders/>} />
              
               
               <Route path="/tokenTransfer" element={isAuthenticated? <ERC20 /> : <Login/>} />

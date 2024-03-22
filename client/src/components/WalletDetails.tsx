@@ -147,7 +147,7 @@ const WalletDetails: React.FC = () => {
             <>
               <div
                 className="row d-flex justify-content-center align-items-center mt-5 mx-2 px-1"
-                data-aos="zoom-in"
+               
               >
                 <div className="col col-lg-6 mb-4 mb-lg-0    ">
                   <div
