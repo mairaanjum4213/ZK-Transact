@@ -28,7 +28,7 @@ const BuyTokensRequest: React.FC = () => {
                                 >
                                     <div className=" w-full h-fit mx-auto sidebarOptions text-gray-300">
                                         User Name asked for transaction of 240 Tokens <br />
-                                        Search in code make it dynamic
+                                        Search in code make it dynamic abc
                                     </div>
                                 </div>
                             </div>

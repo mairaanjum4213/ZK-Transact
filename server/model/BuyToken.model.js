@@ -31,6 +31,13 @@ export const BuyTokenSchema = new Schema({
     dateTimeField: {
         type: Date,
         default: Date.now
+    },
+    status:{
+        type:String,
+        enum: ["Pending", "Approved", "Declined"]
+    },
+    adminComments:{
+        type:String
     }
 }, {timestamps:true});
 

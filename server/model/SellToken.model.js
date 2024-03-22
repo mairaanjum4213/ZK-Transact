@@ -45,6 +45,13 @@ const SellTokenSchema = new Schema({
     SellTokendateTimeField: {
         type: Date,
         default: Date.now
+    },
+    transactionStatus:{
+        type:String,
+        enum: ["Pending", "Approved", "Declined"]
+    },
+    commentsByAdmin:{
+        type:String
     }
     
 });
