@@ -1,15 +1,41 @@
+import { useState } from "react";
 const BuyTokensRequest: React.FC = () => {
     return (
         <>
-            <div className="d-flex justify-center align-items-center mt-[15%]">
-                <span className="font-extrabold inset-0 text-[4rem]  w-full h-fit text-center" style={{
-                    backgroundImage: `linear-gradient(45deg, #FF3BFF, #FF3BFF, #5C24FF, #D94FD5)`,
-                    WebkitBackgroundClip: 'text',
-                    color: 'transparent'
-                }}>
-                  Buy  Comming Soon
-                </span>
-            </div>
+          <button
+                            className=" standarButton-1"
+                            type="button"
+                            data-bs-toggle="offcanvas"
+                            data-bs-target="#BuyRequests"
+                            aria-controls="BuyRequests"
+                        >
+                           See Recent Requests
+                        </button>
+
+<div
+                            className="offcanvas offcanvas-start adminSide rounded"
+                            tabIndex={-1}
+                            id="BuyRequests"
+                            aria-labelledby="BuyRequests"
+                        >
+
+                            <div className="flex flex-column h-screen  justify-start mx-3 my-3 overflow-y-auto">
+                                <h2 className=" my-3 text-xl text-white">
+                                    Recent Requests
+                                </h2>
+                                <hr className="w-2/3 mb-2 text-white" />
+                                <div className="my-2 w-11/12 mx-auto flex text-justify rounded  "
+                                >
+                                    <div className=" w-full h-fit mx-auto sidebarOptions text-gray-300">
+                                        User Name asked for transaction of 240 Tokens <br />
+                                        Search in code make it dynamic
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+        
         </>
     );
 };

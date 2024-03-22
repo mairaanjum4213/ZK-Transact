@@ -132,26 +132,41 @@ const Chat: React.FC = () => {
       toast.error("Error creating chat");
     }
   };
+  const [hideBreadCrumb, setHideBreadCrumb] = useState<boolean>(false);
+  useEffect(() => {
+    if (window.location.pathname === "/admin") {
+      setHideBreadCrumb(true);
+    } else {
+      setHideBreadCrumb(false);
+    }
+  }, []);
   return (
     <>
-
-<BreadCrumb parentPageLink='/' ParentPage="Home" pageName="Home" ChildPage="Chats" imageUrl={ChatBreadCrumb} />
+      {!hideBreadCrumb && (
+        <BreadCrumb
+          parentPageLink="/"
+          ParentPage="Home"
+          pageName="Home"
+          ChildPage="Chats"
+          imageUrl={ChatBreadCrumb}
+        />
+      )}
       <Toaster position="top-center" reverseOrder={false}></Toaster>
       <div className="mb-5">
-        <div className="LogoSearch  px-4 py-4">
-          <div className="Search">
+        <div className="LogoSearch  py-4">
+          <div className="Search ml-4 py-3 pr-5">
             <input
               type="text"
               placeholder="User Name"
               value={searchUsername}
               onChange={(e) => setSearchUsername(e.target.value)}
             />
-            <div className="simpleButton1 p-1" onClick={handleSearch}>
+            <div className="simpleButton1 py-2 px-3" onClick={handleSearch}>
               Search
             </div>
           </div>
         </div>
-        <div className="Chat">
+        <div className="Chat ">
           <div className="Left-side-chat">
             <div className="Chat-container h-full">
               <h2 className="fs-4" style={{ letterSpacing: "2px" }}>
@@ -171,7 +186,7 @@ const Chat: React.FC = () => {
             </div>
           </div>
           {/* Right Side */}
-          <div className="Right-side-chat">
+          <div className="Right-side-chat  ">
             <ChatBox
               chat={currentChat}
               currentUser={userData?._id}
@@ -181,9 +196,6 @@ const Chat: React.FC = () => {
           </div>
         </div>
       </div>
-
-
-
     </>
   );
 };

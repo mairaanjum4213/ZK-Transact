@@ -77,7 +77,7 @@ const UserNavbar: React.FC = () => {
                 <li className="nav-item mx-2">
                   <Link to="/tokenTransfer" className="nav-link active" aria-current="page">Transfer Tokens</Link>
                 </li>
-                {/* {isConnected && <li className='navLinks walletIcon '><WalletDetails /></li>} */}
+               
               </ul>
               <div className="d-flex flex-column flex-lg-row   justify-content-center align-items-center gap-3">
                 {/* Wallet Connection Button */}
