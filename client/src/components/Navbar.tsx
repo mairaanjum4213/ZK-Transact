@@ -9,7 +9,7 @@ const Navbar: React.FC = () => {
   const { isAuthenticated } = useAuthStore(state => state.auth);
   const setIsAuthenticated = useAuthStore(state => state.setIsAuthenticated);
 
-  useEffect(() => {
+  /*useEffect(() => {
     const handleWindowClose = () => {
       setIsAuthenticated(false);
       localStorage.removeItem('isAuthenticated');
@@ -22,7 +22,7 @@ const Navbar: React.FC = () => {
     return () => {
       window.removeEventListener('beforeunload', handleWindowClose);
     };
-  }, [setIsAuthenticated]);
+  }, [setIsAuthenticated]);*/
 
   
   useEffect(() => {

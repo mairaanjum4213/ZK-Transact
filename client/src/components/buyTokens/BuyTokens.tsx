@@ -72,9 +72,9 @@ useEffect(() => {
         formData.append('buyer', userData._id);
         formData.append('metamaskAddress', metamask);
         formData.append('serviceProviderName', serviceProvider);
-        formData.append('localCurrency', (localCurrencyVal || 0).toString()); // Convert to string
-        formData.append('TokensAmount', (zkTokenVal || 0).toString()); // Convert to string
-        formData.append('transactionFee', (transactionfee || 0).toString()); // Convert to string
+        formData.append('localCurrency', (localCurrencyVal || 0).toString()); 
+        formData.append('TokensAmount', (zkTokenVal || 0).toString()); 
+        formData.append('transactionFee', (transactionfee || 0).toString()); 
         formData.append('buyReceipt', file);
  
        const storebuyTokenPromise = storebuyToken(formData);
@@ -83,7 +83,7 @@ useEffect(() => {
           success: <b>Buy Tokens request sent Successfully...!</b>,
           error: <b>Error occurs while buying tokens.</b>
         });
-        storebuyTokenPromise.then(() => navigate('/buyTokens-reciept'));
+        storebuyTokenPromise.then(() =>  navigate(`/buyTokens-reciept/${serviceProvider}`));
       } catch (error) {
         console.error("Error submitting buy token data:", error);
         toast.error("Error submitting buy token data. Please try again later.");
@@ -177,7 +177,9 @@ useEffect(() => {
                 onChange={handleFileChange}
               />
                {file && <p>Selected File: {file.name}</p>} {/* Display the selected file name if a file is selected */}
-              <button type='submit' className='my-4 btnStyle' rel="stylesheet"> Generate Reciept
+              
+              <button type='submit' className='my-4 btnStyle' rel="stylesheet"> 
+              Generate Reciept
             </button>
                
             </form>

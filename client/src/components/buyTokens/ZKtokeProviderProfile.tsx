@@ -10,7 +10,12 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 
 axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
-const ZKtokeProviderProfile: React.FC = () => {
+
+interface Props {
+  title: string;
+}
+
+const ZKtokeProviderProfile: React.FC <Props> = ({title}) => {
   const { username } = useParams<{ username: string }>();
   const [userData, setUserData] = useState<any>(null);
   useEffect(() => {
@@ -37,17 +42,11 @@ const ZKtokeProviderProfile: React.FC = () => {
   };
   return (
     <>
-      <BreadCrumb
-        parentPageLink="/buyTokens"
-        ParentPage="Buy Tokens"
-        pageName=" ZK-Token Sellers"
-        ChildPage=" ZK-Token Sellers"
-        imageUrl={BuyTokens}
-      />
+     
       <section className="">
         <div className="container py-5 ">
           <h1 className="fw-bold fs-4" style={{ letterSpacing: "1px" }}>
-            ZK Token Seller Profile
+           {title}
           </h1>
           <div className="row d-flex justify-content-center align-items-center mt-5 mx-2 px-1">
             <div className="col col-lg-6 mb-4 mb-lg-0  ">

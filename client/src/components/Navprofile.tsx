@@ -7,6 +7,7 @@ import "../css/ProfileDropdown.css";
 import { useEffect, useState } from "react";
 import { getUser } from "../helper/helper";
 import { jwtDecode } from "jwt-decode";
+
 const Navprofile: React.FC = () => {
   const [userData, setUserData] = useState<any>();
   const token = localStorage.getItem("token");
@@ -81,7 +82,9 @@ const Navprofile: React.FC = () => {
             </li>
           )}
           <li>Setting</li>
-          <li>Chats</li>
+          <li>
+           <Link to="/chats">Chat</Link>
+          </li>
 
           <li className="flex items-center gap-2">
             {userData?.isMerchant === true ? (

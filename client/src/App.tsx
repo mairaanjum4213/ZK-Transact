@@ -21,11 +21,6 @@ import ResetPassword from './components/ResetPassword';
 import Profile from './components/Profile';
 import Navbar from './components/Navbar';
 import BuyTokens from './components/buyTokens/BuyTokens.tsx';
-import ZKtokeProviderProfile from './components/buyTokens/ZKtokeProviderProfile.tsx';
-import ViewZKtokensProviders from './components/buyTokens/ViewZKtokensProviders.tsx';
-import ZKtokePurchaserProfile from "./components/sellTokens/ZKtokePurchaserProfile.tsx";
-import ViewZKtokensPurchasers from './components/sellTokens/ViewZKtokensPurchasers.tsx';
-
 import ScrollUp from './components/ScrollUp';
 import SellTokens from './components/sellTokens/SellTokens.tsx';
 import UserDashboard from './components/UserDashboard.tsx';
@@ -35,10 +30,14 @@ import BuyTokensRecieptApproved from './components/buyTokens/BuyTokensRecieptApp
 import SellTokensReciept from './components/sellTokens/SellTokensReciept.tsx'
 import WalletDetails from './components/WalletDetails.tsx';
 import Chat from './components/chat/Chat.tsx';
-import ChatBotFrontend from './components/chatBot/chatBotFrontend.tsx';
+import ChatBotFrontend from "./components/chatBot/ChatBotFrontend.tsx"
 import Consent from './components/admin/Consent.tsx';
 import { useAuthStore } from './store/store';
 
+import CompleteViewZKTokenProvider from './components/buyTokens/CompleteViewZKTokenProvider.tsx';
+import CompleteViewZKTokenPurchasers from './components/sellTokens/CompleteViewZKTokenPurchasers.tsx';
+import CompleteZKTokenProviderProfile from './components/buyTokens/CompleteZKTokenProviderProfile.tsx';
+import CompleteZKTokenPurchasers from './components/sellTokens/CompleteZKTokenPurchasers.tsx';
 
 
 function App() {
@@ -79,6 +78,7 @@ function App() {
     }
   }, []); */
   const isAuthenticated = useAuthStore((state) => state.auth.isAuthenticated);
+  console.log(isAuthenticated)
   return (
     <>
       <WagmiProvider>
@@ -105,18 +105,17 @@ function App() {
               <Route path="/user" element={isAuthenticated? <UserDashboard /> : <Login/>} />
 
               <Route path="/buyTokens" element={isAuthenticated? <BuyTokens/> : <Login/>} />
-              <Route path="/buyTokens-reciept" element={<BuyTokensReciept/>} />
+              <Route path="/buyTokens-reciept/:username" element={isAuthenticated? <BuyTokensReciept/> : <Login/>} />
               <Route path="/buyTokens-  " element={isAuthenticated? <BuyTokensRecieptApproved/> : <Login/>} />
 
               <Route path="/sellTokens-reciept" element={isAuthenticated? <SellTokensReciept/> : <Login/>} />
               <Route path="/sellTokens" element={isAuthenticated? <SellTokens /> : <Login/>} />
 
-           
-              <Route path="/zkt-purchaser-profile" element={isAuthenticated? <ZKtokePurchaserProfile/> : <Login/>} />
-              <Route path="/zkt-purchasers" element={isAuthenticated? <ViewZKtokensPurchasers/> : <Login/>} />
-            
-              <Route path="/user/:username" element={<ZKtokeProviderProfile/>} />
-              <Route path="/zkt-providers" element={<ViewZKtokensProviders/>} />
+                      
+              <Route path="/zkt-purchasers" element={isAuthenticated? <CompleteViewZKTokenPurchasers/> : <Login/>} />    
+              <Route path="/user/:username" element={isAuthenticated? <CompleteZKTokenProviderProfile/> : <Login/>} />
+              <Route path="/user/:username" element={isAuthenticated? <CompleteZKTokenPurchasers/> : <Login/>} />
+              <Route path="/zkt-providers" element={isAuthenticated? <CompleteViewZKTokenProvider/>: <Login/>} />
              
               
               <Route path="/tokenTransfer" element={isAuthenticated? <ERC20 /> : <Login/>} />

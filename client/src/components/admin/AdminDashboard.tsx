@@ -38,7 +38,7 @@ const AdminDashboard: React.FC = () => {
   return (
     <>
       <div className='h-screen noScroll'>
-        <nav className=' sticky flex px-5 py-3 bg-white border-b shadow-md justify-between align-items-center ' >
+      <nav className=' sticky flex px-5 py-3 bg-white border-b shadow-md justify-between align-items-center ' >
           <div>
             <img src={ZKTransact} alt="logo" />
           </div>

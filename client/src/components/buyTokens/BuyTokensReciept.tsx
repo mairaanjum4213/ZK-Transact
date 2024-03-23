@@ -10,12 +10,28 @@ import { useDarkMode, useLightMode } from "color-scheme-hook";
 import axios from 'axios'
 import { useEffect, useState } from 'react';
 axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
+import {useParams} from 'react-router-dom'
 
 const BuyTokensReciept: React.FC = () => {
 
     const [isLightMode, toggleColorScheme, resetPreference] = useLightMode();
     const [allImage, setAllImage] = useState<any>(null);
     const [pdfFile, setPdfFile] = useState<string | null>(null);
+    const { username } = useParams<{ username: string }>();
+    const [userData, setUserData] = useState<any>(null);
+
+    useEffect(() => {
+      const fetchUserData = async () => {
+        try {
+          const response = await axios.get(`/api/user/${username}`);
+          setUserData(response.data);
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+        }
+      };
+  
+      fetchUserData();
+    }, [username]);
 
 
     const handleCopyToClipboardWalletAddresss = () => {
@@ -70,13 +86,13 @@ const BuyTokensReciept: React.FC = () => {
                                             
                                             <div className="col-lg-6 col-md-6 col-sm-6">
                                                 <p className='normalTextColor text-right fs-6'>
-                                                    AdminMaira@yahoo.com
+                                                    {userData?.username}
                                                 </p>
                                                 <p className='text-secondary text-right mt-1'>
-                                                    mairaanjum86@gmial.com
+                                                    {userData?.email}
                                                 </p>
                                                 <p className='text-secondary text-right mt-1'>
-                                                    Pakistan
+                                                   {userData?.region}
                                                 </p>
                                             </div>
                                         </div>

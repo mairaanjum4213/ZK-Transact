@@ -1,5 +1,4 @@
-import BreadCrumb from "../BreadCrumb.tsx";
-import BuyTokens from "../../assets/BreadCrumbs/ZKSellers.jpg";
+
 import Author from "../../assets/author.jpg";
 import "../../css/TokenTraders.css";
 import { Link } from "react-router-dom";
@@ -9,7 +8,12 @@ import { getUser } from "../../helper/helper.tsx";
 import axios from "axios";
 axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
 
-const ViewZKtokensProviders: React.FC = () => {
+
+interface Props {
+  title: string;
+}
+
+const ViewZKtokensProviders: React.FC<Props> = ({title}) => {
   const token = localStorage.getItem("token");
   const decodedToken: any = token ? jwtDecode(token) : {};
   const username = decodedToken.username || "";
@@ -53,13 +57,7 @@ const ViewZKtokensProviders: React.FC = () => {
 
   return (
     <>
-      <BreadCrumb
-        parentPageLink="/buyTokens"
-        ParentPage="Buy Tokens"
-        pageName=" ZK-Token Sellers"
-        ChildPage=" ZK-Token Sellers"
-        imageUrl={BuyTokens}
-      />
+      
       <section id="">
         <p
           className="mt-3  px-5"
@@ -69,7 +67,7 @@ const ViewZKtokensProviders: React.FC = () => {
             letterSpacing: "1px",
           }}
         >
-          Online Zk-Token Sellers
+         {title}
         </p>
         <p className="mt-3 mb-5 px-5" style={{ fontSize: "large" }}>
           Region: {userData?.region}
