@@ -4,11 +4,12 @@ import logo from '../assets/icon2.png';
 import logo2 from '../assets/icon3.png';
 import { Toaster } from 'react-hot-toast';
 import { Link } from 'react-router-dom';
+import ConnectWallet from './ConnectWallet';
 const Navbar: React.FC = () => {
   return (
     <>
       <Toaster position='top-center' reverseOrder={false}></Toaster>
-      <nav className="navbar navParent   navbar-expand-lg bg-white py-3">
+      <nav className="navbar navParent   navbar-expand-lg bg-white py-2">
         <div className="container">
           <Link to="aboutus" className="navbar-brand fs-4 ">
             <img src={logo} alt="Logo" />
@@ -53,50 +54,18 @@ const Navbar: React.FC = () => {
                 <li className="nav-item">
                   <Link to="/register" className="nav-link active" aria-current="page">Register</Link>
                 </li>
-                {/* Drop Down  */}
-                {/* <li className="nav-item dropdown mx-2 ">
-            <a
-              className="nav-link dropdown-toggle"
-              href="#"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              Dropdown
-            </a>
-            <ul className="dropdown-menu">
-              <li>
-                <a className="dropdown-item" href="#">
-                  Action
-                </a>
-              </li>
-              <li>
-                <a className="dropdown-item" href="#">
-                  Another action
-                </a>
-              </li>
-              <li>
-                <hr className="dropdown-divider" />
-              </li>
-              <li>
-                <a className="dropdown-item" href="#">
-                  Something else here
-                </a>
-              </li>
-            </ul>
-          </li> */}
               </ul>
               {/* Login / Sign up */}
               {/* to show this div crate a class and in medai query small screen pe display block  iska bad opacity ma filhal yha 0 kr rha*/}
-              <div className="d-flex flex-column flex-lg-row normalBar  justify-content-center align-items-center gap-3">
-                <a href="#login" style={{ opacity: "0" }} className="">Login</a>
+              <div className="d-flex flex-column flex-lg-row normalBar  justify-content-center align-items-center">
                 <a
                   href="#signup"
-                  className="text-white text-decoration-none px-3 py-1 rounded-4"
+                  className="text-white text-decoration-none  select-none py-1 rounded-4"
                   style={{ backgroundColor: "#f94ca4", opacity: "0" }}
                 >
                   Sign Up
                 </a>
+                <ConnectWallet />
               </div>
             </div>
           </div>

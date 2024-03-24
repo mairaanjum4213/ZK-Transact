@@ -19,16 +19,18 @@ const Notifications: React.FC = () => {
           </span>
           <RiNotification2Fill />
         </button>
-        <ul className="dropdown-menu dropdown-menu-lg-end dropdownParent  pt-0">
+        <ul className="dropdown-menu dropdown-menu-lg-end dropdownParent  rounded-lg pt-0">
+        
+        
           <div id="notficationBg" className='p-4'>
             <p className='text-white fs-4'>
               Notifications
             </p>
-            <p className='text-white'>You   have  <b>36</b> unread notification</p>
+            <p className="opacity-0">You   have  <b>36</b> unread notification</p>
           </div>
-          <div className=' p-1 d-flex justify-content-around my-3'>
-            <button className='simpleButton1 '>Sending </button>
-            <button className='simpleButton2'>Receiving</button>
+          <div className=' p-1  mx-2 d-flex justify-content-center  gap-4 my-3'>
+            <button className='simpleButton1 w-40  '>Sending </button>
+            <button className='simpleButton2 w-40'>Receiving</button>
           </div>
           <li className='d-flex justify-content-between align-items-center m-2'>
             <p>
@@ -54,7 +56,7 @@ const Notifications: React.FC = () => {
             </div>
           </li>
           <div id="" className='my-2 d-flex justify-content-around align-items-center'>
-            <p className='clearAll'>Clear All</p>
+            <p className='text-sm'>ZK Transact</p>
           </div>
         </ul>
       </div>

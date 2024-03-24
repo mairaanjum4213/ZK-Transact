@@ -4,7 +4,7 @@ import BreadCrumb from '../BreadCrumb.tsx';
 import '../../css/Registration.css';
 import ZkTokenConversion from '../ZkTokenConversion.tsx';
 import { IoInformationCircle } from "react-icons/io5";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import sellTokens from '../../assets/BreadCrumbs/buyZkTokens.png';
 import buyToken from '../../assets/sellTokens.png';
 // Backend integration
@@ -16,6 +16,7 @@ import { getUser, storesSellToken } from "../../helper/helper"
 
 const SellTokens: React.FC = () => {
   const token = localStorage.getItem('token');
+  const navigate = useNavigate();
   const decodedToken: any = token ? jwtDecode(token) : {};
   const username = decodedToken.username || '';
   const [userData, setUserData] = useState<string>("");
@@ -29,13 +30,11 @@ const SellTokens: React.FC = () => {
   const [localCurrencyVal, setLocalCurrencyVal] = useState<number>();
   const [transactionfee, settransactionfee] = useState<number>();
   const [inputZKToken, setInputZKToken] = useState<number>();
- // Fetching User Data for Id
   useEffect(() => {
     async function fetchUserData() {
       try {
         const response = await getUser({ username });
         if (response.data) {
-         // To Access Id or other data of user from db just use userData._id
           setUserData(response.data)
         
         }
@@ -78,7 +77,7 @@ const SellTokens: React.FC = () => {
           success: <b>Sell Tokens request sent Successfully</b>,
           error: <b>Error Occured While Sending Request</b>
         });
-        storeSellTokenPromise.then(() => window.location.reload());
+        storeSellTokenPromise.then(() =>  navigate(`/sellTokens-reciept/${purchaserName}`));
       } catch (error) {
         console.error("Error submitting Selling Token Data:", error);
         toast.error("Error Occured While Submitting Sell Token Data");

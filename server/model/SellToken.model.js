@@ -54,6 +54,6 @@ const SellTokenSchema = new Schema({
         type:String
     }
     
-});
+},{timestamps:true});
 
 export default mongoose.models.SellToken || mongoose.model('SellToken', SellTokenSchema);

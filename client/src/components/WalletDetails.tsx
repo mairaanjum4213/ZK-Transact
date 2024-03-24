@@ -15,8 +15,19 @@ import { jwtDecode } from "jwt-decode";
 import { getUser } from "../helper/helper";
 import axios from "axios";
 axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
+import ConnectWallet from "./ConnectWallet";
 
 const WalletDetails: React.FC = () => {
+
+
+  const [hideBreadCrumb, setHideBreadCrumb] = useState<boolean>(false);
+  useEffect(() => {
+    if (window.location.pathname === "/admin") {
+      setHideBreadCrumb(true);
+    } else {
+      setHideBreadCrumb(false);
+    }
+  }, []);
   const { isConnected } = useAccount();
   const handleCopyToClipboardWalletAddresss = () => {
     toast.success("Wallet Address Copied");
@@ -42,23 +53,20 @@ const WalletDetails: React.FC = () => {
     const updatedAddress = address ?? "Default Address";
     setWalletAddress(updatedAddress);
   }, [address]);
-
   const handleNetworkSwitch = async (id: number, name: string) => {
     try {
       if (switchNetwork) {
         await switchNetwork(id);
         toast.success(`Switching to ${name}`);
       }
-    } catch (err) {}
+    } catch (err) { }
   };
-
   const [metamaskAddress, setMetamaskAddress] = useState("");
   const zkTokens = balance?.formatted;
   const token = localStorage.getItem("token");
   const decodedToken: any = token ? jwtDecode(token) : {};
   const username = decodedToken.username || "";
   const [userData, setUserData] = useState<any>("");
-
   // -----User Data
   useEffect(() => {
     // Fetching User Data for Id
@@ -75,36 +83,16 @@ const WalletDetails: React.FC = () => {
     }
     fetchUserData();
   }, [username]);
-
-  /*const handleAddWallet = async () => {
-    try {
-      const response = await axios.post("/api/wallet", {
-        metamaskAddress,
-        zkTokens
-      });
-      const createdWalletId = response.data.wallet._id; // Get the created account id
-      assignWalletToUser(createdWalletId); // Automatically assign account to user
-      toast.success("Wallet Details added!");
-    } catch (error) {
-      toast.error("Problem adding wallet details.");
-    }
-  };*/
-
   const [isButtonClicked, setIsButtonClicked] = useState(false);
-
-  // Other code
-
   const handleAddWallet = async () => {
     try {
-      setIsButtonClicked(true); // Disable the button
-
+      setIsButtonClicked(true);
       // Check if user already has a wallet
       if (userData.wallet) {
         toast.error("You cannot add multiple wallets.");
         setIsButtonClicked(false); // Enable the button
         return;
       }
-
       const response = await axios.post("/api/wallet", {
         metamaskAddress,
         zkTokens,
@@ -118,7 +106,6 @@ const WalletDetails: React.FC = () => {
       setIsButtonClicked(false); // Enable the button
     }
   };
-
   const assignWalletToUser = async (walletId: string) => {
     try {
       await axios.put(`/api/users/${userData._id}/wallet/${walletId}`);
@@ -126,30 +113,27 @@ const WalletDetails: React.FC = () => {
       toast.error("Problem while adding wallet ");
     }
   };
-
   return (
     <>
       <Toaster position="top-center" reverseOrder={false}></Toaster>
-      <BreadCrumb
+      {!hideBreadCrumb && ( <BreadCrumb
         parentPageLink="/user"
         ParentPage="Home"
         pageName="Wallet Detials"
         ChildPage="Wallet Detials"
         imageUrl={breadCrumWallet}
-      />
+      />)}
       <section className="">
         <div className="container  mb-5">
           <h1 className="fw-bold fs-4 my-5" style={{ letterSpacing: "1px" }}>
-            Crypto Wallet Details
+            Connected Wallet Details
           </h1>
-
           {isConnected ? (
             <>
               <div
                 className="row d-flex justify-content-center align-items-center mt-5 mx-2 px-1"
-               
               >
-                <div className="col col-lg-6 mb-4 mb-lg-0    ">
+                <div className="col col-lg-6 mb-4 mb-lg-0 w-10/12  ">
                   <div
                     className="adminProfileCard mb-3 "
                     style={{ borderRadius: ".5rem" }}
@@ -165,10 +149,10 @@ const WalletDetails: React.FC = () => {
                         <img
                           src={metamask}
                           alt="Avatar"
-                          className="img-fluid my-4"
+                          className="img-fluid"
                         />
                         <h5 className=" fs-4">Meta Mask </h5>
-                        <p className="text-secondary my-2">Wallet</p>
+                        <p className="text-secondary mb-4">Wallet</p>
                       </div>
                       <div className="col-md-8">
                         <div className="card-body px-4 pb-4 pt-lg-4">
@@ -265,20 +249,26 @@ const WalletDetails: React.FC = () => {
                   </div>
                 </div>
               </div>
+              <div className="mx-[45%] mt-2 w-full">
+                <ConnectWallet />
+              </div>
             </>
           ) : (
-            <p className="text-left font-bold text-red-500 text-lg">
-              Please Connect the wallet first.
-            </p>
+            <div className="flex justify-center flex-col  align-items-center text-red-500 text-lg">
+              <p>  Please Connect the wallet first.</p>
+              <div className="w-fit">
+                <div className="my-4">
+                  <ConnectWallet />
+                </div>
+              </div>
+            </div>
           )}
         </div>
       </section>
-
       {/*   Add metamask details*/}
-
-      <div className="mx-auto flex  w-full lg:w-6/12 ">
+      {userData.isMerchant && (<div className="mx-auto flex  w-full lg:w-6/12 ">
         <div className=" w-full  my-8 p-4 accountsCard rounded-xl">
-          <h1 className="text-xl font-bold mb-4">Add Metamask Details </h1>
+          <h1 className="text-xl font-bold mb-4 tracking-widest" >Add Metamask Details </h1>
           <div className="mb-4">
             <label className="block mb-2">Metamask Address:</label>
             <input
@@ -303,13 +293,14 @@ const WalletDetails: React.FC = () => {
           <button
             type="submit"
             onClick={handleAddWallet}
-            disabled={isButtonClicked} // Disable button if isButtonClicked is true
+            disabled={isButtonClicked}
             className="standarButton-1"
           >
             {isButtonClicked ? "Adding Wallet..." : "Add Wallet"}
           </button>
         </div>
       </div>
+      )}
     </>
   );
 };

@@ -6,34 +6,31 @@ import Notifications from './Notifications';
 import { Link } from 'react-router-dom';
 import NavChats from './NavChats';
 import Navprofile from './Navprofile';
-import { Connector, useAccount, useConnect, useDisconnect } from 'wagmi';
+// import { Connector, useAccount, useConnect, useDisconnect } from 'wagmi';
 import { Toaster, toast } from 'react-hot-toast';
 const UserNavbar: React.FC = () => {
-  const [showModal, setShowModal] = useState(false);
-  const handleModalToggle = () => {
-    setShowModal(!showModal);
-  };
-  const { connectAsync, connectors, isLoading, pendingConnector } = useConnect();
-  const { disconnect } = useDisconnect();
-  const { isConnected } = useAccount();
-  const handleWalletConnect = async (connector: Connector) => {
-    const { chain } = await connectAsync({ connector });
-    if (chain.unsupported) {
-      toast.error("Please connect with sepolia");
-      disconnect();
-    }
-  }
-  const handleDisconnect = () => {
-    disconnect();
-  }
+ 
+  // const { connectAsync, connectors, isLoading, pendingConnector } = useConnect();
+  // const { disconnect } = useDisconnect();
+  // const { isConnected } = useAccount();
+  // const handleWalletConnect = async (connector: Connector) => {
+  //   const { chain } = await connectAsync({ connector });
+  //   if (chain.unsupported) {
+  //     toast.error("Please connect with sepolia");
+  //     disconnect();
+  //   }
+  // }
+  // const handleDisconnect = () => {
+  //   disconnect();
+  // }
   return (
     <>
       <Toaster position='top-center' reverseOrder={false}></Toaster>
-      <nav className="navbar navParent   navbar-expand-lg bg-white p py-3">
+      <nav className="navbar navParent  navbar-expand-lg bg-white  py-3">
         {/* problem1 solved using container fluid isntead of container as container has z-index-1  */}
         <div className="container-fluid px-5">
           <Link to="aboutus" className="navbar-brand fs-4 ">
-            <img src={logo} alt="Logo" />
+            <img  src={logo} alt="Logo" />
           </Link>
           <button
             className="navbar-toggler shadow-none border-0"
@@ -62,26 +59,26 @@ const UserNavbar: React.FC = () => {
               />
             </div>
             <div className="offcanvas-body d-flex flex-column  flex-lg-row p-lg-0">
-              <ul className="navbar-nav  justify-content-center fs-5 align-items-center flex-grow-1 pe-3">
+              <ul className="navbar-nav  gap-1 justify-content-center fs-5 align-items-center flex-grow-1 pe-3">
               
               <li className="nav-item">
-                  <Link to="/user" className="nav-link active" aria-current="page">Home</Link>
+                  <Link to="/user" className="nav-link active " aria-current="page">Home</Link>
                 </li>
 
                 <li className="nav-item">
                   <Link to="/buytokens" className="nav-link active" aria-current="page">Buy Tokens</Link>
                 </li>
-                <li className="nav-item mx-2">
+                <li className="nav-item ">
                   <Link to="/selltokens" className="nav-link active" aria-current="page">Sell Tokens</Link>
                 </li>
-                <li className="nav-item mx-2">
+                <li className="nav-item ">
                   <Link to="/tokenTransfer" className="nav-link active" aria-current="page">Transfer Tokens</Link>
                 </li>
                
               </ul>
               <div className="d-flex flex-column flex-lg-row   justify-content-center align-items-center gap-3">
                 {/* Wallet Connection Button */}
-                {!isConnected && connectors.map(connector => {
+                {/* {!isConnected && connectors.map(connector => {
                   const { id } = connector;
                   return (
                     <button className="btnStyle w-fit h-fit  py-3 px-3" disabled={!connector.ready} key={id} onClick={() => handleWalletConnect(connector)}>
@@ -91,8 +88,8 @@ const UserNavbar: React.FC = () => {
                         ' (connecting)'}
                     </button>)
                 })}
-                {isConnected && <button className="btnStyle" onClick={handleDisconnect}>Disconnect Wallet  </button>}
-                <div className='d-flex justify-content-center align-items-center'>
+                {isConnected && <button className="btnStyle" onClick={handleDisconnect}>Disconnect Wallet  </button>} */}
+                <div className='d-flex justify-content-center gap-2 align-items-center'>
                   <Notifications />
                   <NavChats />
                   <Navprofile />

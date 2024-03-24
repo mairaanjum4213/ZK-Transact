@@ -38,6 +38,8 @@ import CompleteViewZKTokenProvider from './components/buyTokens/CompleteViewZKTo
 import CompleteViewZKTokenPurchasers from './components/sellTokens/CompleteViewZKTokenPurchasers.tsx';
 import CompleteZKTokenProviderProfile from './components/buyTokens/CompleteZKTokenProviderProfile.tsx';
 import CompleteZKTokenPurchasers from './components/sellTokens/CompleteZKTokenPurchasers.tsx';
+import BuyTokenApprovalPage from './components/buyTokens/buyTokenApprovalPage.tsx';
+import SellTokenApprovalPage from './components/sellTokens/SellTokenApprovalPage.tsx';
 
 
 function App() {
@@ -106,10 +108,12 @@ function App() {
 
               <Route path="/buyTokens" element={isAuthenticated? <BuyTokens/> : <Login/>} />
               <Route path="/buyTokens-reciept/:username" element={isAuthenticated? <BuyTokensReciept/> : <Login/>} />
-              <Route path="/buyTokens-  " element={isAuthenticated? <BuyTokensRecieptApproved/> : <Login/>} />
+              <Route path="/buyTokens-approved" element={isAuthenticated? <BuyTokensRecieptApproved/> : <Login/>} />
+              <Route path="/buyTokens-approval" element={isAuthenticated? <BuyTokenApprovalPage/> : <Login/>} />
 
-              <Route path="/sellTokens-reciept" element={isAuthenticated? <SellTokensReciept/> : <Login/>} />
+              <Route path="/sellTokens-reciept/:username" element={isAuthenticated? <SellTokensReciept/> : <Login/>} />
               <Route path="/sellTokens" element={isAuthenticated? <SellTokens /> : <Login/>} />
+              <Route path="/sellTokens-approval" element={isAuthenticated? <SellTokenApprovalPage/> : <Login/>} />
 
                       
               <Route path="/zkt-purchasers" element={isAuthenticated? <CompleteViewZKTokenPurchasers/> : <Login/>} />    

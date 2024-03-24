@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { IoStatsChart } from "react-icons/io5";
+import { BiTransferAlt } from "react-icons/bi";
+import { AiOutlineDollar } from "react-icons/ai";
+import { FcSalesPerformance } from "react-icons/fc";
 import { MdSell } from "react-icons/md";
 import { PiCoinsFill } from "react-icons/pi";
 import { FaWallet } from "react-icons/fa6";
@@ -13,8 +16,10 @@ import Accounts from '../Accounts';
 import ZKTransact from "../../assets/icon2.png"
 import Navprofile from '../Navprofile';
 import Notifications from '../Notifications';
-import { Connector, useAccount, useConnect, useDisconnect } from 'wagmi';
 import { Toaster, toast } from 'react-hot-toast';
+import BuyTokens from '../buyTokens/BuyTokens';
+import SellTokens from '../sellTokens/SellTokens';
+import { ERC20 } from '../../Wagmi/ERC20';
 const AdminDashboard: React.FC = () => {
   const [selectedContent, setSelectedContent] = useState('Dashboard');
   const [focusedDiv, setFocusedDiv] = useState('Dashboard');
@@ -22,23 +27,10 @@ const AdminDashboard: React.FC = () => {
     setSelectedContent(content);
     setFocusedDiv(content);
   };
-  const { connectAsync, connectors, isLoading, pendingConnector } = useConnect();
-  const { disconnect } = useDisconnect();
-  const { isConnected } = useAccount();
-  const handleWalletConnect = async (connector: Connector) => {
-    const { chain } = await connectAsync({ connector });
-    if (chain.unsupported) {
-      toast.error("Please connect with sepolia");
-      disconnect();
-    }
-  }
-  const handleDisconnect = () => {
-    disconnect();
-  }
   return (
     <>
       <div className='h-screen noScroll'>
-      <nav className=' sticky flex px-5 py-3 bg-white border-b shadow-md justify-between align-items-center ' >
+        <nav className=' sticky flex px-5 py-3 bg-white border-b shadow-md justify-between align-items-center ' >
           <div>
             <img src={ZKTransact} alt="logo" />
           </div>
@@ -53,7 +45,7 @@ const AdminDashboard: React.FC = () => {
         </nav>
         <div className="d-flex flex-lg-row flex-column gap-1 ">
           <div className=" relative w-full  lg:w-[24%]   py-md-5 py-3 px-[1.8rem] adminSide    }  ">
-            <div id="adminSideBar" className="d-flex flex-lg-column h-full flex-row  gap-3 align-items-lg-start align-items-center overflow-auto  "  >
+            <div id="adminSideBar" className="d-flex flex-lg-column h-full flex-row  gap-3 align-items-lg-start align-items-center  "  >
               <div className={`flex w-full cursor-pointer   gap-2 justify-start align-items-center text-white sidebarOptions ${focusedDiv === 'Dashboard' ? 'focusedDiv' : ''}`}
                 onClick={() => handleMenuClick('Dashboard')}
               >
@@ -102,19 +94,29 @@ const AdminDashboard: React.FC = () => {
                   Accounts
                 </div>
               </div>
-              <div className={`flex w-full cursor-pointer gap-2 justify-center align-items-center text-white sidebarOptions ${isConnected ? ("connectWallet") : ("disconnectWallet")}`}
-                onClick={() => handleMenuClick('Connect Wallet')}>
-                {!isConnected && connectors.map(connector => {
-                  const { id } = connector;
-                  return (
-                    <button className="" disabled={!connector.ready} key={id} onClick={() => handleWalletConnect(connector)}>
-                      Connect Wallet
-                      {isLoading &&
-                        connector.id === pendingConnector?.id &&
-                        ''}
-                    </button>)
-                })}
-                {isConnected && <button className="" onClick={handleDisconnect}>Disconnect </button>}
+              <div className={`flex w-full cursor-pointer gap-2 justify-start align-items-center text-white sidebarOptions ${focusedDiv === 'buyTokens' ? 'focusedDiv' : ''}`}
+                onClick={() => handleMenuClick('buyTokens')}
+              >
+                <FcSalesPerformance className="text-lg text-amber-500 " />
+                <div className='h-fit whitespace-nowrap text-center rounded-lg ' >
+                  Buy Tokens
+                </div>
+              </div>
+              <div className={`flex w-full cursor-pointer gap-2 justify-start align-items-center text-white sidebarOptions ${focusedDiv === 'sellTokens' ? 'focusedDiv' : ''}`}
+                onClick={() => handleMenuClick('sellTokens')}
+              >
+                <AiOutlineDollar className="text-lg text-amber-500 " />
+                <div className='h-fit whitespace-nowrap text-center rounded-lg ' >
+                  Sell Tokens
+                </div>
+              </div>
+              <div className={`flex w-full cursor-pointer gap-2 justify-start align-items-center text-white sidebarOptions ${focusedDiv === 'transferTokens' ? 'focusedDiv' : ''}`}
+                onClick={() => handleMenuClick('transferTokens')}
+              >
+                <BiTransferAlt className="text-lg " />
+                <div className='h-fit whitespace-nowrap text-center rounded-lg ' >
+                  Transfer Tokens
+                </div>
               </div>
               <div>
               </div>
@@ -127,7 +129,7 @@ const AdminDashboard: React.FC = () => {
               <Dashboard />
             )}
             {selectedContent === 'WalletDetails' && (
-              <div className=''>
+              <div className='overflow-x-hidden'>
                 <WalletDetails />
               </div>
             )}
@@ -141,6 +143,31 @@ const AdminDashboard: React.FC = () => {
             )}
             {selectedContent === 'SellRequest' && (
               <SellTokensRequest />
+            )}
+            {selectedContent === 'Accounts' && (
+              <div className=''>
+                <Accounts />
+              </div>
+            )}
+            {selectedContent === 'buyTokens' && (
+              <div className=''>
+                <BuyTokens />
+              </div>
+            )}
+            {selectedContent === 'Accounts' && (
+              <div className=''>
+                <Accounts />
+              </div>
+            )}
+            {selectedContent === 'sellTokens' && (
+              <div className=''>
+                <SellTokens />
+              </div>
+            )}
+            {selectedContent === 'transferTokens' && (
+              <div className='overflow-x-hidden'>
+                <ERC20 />
+              </div>
             )}
             {selectedContent === 'Accounts' && (
               <div className=''>

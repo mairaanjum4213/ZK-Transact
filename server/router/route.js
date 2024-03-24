@@ -27,12 +27,11 @@ router.route('/getUserById/:id').get(controller.getUserById)
 router.route('/getAllUsers').get(controller.getAllUsers)
 router.route('/createResetSession').get(controller.createResetSession) // reset all the variables
 router.route('/getbuytokens').get(controller.userwithBuyToken) 
-router.route('/getselltokens/:id').get(controller.userwithSellToken) 
+router.route('/getselltokens').get(controller.userwithSellToken) 
 router.route('/gettransfertokens/sender/:senderId').get(controller.userwithTransferToken) 
 
 /** PUT Methods */
 router.route('/updateuser').put(Auth, controller.updateUser); // is use to update the user profile,, 
-//first call Auth middleware to verify the jwt token only valid login user can update
 router.route('/resetPassword').put(controller.verifyUser,controller.resetPassword); // use to reset password
 
 
@@ -62,5 +61,17 @@ router.route('/users/:userId/accounts/:accountId').put(controller.assignAccountT
 /*______________________Wallet Routes ______________________*/
 router.route('/wallet').post(controller.createWalletDetails);
 router.route('/users/:userId/wallet/:walletId').put(controller.assignWalletToUser);
+
+
+
+/*______________________Sell Request Routes ______________________*/
+router.route('/sellToken/approve/:id').put(controller.approveSellToken);
+router.route('/sellToken/pending/:username').get(controller.getPendingSellTokenRequestsForAdmin);
+
+
+
+/*______________________Buy Request Routes ______________________*/
+router.route('/buyToken/approve/:id').put(controller.approveBuyToken);
+router.route('/buyToken/pending/:username').get(controller.getPendingBuyTokenRequestsForAdmin);
 
 export default router;

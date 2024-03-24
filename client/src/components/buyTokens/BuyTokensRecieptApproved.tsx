@@ -12,7 +12,7 @@ import axios from 'axios'
 import { useEffect, useState } from 'react';
 axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
 
-const BuyTokensReciept: React.FC = () => {
+const BuyTokensRecieptApproved: React.FC = () => {
 
     const [isLightMode, toggleColorScheme, resetPreference] = useLightMode();
     const [allImage, setAllImage] = useState<any>(null);
@@ -198,4 +198,4 @@ const BuyTokensReciept: React.FC = () => {
         </>
     );
 };
-export default BuyTokensReciept;
+export default BuyTokensRecieptApproved;

@@ -34,7 +34,7 @@ export const BuyTokenSchema = new Schema({
     },
     status:{
         type:String,
-        enum: ["Pending", "Approved", "Declined"]
+        enum: ["Pending", "Approved", "Declined"],
     },
     adminComments:{
         type:String

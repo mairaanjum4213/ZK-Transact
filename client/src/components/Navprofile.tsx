@@ -7,7 +7,6 @@ import "../css/ProfileDropdown.css";
 import { useEffect, useState } from "react";
 import { getUser } from "../helper/helper";
 import { jwtDecode } from "jwt-decode";
-
 const Navprofile: React.FC = () => {
   const [userData, setUserData] = useState<any>();
   const token = localStorage.getItem("token");
@@ -36,7 +35,6 @@ const Navprofile: React.FC = () => {
     navigate("/");
   };
   const { isConnected } = useAccount();
-
   return (
     <>
       <div className="btn-group mx-1">
@@ -67,7 +65,7 @@ const Navprofile: React.FC = () => {
               Edit Profile
             </Link>
           </li>
-          {isConnected && (
+          {/* {isConnected && (
             <li style={{ textDecoration: "none" }}>
               <Link
                 to="/walletDetails"
@@ -80,12 +78,22 @@ const Navprofile: React.FC = () => {
                 Wallet Details
               </Link>
             </li>
-          )}
-          <li>Setting</li>
-          <li>
-           <Link to="/chats">Chat</Link>
+          )} */}
+          <li style={{ textDecoration: "none" }}>
+            <Link
+              to="/walletDetails"
+              style={{
+                display: "block",
+                width: "100%",
+                height: "100%",
+              }}
+            >
+              Wallet Details
+            </Link>
           </li>
-
+          <li>
+            <Link to="/chats">Chat</Link>
+          </li>
           <li className="flex items-center gap-2">
             {userData?.isMerchant === true ? (
               <Link to="/admin">Admin Dashboard</Link>
@@ -96,7 +104,7 @@ const Navprofile: React.FC = () => {
               </>
             )}
           </li>
-
+          <li>FAQs</li>
           <div className="text-center px-1 mt-3 pb-2">
             <button className="simpleButton1 w-75 " onClick={handleLogout}>
               Logout

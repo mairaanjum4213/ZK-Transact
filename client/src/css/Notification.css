@@ -69,14 +69,6 @@
   background-color: transparent !important;
   color: #269e88 !important;
 }
-.clearAll {
-  color: grey;
-  transition: transform 0.3s ease, border 0.6s;
-}
-.clearAll:hover {
-  transform: translateY(-2px);
-  border-bottom: 1px solid grey;
-}
 @media (prefers-color-scheme: light) {
   .dropdownParent {
     background-color: white;
