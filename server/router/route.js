@@ -28,6 +28,8 @@ router.route('/getAllUsers').get(controller.getAllUsers)
 router.route('/createResetSession').get(controller.createResetSession) // reset all the variables
 router.route('/getbuytokens').get(controller.userwithBuyToken) 
 router.route('/getselltokens').get(controller.userwithSellToken) 
+router.route('/userwithselltoken/:sellTokenId').get(controller.userwithSellTokenwithId);
+router.route('/userwithbuytoken/:buyTokenId').get(controller.userwithBuyTokenwithId);
 router.route('/gettransfertokens/sender/:senderId').get(controller.userwithTransferToken) 
 
 /** PUT Methods */

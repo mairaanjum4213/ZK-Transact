@@ -347,6 +347,21 @@ export async function userwithSellToken(req, res) {
   }
 }
 
+export async function userwithSellTokenwithId(req, res) {
+  try {
+    const sellToken = await SellTokenModel.findById(req.params.sellTokenId)
+      .populate("seller", ["username", "email"]);
+    
+    if (sellToken) {
+      res.status(200).json(sellToken);
+    } else {
+      res.status(404).json({ message: "SellToken not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
 //_________________________________________________ ↑  Sell  Tokens  ↑
 
 //_________________________________________________ ↓  Transfer Tokens ↓
@@ -443,6 +458,21 @@ export async function userwithBuyToken(req, res) {
     const buyToken = await BuyTokenModel.findOne()
       .sort({ createdAt: -1 })
       .populate("buyer", ["username", "email"]);
+    if (buyToken) {
+      res.status(200).json(buyToken);
+    } else {
+      res.status(404).json({ message: "BuyToken not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+export async function userwithBuyTokenwithId(req, res) {
+  try {
+    const buyToken = await BuyTokenModel.findById(req.params.buyTokenId)
+      .populate("buyer", ["username", "email"]);
+    
     if (buyToken) {
       res.status(200).json(buyToken);
     } else {
@@ -622,7 +652,7 @@ export const getPendingSellTokenRequestsForAdmin = async (req, res) => {
     const pendingSellTokens = await SellTokenModel.find({
       purchaserName: username,
       transactionStatus: 'Pending'
-    });
+    }).populate("seller", ["username", "email"]);;
 
     return res.status(200).json(pendingSellTokens);
   } catch (error) {
@@ -662,7 +692,7 @@ export const getPendingBuyTokenRequestsForAdmin = async (req, res) => {
     const pendingSellTokens = await BuyTokenModel.find({
       serviceProviderName: username,
       status: 'Pending'
-    });
+    }).populate("buyer", ["username", "email"]);;
 
     return res.status(200).json(pendingSellTokens);
   } catch (error) {
