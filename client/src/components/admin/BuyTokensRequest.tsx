@@ -144,14 +144,17 @@ const BuyTokensRequest: React.FC<BuyTokensRequestProps> = ({ requestId }) => {
       window.location.reload();
     }
   }, [isSuccess, useContractWriteData]);
+
   const [beneficiaryMetamask, setBeneficiaryMetamask] = useState<string>("");
   const [transferTokenAmount, setTransferTokenAmount] = useState<any>();
   const [transferSuccess, setTransferSuccess] = useState(false);
+
   useEffect(() => {
     if (isSuccess && !transferSuccess) {
       setTransferSuccess(true);
     }
   }, [isSuccess, transferSuccess]);
+
   const handleTransferClick = () => {
     if (write) {
       write();
@@ -167,7 +170,7 @@ const BuyTokensRequest: React.FC<BuyTokensRequestProps> = ({ requestId }) => {
             <h2 className="mt-5 mx-5 fw-bold">Buy Tokens Request</h2>
 
             <div
-              className="container -z-10  mb-4 w-11/12 rounded  border mt-5  "
+              className="mx-5 mb-4 w-11/12 rounded  border mt-5  "
               id="printReciept"
             >
               <div className="row gutters">
@@ -231,7 +234,7 @@ const BuyTokensRequest: React.FC<BuyTokensRequestProps> = ({ requestId }) => {
                                 <div className="invoice-num">
                                   <div className="normalTe">
                                     <p>Invoice</p>
-                                    <p>{requestData?._id}</p>
+                                    <p className="text-sm">{requestData?._id}</p>
                                   </div>
                                 </div>
                               </div>
@@ -264,7 +267,7 @@ const BuyTokensRequest: React.FC<BuyTokensRequestProps> = ({ requestId }) => {
                                       <td className="p-3 customTabletd">
                                         {requestData?.metamaskAddress}
                                         <CopyToClipboard
-                                          text={"metamaskAddress"}
+                                          text={requestData?.metamaskAddress}
                                           style={{
                                             display: "inline",
                                             cursor: "-webkit-grabbing",
@@ -301,7 +304,7 @@ const BuyTokensRequest: React.FC<BuyTokensRequestProps> = ({ requestId }) => {
                                       cursor: "grabbing",
                                     }}
                                   >
-                                    Button not workingggggg
+                                   Show Bank Receipt 
                                   </button>
                                 </div>
                               </div>
@@ -314,8 +317,10 @@ const BuyTokensRequest: React.FC<BuyTokensRequestProps> = ({ requestId }) => {
                 </div>
               </div>
             </div>
+            <a href="#Transfer">Transfer </a>
+            <a href="#Reject">Reject </a>
             <p className="mx-5 text-danger">
-              *Approve the buy request by trasfering X tokens
+              *Approve the buy request by transferring X tokens*
             </p>
             {/* Adding wagmi here to avoid props */}
             {isConnected ? (
@@ -340,19 +345,21 @@ const BuyTokensRequest: React.FC<BuyTokensRequestProps> = ({ requestId }) => {
                     </div>
                   </div>
                   <form
+                  
                     className="row d-flex justify-content-center mt-4"
                     onSubmit={(e) => {
                       e.preventDefault();
                     }}
                   >
                     <input
+                
                       style={{ width: "65%" }}
-                      id="transfer"
+                      id="Transfer"
                       className="InputReg cursor-auto"
                       type="number"
                       onChange={handleInputChange1}
                       value={transferTokenAmount}
-                      placeholder="replace transferTokenAmount var with db value thhis input is disbale"
+                      placeholder="Enter tokens"
                     />
                     <div className="row  d-flex justify-content-center mt-4 ">
                       <input
@@ -360,7 +367,7 @@ const BuyTokensRequest: React.FC<BuyTokensRequestProps> = ({ requestId }) => {
                         style={{ width: "65%" }}
                         type="text"
                         onChange={handleInputChange2}
-                        placeholder="replace  var with db value  jsa uper show krwie reciept ma thhis input is disbale"
+                        placeholder="Copy metamask address from above and paste here"
                         value={beneficiaryMetamask}
                       />
                     </div>
@@ -397,7 +404,7 @@ const BuyTokensRequest: React.FC<BuyTokensRequestProps> = ({ requestId }) => {
               userData.accounts &&
               userData.accounts.length === 0 && (
                 <>
-                  <div className="absolute top-1/2 left-[44%] w-full h-fit -z-10">
+                  <div className="absolute top-1/2 left-[44%] w-full h-fit">
                     <div className="flex align-items-center gap-2">
                       <BsSignStopFill className="text-red-800 w-10 h-10" />
                       <p className="text-xl  tracking-wider">
@@ -410,7 +417,7 @@ const BuyTokensRequest: React.FC<BuyTokensRequestProps> = ({ requestId }) => {
             {/* Check if wallet is empty */}
             {!userData ||
               (!userData.wallet && (
-                <div className="absolute top-[60%] left-[44%] w-full h-fit -z-10 ">
+                <div className="absolute top-[60%] left-[44%] w-full h-fit ">
                   <div className="flex align-items-center gap-2">
                     <BsSignStopFill className="text-red-800 w-10 h-10" />
                     <p className="text-xl  tracking-wider">
@@ -421,6 +428,7 @@ const BuyTokensRequest: React.FC<BuyTokensRequestProps> = ({ requestId }) => {
               ))}
           </>
         )}
+
       </div>
       <div></div>
     </>

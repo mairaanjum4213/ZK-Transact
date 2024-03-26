@@ -64,7 +64,7 @@ const SellTokensRequest: React.FC<SellTokensRequestProps> = ({ requestId }) => {
          
          
             {accountsAndwallets ? (      <>
-                <div className="container  mb-3 border w-11/12 mt-5 rounded " id="printReciept">
+                <div className="mx-5 mb-3 border w-11/12 mt-5 rounded " id="printReciept">
                     <div className="row gutters ">
                         <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
                             <div className="w-full p-4">
@@ -134,7 +134,7 @@ const SellTokensRequest: React.FC<SellTokensRequestProps> = ({ requestId }) => {
                                                             <div className="invoice-num">
                                                                 <div className="normalTe">
                                                                     <p className="text-dark">Invoice</p>
-                                                                    <p className="text-dark">
+                                                                    <p  className="text-dark text-sm">
                                                                         {requestData?._id}
                                                                     </p>
                                                                 </div>
@@ -144,7 +144,7 @@ const SellTokensRequest: React.FC<SellTokensRequestProps> = ({ requestId }) => {
                                                                 <div className="normalTe">
                                                                     <p className="text-white fs-5">Invoice</p>
                                                                     <p
-                                                                        className="text-white"
+                                                                        className="text-white text-sm"
                                                                         style={{ fontSize: "small" }}
                                                                     >
                                                                         {requestData?._id}
@@ -227,7 +227,7 @@ const SellTokensRequest: React.FC<SellTokensRequestProps> = ({ requestId }) => {
                     <>
                         {userData && userData.accounts && userData.accounts.length === 0 && (
                             <>
-                                <div className='absolute top-1/2 left-[44%] w-full h-fit -z-10'>
+                                <div className='absolute top-1/2 left-[44%] w-full h-fit'>
                                     <div className='flex align-items-center gap-2'>
                                         <BsSignStopFill className="text-red-800 w-10 h-10" />
                                         <p className='text-xl  tracking-wider'>Add Local Bank Account to Provide Services</p>
@@ -237,7 +237,7 @@ const SellTokensRequest: React.FC<SellTokensRequestProps> = ({ requestId }) => {
                         )}
                         {/* Check if wallet is empty */}
                         {!userData || !userData.wallet && (
-                            <div className='absolute top-[60%] left-[44%] w-full h-fit -z-10 '>
+                            <div className='absolute top-[60%] left-[44%] w-full h-fit'>
                                 <div className='flex align-items-center gap-2'>
                                     <BsSignStopFill className="text-red-800 w-10 h-10" />
                                     <p className='text-xl  tracking-wider'>Add Meta Mask to Provide Services</p>

@@ -18,7 +18,7 @@ a {
 }
 /* Scroll-bar */
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 8px;
   scrollbar-width: thin !important;
   scrollbar-gutter: stable both-edges;
 }
@@ -26,7 +26,7 @@ a {
   background-color: #269e88dc;
   filter: blur(10px);
   width: 20%;
-  border-radius: 10%;
+  border-radius: 5px;
 }
 .modal ::-webkit-scrollbar-thumb,
 .dropdownParent::-webkit-scrollbar-thumb {

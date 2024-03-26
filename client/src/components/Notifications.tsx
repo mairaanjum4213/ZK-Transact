@@ -23,7 +23,7 @@ const Notifications: React.FC <NotificationsProps> = ({ handleNotificationClick 
   const decodedToken: any = token ? jwtDecode(token) : {};
   const username = decodedToken.username || "";
   const [userData, setUserData] = useState<any>("");
-  const navigate = useNavigate(); // Initialize useHistory
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     async function fetchUserData() {
@@ -96,9 +96,7 @@ const handleNotification = (requestId: string, type: string) => {
         <ul className="dropdown-menu dropdown-menu-lg-end dropdownParent  rounded-lg pt-0">
           <div id="notficationBg" className="p-4">
             <p className="text-white fs-4">Notifications</p>
-            <p className="opacity-0">
-              You have <b>36</b> unread notification
-            </p>
+           
           </div>
           <div className=" p-1  mx-2 d-flex justify-content-center  gap-4 my-3">
             <button
@@ -131,9 +129,8 @@ const handleNotification = (requestId: string, type: string) => {
                   >
                     <p>You have received sell token request from {request?.seller?.username} with status "{request?.transactionStatus}"</p>
                     <FaCircle
-                      className="notificationPointer"
+                      className={`notificationPointer ${request?.status === "Pending" ? 'text-teal-600' : 'hidden'}`}
                       style={{
-                        color: "#3eaa96cb",
                         minWidth: "10px",
                         minHeight: "10px",
                       }}
@@ -154,9 +151,9 @@ const handleNotification = (requestId: string, type: string) => {
                   >
                     <p>You have received buy token request from {request?.buyer?.username} with status "{request?.status}"</p>
                     <FaCircle
-                      className="notificationPointer"
+                      className={`notificationPointer ${request?.status === "Pending" ? 'text-teal-600' : 'hidden'}`}
                       style={{
-                        color: "#3eaa96cb",
+                        
                         minWidth: "10px",
                         minHeight: "10px",
                       }}

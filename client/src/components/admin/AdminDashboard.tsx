@@ -189,7 +189,10 @@ const AdminDashboard: React.FC = () => {
             )}
 
             {selectedContent === "SellRequest" && selectedRequest && (
-              <SellTokensRequest requestId={selectedRequest.id} />
+              <div className="overflow-x-hidden">
+                  <SellTokensRequest requestId={selectedRequest.id}/>
+              </div>
+            
             )}
 
             {selectedContent === "Accounts" && (
