@@ -68,12 +68,16 @@ router.route('/users/:userId/wallet/:walletId').put(controller.assignWalletToUse
 
 /*______________________Sell Request Routes ______________________*/
 router.route('/sellToken/approve/:id').put(controller.approveSellToken);
+router.route('/sellToken/approved/:id').put(controller.approveSellTokenByAdmin);
+router.route('/sellToken/reject/:id').put(controller.rejectSellTokenByAdmin);
 router.route('/sellToken/pending/:username').get(controller.getPendingSellTokenRequestsForAdmin);
 
 
 
 /*______________________Buy Request Routes ______________________*/
 router.route('/buyToken/approve/:id').put(controller.approveBuyToken);
+router.route('/buyToken/approved/:id').put(controller.approveBuyTokenByAdmin);
+router.route('/buyToken/reject/:id').put(controller.rejectBuyTokenByAdmin);
 router.route('/buyToken/pending/:username').get(controller.getPendingBuyTokenRequestsForAdmin);
 
 export default router;

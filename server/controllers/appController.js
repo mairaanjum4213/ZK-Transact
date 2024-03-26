@@ -661,6 +661,46 @@ export const getPendingSellTokenRequestsForAdmin = async (req, res) => {
   }
 };
 
+
+export const approveSellTokenByAdmin = async (req, res) => {
+  const { id } = req.params;
+  const { commentsByAdmin } = req.body;
+
+  try {
+    const sellToken = await SellTokenModel.findById(id); 
+    if (!sellToken) {
+      return res.status(404).json({ message: 'Sell token not found' });
+    }
+    sellToken.transactionStatus= 'Approved';
+    sellToken.commentsByAdmin= commentsByAdmin;
+    await sellToken.save();
+    return res.status(200).json({ message: 'Sell tokens request approved', sellToken });
+  } catch (error) {
+    console.error('Error approving sell token:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+
+export const rejectSellTokenByAdmin = async (req, res) => {
+  const { id } = req.params;
+  const { commentsByAdmin } = req.body;
+
+  try {
+    const sellToken = await SellTokenModel.findById(id); 
+    if (!sellToken) {
+      return res.status(404).json({ message: 'Sell token not found' });
+    }
+    sellToken.transactionStatus= 'Declined';
+    sellToken.commentsByAdmin= commentsByAdmin;
+    await sellToken.save();
+    return res.status(200).json({ message: 'Sell tokens request approved', sellToken });
+  } catch (error) {
+    console.error('Error approving sell token:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
   
 //_________________________________________________ ↑Sell Token Requests to admin↑
 
@@ -697,6 +737,45 @@ export const getPendingBuyTokenRequestsForAdmin = async (req, res) => {
     return res.status(200).json(pendingSellTokens);
   } catch (error) {
     console.error(`Error fetching pending buy token requests for admin ${username}:`, error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+export const approveBuyTokenByAdmin = async (req, res) => {
+  const { id } = req.params;
+  const { adminComments } = req.body;
+
+  try {
+    const buyToken = await BuyTokenModel.findById(id); 
+    if (!buyToken) {
+      return res.status(404).json({ message: 'Buy token not found' });
+    }
+    buyToken.status = 'Approved';
+    buyToken.adminComments=adminComments;
+    await buyToken.save();
+    return res.status(200).json({ message: 'Buy token approval request sent successfully', buyToken });
+  } catch (error) {
+    console.error('Error approving buy token:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+
+export const rejectBuyTokenByAdmin = async (req, res) => {
+  const { id } = req.params;
+  const { adminComments } = req.body;
+
+  try {
+    const buyToken = await BuyTokenModel.findById(id); 
+    if (!buyToken) {
+      return res.status(404).json({ message: 'Buy token not found' });
+    }
+    buyToken.status = 'Declined';
+    buyToken.adminComments=adminComments;
+    await buyToken.save();
+    return res.status(200).json({ message: 'Buy token approval request sent successfully', buyToken });
+  } catch (error) {
+    console.error('Error approving buy token:', error);
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
