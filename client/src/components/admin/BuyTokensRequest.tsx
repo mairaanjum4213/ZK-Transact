@@ -25,12 +25,13 @@ import { BigNumber } from "bignumber.js";
 import contractABI from "../../Wagmi/data.json";
 import ImportTokens from "../ImportTokensAccordian.tsx";
 import { HiOutlineRefresh } from "react-icons/hi";
-
+import { useNavigate } from "react-router-dom";
 interface BuyTokensRequestProps {
   requestId: string;
 }
-
 const BuyTokensRequest: React.FC<BuyTokensRequestProps> = ({ requestId }) => {
+  const navigate = useNavigate();
+  const [decision, setDecision] = useState<String>("null");
   const [requestData, setRequestData] = useState<any>(null);
   const [isLightMode] = useLightMode();
   const [userData, setUserData] = useState<any>();
@@ -53,7 +54,6 @@ const BuyTokensRequest: React.FC<BuyTokensRequestProps> = ({ requestId }) => {
     }
     fetchUserData();
   }, [username]);
-
   useEffect(() => {
     const fetchSellRequestData = async () => {
       try {
@@ -63,16 +63,12 @@ const BuyTokensRequest: React.FC<BuyTokensRequestProps> = ({ requestId }) => {
         console.error("Error fetching sell request data:", error);
       }
     };
-
     fetchSellRequestData();
   }, [requestId]);
-
-   const showreceipt = (receipt: string) => {
+  const showreceipt = (receipt: string) => {
     window.open(`http://localhost:8080/uploads/${receipt}`);
   };
-
-  console.log(requestData?.buyReceipt)
-
+  console.log(requestData?.buyReceipt);
   const accountsAndwallets =
     userData &&
     userData.accounts &&
@@ -82,6 +78,9 @@ const BuyTokensRequest: React.FC<BuyTokensRequestProps> = ({ requestId }) => {
   const [amount, setAmount] = useState<number | string>(0);
   const [address, setAddress] = useState<number | string>("");
   const { address: metamaskaddress } = useAccount();
+  const [tokenError, setTokenError] = useState("");
+  const [metamaskError, setMetamaskError] = useState("");
+
   const { isConnected } = useAccount();
   const wagmigotchiContract = {
     address: import.meta.env.VITE_SMART_ADD2,
@@ -133,34 +132,97 @@ const BuyTokensRequest: React.FC<BuyTokensRequestProps> = ({ requestId }) => {
       new BigNumber(10).pow(18)
     );
     setAmount(amountInWei.toString(10));
+    setTokenError("");
   };
   const handleInputChange2 = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAddress(e.target.value as number | string);
     setBeneficiaryMetamask(e.target.value);
+    setMetamaskError("");
   };
   useEffect(() => {
     if (isSuccess) {
       toast.success("Transaction Successful");
-      window.location.reload();
+    }
+    if (requestData) {
+      const buyTokenRequestId = requestData._id;
+      const adminComments =
+        "Your request to buy tokens has been approved. In case you didn't receive tokens chat with admin";
+      handleApprovedBuyToken(buyTokenRequestId, adminComments);
     }
   }, [isSuccess, useContractWriteData]);
-
   const [beneficiaryMetamask, setBeneficiaryMetamask] = useState<string>("");
   const [transferTokenAmount, setTransferTokenAmount] = useState<any>();
   const [transferSuccess, setTransferSuccess] = useState(false);
+ 
+  const handleApprovedBuyToken = async (id: string, adminComments: string) => {
+    try {
+      const response = await axios.put(`/api/buyToken/approved/${id}`, {
+        adminComments,
+      });
+      toast.success("User request to buy tokens approved successfully");
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    } catch (error) {
+      toast.error("Error approving buy tokens request");
+    }
+  };
 
   useEffect(() => {
     if (isSuccess && !transferSuccess) {
       setTransferSuccess(true);
     }
+
   }, [isSuccess, transferSuccess]);
 
   const handleTransferClick = () => {
+    // Check if Metamask address matches requestData Metamask address
+    if (address != requestData?.metamaskAddress) {
+      setMetamaskError("Metamask address does not match");
+      return;
+    }
+
+    // Check if transferTokenAmount matches requestData token amount
+    if (transferTokenAmount != requestData?.TokensAmount) {
+      setTokenError("Token amount does not match");
+      return;
+    }
+
     if (write) {
       write();
     }
+
   };
- 
+
+  const [adminComments, setAdminComments] = useState<string>("");
+
+  const handleRejectBuyToken = async (id: string, comments: string) => {
+    try {
+      const response = await axios.put(`/api/buyToken/reject/${id}`, {
+        adminComments: comments,
+      });
+      toast.error("User request to buy tokens rejected");
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    } catch (error) {
+      toast.error("Error rejecting buy tokens request");
+    }
+  };
+
+  const handleRejectionClick = () => {
+    if (requestData) {
+      const buyTokenRequestId = requestData._id;
+      handleRejectBuyToken(buyTokenRequestId, adminComments);
+    }
+  };
+
+  const handleAdminCommentsChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    setAdminComments(e.target.value);
+  };
+
   return (
     <>
       <Toaster position="top-center" reverseOrder={false}></Toaster>
@@ -168,7 +230,6 @@ const BuyTokensRequest: React.FC<BuyTokensRequestProps> = ({ requestId }) => {
         {accountsAndwallets ? (
           <>
             <h2 className="mt-5 mx-5 fw-bold">Buy Tokens Request</h2>
-
             <div
               className="mx-5 mb-4 w-11/12 rounded  border mt-5  "
               id="printReciept"
@@ -226,7 +287,9 @@ const BuyTokensRequest: React.FC<BuyTokensRequestProps> = ({ requestId }) => {
                                 <p className="normalTextColor fs-6   ">
                                   {requestData?.buyer?.username}
                                 </p>
-                                <p className="text-secondary  mt-1">{requestData?.buyer?.email}</p>
+                                <p className="text-secondary  mt-1">
+                                  {requestData?.buyer?.email}
+                                </p>
                               </div>
                             </div>
                             <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
@@ -234,7 +297,9 @@ const BuyTokensRequest: React.FC<BuyTokensRequestProps> = ({ requestId }) => {
                                 <div className="invoice-num">
                                   <div className="normalTe">
                                     <p>Invoice</p>
-                                    <p className="text-sm">{requestData?._id}</p>
+                                    <p className="text-sm">
+                                      {requestData?._id}
+                                    </p>
                                   </div>
                                 </div>
                               </div>
@@ -287,10 +352,10 @@ const BuyTokensRequest: React.FC<BuyTokensRequestProps> = ({ requestId }) => {
                                         {requestData?.localCurrency}{" "}
                                       </td>
                                       <td className="p-3 customTabletd">
-                                       {requestData?.transactionFee}{" "}
+                                        {requestData?.transactionFee}{" "}
                                       </td>
                                       <td className="p-3 customTabletd">
-                                       {requestData?.TokensAmount}
+                                        {requestData?.TokensAmount}
                                       </td>
                                     </tr>
                                   </tbody>
@@ -298,15 +363,31 @@ const BuyTokensRequest: React.FC<BuyTokensRequestProps> = ({ requestId }) => {
                                 <div className="link-wrapper">
                                   <button
                                     className=" mt-4   hover-2"
-                                    onClick={() => showreceipt(requestData?.buyReceipt)}
+                                    onClick={() =>
+                                      showreceipt(requestData?.buyReceipt)
+                                    }
                                     style={{
                                       cursor: "-webkit-grabbing",
                                       cursor: "grabbing",
                                     }}
                                   >
-                                   Show Bank Receipt 
+                                    Show Bank Receipt
                                   </button>
                                 </div>
+                              </div>
+                              <div className="flex align-items-center justify-center gap-4  ">
+                                <button
+                                  className="simpleButton1"
+                                  onClick={() => setDecision("reject")}
+                                >
+                                  Reject Request
+                                </button>
+                                <button
+                                  className="simpleButton2"
+                                  onClick={() => setDecision("approve")}
+                                >
+                                  Approve Request
+                                </button>
                               </div>
                             </div>
                           </div>
@@ -317,23 +398,19 @@ const BuyTokensRequest: React.FC<BuyTokensRequestProps> = ({ requestId }) => {
                 </div>
               </div>
             </div>
-            <a href="#Transfer">Transfer </a>
-            <a href="#Reject">Reject </a>
-            <p className="mx-5 text-danger">
-              *Approve the buy request by transferring X tokens*
-            </p>
             {/* Adding wagmi here to avoid props */}
             {isConnected ? (
-              <div className="my-3">
+              <div
+                className={`my-3 ${
+                  decision === "approve" ? "block" : "hidden"
+                }`}
+              >
                 <div className="mx-5">
                   <div className=" mt-2">
                     <div className="flex align-items-center justify-between mb-4">
-                      <div
-                        className=" fw-bold"
-                        style={{ fontSize: "xx-large" }}
-                      >
-                        Transfer {data?.symbol}
-                      </div>
+                      <h2 className=" fw-bold tracking-wider">
+                        Approve Transfer
+                      </h2>
                       <ConnectWallet />
                     </div>
                     <div className="" style={{ fontSize: "large" }}>
@@ -345,14 +422,12 @@ const BuyTokensRequest: React.FC<BuyTokensRequestProps> = ({ requestId }) => {
                     </div>
                   </div>
                   <form
-                  
                     className="row d-flex justify-content-center mt-4"
                     onSubmit={(e) => {
                       e.preventDefault();
                     }}
                   >
                     <input
-                
                       style={{ width: "65%" }}
                       id="Transfer"
                       className="InputReg cursor-auto"
@@ -361,6 +436,7 @@ const BuyTokensRequest: React.FC<BuyTokensRequestProps> = ({ requestId }) => {
                       value={transferTokenAmount}
                       placeholder="Enter tokens"
                     />
+                    {tokenError && <p className="text-danger">{tokenError}</p>} {/* Display token error */}
                     <div className="row  d-flex justify-content-center mt-4 ">
                       <input
                         className="InputReg cursor-auto"
@@ -371,6 +447,7 @@ const BuyTokensRequest: React.FC<BuyTokensRequestProps> = ({ requestId }) => {
                         value={beneficiaryMetamask}
                       />
                     </div>
+                    {metamaskError && <p className="text-danger">{metamaskError}</p>} {/* Display Metamask error */}
                     <div className="row d-flex justify-content-center mt-5  mb-5 ">
                       <button
                         style={{ minWidth: "45%" }}
@@ -397,6 +474,30 @@ const BuyTokensRequest: React.FC<BuyTokensRequestProps> = ({ requestId }) => {
                 </div>
               </>
             )}
+            <div
+              id="Reject"
+              className={`align-items-center ${
+                decision === "reject" ? "block" : "hidden"
+              }`}
+            >
+              <h2 className="mx-5 mb-4 font-bold">Reject User Request</h2>
+              <div className="flex flex-col align-items-center">
+                <textarea
+                  className="w-7/12 h-[5rem] row-4 InputReg"
+                  placeholder="Enter Reason For Rejection"
+                  value={adminComments}
+                  onChange={handleAdminCommentsChange}
+                />
+                <div className="w-5/12">
+                  <button
+                    className="standarButton-1 my-4"
+                    onClick={handleRejectionClick}
+                  >
+                    Reject Request
+                  </button>
+                </div>
+              </div>
+            </div>
           </>
         ) : (
           <>
@@ -428,7 +529,6 @@ const BuyTokensRequest: React.FC<BuyTokensRequestProps> = ({ requestId }) => {
               ))}
           </>
         )}
-
       </div>
       <div></div>
     </>
