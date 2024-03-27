@@ -19,7 +19,8 @@ import Notifications from "../Notifications";
 import BuyTokens from "../buyTokens/BuyTokens";
 import SellTokens from "../sellTokens/SellTokens";
 import { ERC20 } from "../../Wagmi/ERC20";
-
+import Notice from "./Notice";
+import UserNavbar from "../UserNavbar";
 const AdminDashboard: React.FC = () => {
   const [selectedContent, setSelectedContent] = useState("Dashboard");
   const [focusedDiv, setFocusedDiv] = useState("Dashboard");
@@ -27,23 +28,19 @@ const AdminDashboard: React.FC = () => {
     setSelectedContent(content);
     setFocusedDiv(content);
   };
-
   const handleNotificationClick = (content: string, requestId: any) => {
     setSelectedContent(content);
     setFocusedDiv(content);
-
     if (content === "BuyRequest") {
       setSelectedRequest({ type: "buy", id: requestId });
     } else if (content === "SellRequest") {
       setSelectedRequest({ type: "sell", id: requestId });
     }
   };
-
   const [selectedRequest, setSelectedRequest] = useState<{
     type: string;
     id: string;
   } | null>(null);
-
   return (
     <>
       <div className="h-screen noScroll">
@@ -69,9 +66,8 @@ const AdminDashboard: React.FC = () => {
               className="d-flex flex-lg-column h-full flex-row  gap-3 align-items-lg-start align-items-center  "
             >
               <div
-                className={`flex w-full cursor-pointer   gap-2 justify-start align-items-center text-white sidebarOptions ${
-                  focusedDiv === "Dashboard" ? "focusedDiv" : ""
-                }`}
+                className={`flex w-full cursor-pointer   gap-2 justify-start align-items-center text-white sidebarOptions ${focusedDiv === "Dashboard" ? "focusedDiv" : ""
+                  }`}
                 onClick={() => handleMenuClick("Dashboard")}
               >
                 <IoStatsChart className="text-lg" />
@@ -80,9 +76,8 @@ const AdminDashboard: React.FC = () => {
                 </div>
               </div>
               <div
-                className={`flex w-full cursor-pointer gap-2 justify-start align-items-center text-white sidebarOptions ${
-                  focusedDiv === "BuyRequest" ? "focusedDiv" : ""
-                }`}
+                className={`flex w-full cursor-pointer gap-2 justify-start align-items-center text-white sidebarOptions ${focusedDiv === "BuyRequest" ? "focusedDiv" : ""
+                  }`}
                 onClick={() => handleMenuClick("BuyRequest")}
               >
                 <MdSell className="text-lg" />
@@ -91,9 +86,8 @@ const AdminDashboard: React.FC = () => {
                 </div>
               </div>
               <div
-                className={`flex w-full cursor-pointer gap-2 justify-start align-items-center text-white sidebarOptions ${
-                  focusedDiv === "SellRequest" ? "focusedDiv" : ""
-                }`}
+                className={`flex w-full cursor-pointer gap-2 justify-start align-items-center text-white sidebarOptions ${focusedDiv === "SellRequest" ? "focusedDiv" : ""
+                  }`}
                 onClick={() => handleMenuClick("SellRequest")}
               >
                 <PiCoinsFill className="text-lg" />
@@ -102,9 +96,8 @@ const AdminDashboard: React.FC = () => {
                 </div>
               </div>
               <div
-                className={`flex w-full cursor-pointer gap-2 justify-start align-items-center text-white sidebarOptions ${
-                  focusedDiv === "Chats" ? "focusedDiv" : ""
-                }`}
+                className={`flex w-full cursor-pointer gap-2 justify-start align-items-center text-white sidebarOptions ${focusedDiv === "Chats" ? "focusedDiv" : ""
+                  }`}
                 onClick={() => handleMenuClick("Chats")}
               >
                 <IoStatsChart className="text-lg" />
@@ -113,9 +106,8 @@ const AdminDashboard: React.FC = () => {
                 </div>
               </div>
               <div
-                className={`flex w-full cursor-pointer gap-2 justify-start align-items-center text-white sidebarOptions ${
-                  focusedDiv === "WalletDetails" ? "focusedDiv" : ""
-                }`}
+                className={`flex w-full cursor-pointer gap-2 justify-start align-items-center text-white sidebarOptions ${focusedDiv === "WalletDetails" ? "focusedDiv" : ""
+                  }`}
                 onClick={() => handleMenuClick("WalletDetails")}
               >
                 <FaWallet className="text-lg " />
@@ -124,9 +116,8 @@ const AdminDashboard: React.FC = () => {
                 </div>
               </div>
               <div
-                className={`flex w-full cursor-pointer gap-2 justify-start align-items-center text-white sidebarOptions ${
-                  focusedDiv === "Accounts" ? "focusedDiv" : ""
-                }`}
+                className={`flex w-full cursor-pointer gap-2 justify-start align-items-center text-white sidebarOptions ${focusedDiv === "Accounts" ? "focusedDiv" : ""
+                  }`}
                 onClick={() => handleMenuClick("Accounts")}
               >
                 <FaWallet className="text-lg " />
@@ -135,9 +126,8 @@ const AdminDashboard: React.FC = () => {
                 </div>
               </div>
               <div
-                className={`flex w-full cursor-pointer gap-2 justify-start align-items-center text-white sidebarOptions ${
-                  focusedDiv === "buyTokens" ? "focusedDiv" : ""
-                }`}
+                className={`flex w-full cursor-pointer gap-2 justify-start align-items-center text-white sidebarOptions ${focusedDiv === "buyTokens" ? "focusedDiv" : ""
+                  }`}
                 onClick={() => handleMenuClick("buyTokens")}
               >
                 <FcSalesPerformance className="text-lg text-amber-500 " />
@@ -146,9 +136,8 @@ const AdminDashboard: React.FC = () => {
                 </div>
               </div>
               <div
-                className={`flex w-full cursor-pointer gap-2 justify-start align-items-center text-white sidebarOptions ${
-                  focusedDiv === "sellTokens" ? "focusedDiv" : ""
-                }`}
+                className={`flex w-full cursor-pointer gap-2 justify-start align-items-center text-white sidebarOptions ${focusedDiv === "sellTokens" ? "focusedDiv" : ""
+                  }`}
                 onClick={() => handleMenuClick("sellTokens")}
               >
                 <AiOutlineDollar className="text-lg text-amber-500 " />
@@ -157,9 +146,8 @@ const AdminDashboard: React.FC = () => {
                 </div>
               </div>
               <div
-                className={`flex w-full cursor-pointer gap-2 justify-start align-items-center text-white sidebarOptions ${
-                  focusedDiv === "transferTokens" ? "focusedDiv" : ""
-                }`}
+                className={`flex w-full cursor-pointer gap-2 justify-start align-items-center text-white sidebarOptions ${focusedDiv === "transferTokens" ? "focusedDiv" : ""
+                  }`}
                 onClick={() => handleMenuClick("transferTokens")}
               >
                 <BiTransferAlt className="text-lg " />
@@ -187,14 +175,21 @@ const AdminDashboard: React.FC = () => {
             {selectedContent === "BuyRequest" && selectedRequest && (
               <BuyTokensRequest requestId={selectedRequest.id} />
             )}
-
             {selectedContent === "SellRequest" && selectedRequest && (
               <div className="overflow-x-hidden">
-                  <SellTokensRequest requestId={selectedRequest.id}/>
+                <SellTokensRequest requestId={selectedRequest.id} />
               </div>
-            
             )}
-
+            {selectedContent === "SellRequest" && !selectedRequest && (
+              <div className="overflow-x-hidden">
+                <Notice />
+              </div>
+            )}
+            {selectedContent === "BuyRequest" && !selectedRequest && (
+              <div className="overflow-x-hidden">
+                <Notice />
+              </div>
+            )}
             {selectedContent === "Accounts" && (
               <div className="">
                 <Accounts />
@@ -205,11 +200,6 @@ const AdminDashboard: React.FC = () => {
                 <BuyTokens />
               </div>
             )}
-            {selectedContent === "Accounts" && (
-              <div className="">
-                <Accounts />
-              </div>
-            )}
             {selectedContent === "sellTokens" && (
               <div className="">
                 <SellTokens />
@@ -218,11 +208,6 @@ const AdminDashboard: React.FC = () => {
             {selectedContent === "transferTokens" && (
               <div className="overflow-x-hidden">
                 <ERC20 />
-              </div>
-            )}
-            {selectedContent === "Accounts" && (
-              <div className="">
-                <Accounts />
               </div>
             )}
           </div>

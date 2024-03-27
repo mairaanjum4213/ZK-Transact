@@ -104,7 +104,10 @@ const Navprofile: React.FC = () => {
               </>
             )}
           </li>
-          <li>FAQs</li>
+          <li>
+            <Link className="block" to="/faqs"  >
+              FAQs</Link>
+          </li>  
           <div className="text-center px-1 mt-3 pb-2">
             <button className="simpleButton1 w-75 " onClick={handleLogout}>
               Logout

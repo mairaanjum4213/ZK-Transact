@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import "../css/Navbar.css"
 import logo from '../assets/icon2.png';
 import logo2 from '../assets/icon3.png';
-import Notifications from './Notifications';
 import { Link } from 'react-router-dom';
 import NavChats from './NavChats';
 import Navprofile from './Navprofile';
 // import { Connector, useAccount, useConnect, useDisconnect } from 'wagmi';
 import { Toaster, toast } from 'react-hot-toast';
+import UserNotifications from './UserNotifications';
 const UserNavbar: React.FC = () => {
  
   // const { connectAsync, connectors, isLoading, pendingConnector } = useConnect();
@@ -90,7 +90,7 @@ const UserNavbar: React.FC = () => {
                 })}
                 {isConnected && <button className="btnStyle" onClick={handleDisconnect}>Disconnect Wallet  </button>} */}
                 <div className='d-flex justify-content-center gap-2 align-items-center'>
-                  <Notifications />
+                  <UserNotifications />
                   <NavChats />
                   <Navprofile />
                 </div>

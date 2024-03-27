@@ -23,7 +23,7 @@ PROMPT = PromptTemplate(
 )
 
 ##connect llm, buffermemory to langchain
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "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"
 llm = OpenAI(temperature=0.5)
 conversation = ConversationChain(
                                 llm=llm,

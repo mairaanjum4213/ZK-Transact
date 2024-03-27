@@ -662,6 +662,24 @@ export const getPendingSellTokenRequestsForAdmin = async (req, res) => {
 };
 
 
+export const getApprovedSellTokenRequestsForUser = async (req, res) => {
+  const { sellerId } = req.params;
+
+  try {
+    const approvedSellTokens = await SellTokenModel.find({
+      seller: sellerId,
+      transactionStatus: { $in: ['Approved', 'Declined'] } 
+    }).populate("seller", ["username", "email"]);;
+
+    return res.status(200).json(approvedSellTokens);
+  } catch (error) {
+    console.error('Error fetching approved sell token requests ', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+
+
 export const approveSellTokenByAdmin = async (req, res) => {
   const { id } = req.params;
   const { commentsByAdmin } = req.body;
@@ -680,7 +698,6 @@ export const approveSellTokenByAdmin = async (req, res) => {
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
-
 
 export const rejectSellTokenByAdmin = async (req, res) => {
   const { id } = req.params;
@@ -740,6 +757,25 @@ export const getPendingBuyTokenRequestsForAdmin = async (req, res) => {
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
+
+export const getApprovedBuyTokenRequestsForUser = async (req, res) => {
+  const { buyerId } = req.params;
+
+  try {
+    const approvedBuyTokens = await BuyTokenModel.find({
+      buyer: buyerId,
+      status: { $in: ['Approved', 'Declined'] } 
+    }).populate("buyer", ["username", "email"]);;
+
+    return res.status(200).json(approvedBuyTokens);
+  } catch (error) {
+    console.error('Error fetching approved buy token requests for user', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+
+
 
 export const approveBuyTokenByAdmin = async (req, res) => {
   const { id } = req.params;

@@ -1,5 +1,5 @@
-import React, { useState,useEffect } from 'react';
-import { Link, useNavigate  } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { IoInformationCircle } from 'react-icons/io5';
 import BreadCrumb from '../BreadCrumb.tsx';
 import ImportTokens from '../ImportTokensAccordian.tsx';
@@ -11,11 +11,8 @@ import '../../css/TokenTraders.css';
 import toast, { Toaster } from 'react-hot-toast';
 import { storebuyToken } from '../../helper/helper';
 import { useFormik } from 'formik';
-// FOr user data
 import { jwtDecode } from "jwt-decode";
-import { getUser } from "../../helper/helper"
-
-
+import { getUser } from "../../helper/helper";
 
 const BuyTokens: React.FC = () => {
   const navigate = useNavigate();
@@ -24,30 +21,50 @@ const BuyTokens: React.FC = () => {
   const username = decodedToken.username || '';
   const [userData, setUserData] = useState<any>("");
 
-// -----User Data
-useEffect(() => {
-  // Fetching User Data for Id
-  async function fetchUserData() {
-    try {
-      const response = await getUser({ username });
-      if (response.data) {
-        setUserData(response.data)
-        // To Access Id or other data of user from db just use userData._id
+  useEffect(() => {
+    async function fetchUserData() {
+      try {
+        const response = await getUser({ username });
+        if (response.data) {
+          setUserData(response.data)
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
       }
-    } catch (error) {
-      console.error("Error fetching user data:", error);
     }
-  }
-  fetchUserData();
-}, [username]);
+    fetchUserData();
+  }, [username]);
 
-  const [metamask, setMetamask] = useState<string>("");
-  const [serviceProvider, setServiceProvider] = useState<string>("");
-  const [localCurrencyVal, setLocalCurrencyVal] = useState<number>();
-  const [transactionfee, settransactionfee] = useState<number>();
-  const [zkTokenVal, setZkTokenVal] = useState<number>();
+  const [metamask, setMetamask] = useState<string>(() => {
+    const storedMetamask = localStorage.getItem('metamask');
+    return storedMetamask !== null ? storedMetamask : '';
+  });
+  const [serviceProvider, setServiceProvider] = useState<string>(() => {
+    const storedServiceProvider = localStorage.getItem('serviceProvider');
+    return storedServiceProvider !== null ? storedServiceProvider : '';
+  });
+  const [localCurrencyVal, setLocalCurrencyVal] = useState<number>(() => {
+    const storedLocalCurrencyVal = localStorage.getItem('localCurrencyVal');
+    return storedLocalCurrencyVal !== null ? +storedLocalCurrencyVal : 0;
+  });
+  const [transactionfee, settransactionfee] = useState<number>(() => {
+    const storedTransactionFee = localStorage.getItem('transactionfee');
+    return storedTransactionFee !== null ? +storedTransactionFee : 0;
+  });
+  const [zkTokenVal, setZkTokenVal] = useState<number>(() => {
+    const storedZkTokenVal = localStorage.getItem('zkTokenVal');
+    return storedZkTokenVal !== null ? +storedZkTokenVal : 0;
+  });
   const [file, setFile] = useState<File | null>(null);
   const [userInputLocalVal, setUserInputLocalVal] = useState<number>(0);
+
+  useEffect(() => {
+    localStorage.setItem('metamask', metamask);
+    localStorage.setItem('serviceProvider', serviceProvider);
+    localStorage.setItem('localCurrencyVal', localCurrencyVal.toString());
+    localStorage.setItem('transactionfee', transactionfee.toString());
+    localStorage.setItem('zkTokenVal', zkTokenVal.toString());
+  }, [metamask, serviceProvider, localCurrencyVal, transactionfee, zkTokenVal]);
 
   const handleDataUpdate = (
     localCurrencyVal: number,
@@ -62,9 +79,7 @@ useEffect(() => {
   };
 
   const formik = useFormik({
-    initialValues: {
-      // No need to provide initial values here
-    },
+    initialValues: {},
     onSubmit: async () => {
       if (!file) return;
       try {
@@ -72,35 +87,33 @@ useEffect(() => {
         formData.append('buyer', userData._id);
         formData.append('metamaskAddress', metamask);
         formData.append('serviceProviderName', serviceProvider);
-        formData.append('localCurrency', (localCurrencyVal || 0).toString()); 
-        formData.append('TokensAmount', (zkTokenVal || 0).toString()); 
-        formData.append('transactionFee', (transactionfee || 0).toString()); 
+        formData.append('localCurrency', (localCurrencyVal || 0).toString());
+        formData.append('TokensAmount', (zkTokenVal || 0).toString());
+        formData.append('transactionFee', (transactionfee || 0).toString());
         formData.append('buyReceipt', file);
- 
-       const storebuyTokenPromise = storebuyToken(formData);
+
+        const storebuyTokenPromise = storebuyToken(formData);
         toast.promise(storebuyTokenPromise, {
           loading: 'Creating...',
           success: <b>Buy Tokens request sent Successfully...!</b>,
           error: <b>Error occurs while buying tokens.</b>
         });
-        storebuyTokenPromise.then(() =>  navigate(`/buyTokens-reciept/${serviceProvider}`));
+        storebuyTokenPromise.then(() => navigate(`/buyTokens-reciept/${serviceProvider}`));
       } catch (error) {
         console.error("Error submitting buy token data:", error);
         toast.error("Error submitting buy token data. Please try again later.");
       }
-      
     }
   });
-  
-  
- const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = event.target.files?.[0]; // Access the selected file from the file input
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = event.target.files?.[0];
     if (selectedFile && selectedFile.type === 'image/png') {
-        setFile(selectedFile); // Update the state with the selected file if it's a PNG file
+      setFile(selectedFile);
     } else {
-        toast.error('Please select a PNG file.'); // Inform the user if the selected file is not a PNG file
+      toast.error('Please select a PNG file.');
     }
-};
+  };
 
 
   return (

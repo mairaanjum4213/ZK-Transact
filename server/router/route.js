@@ -71,7 +71,7 @@ router.route('/sellToken/approve/:id').put(controller.approveSellToken);
 router.route('/sellToken/approved/:id').put(controller.approveSellTokenByAdmin);
 router.route('/sellToken/reject/:id').put(controller.rejectSellTokenByAdmin);
 router.route('/sellToken/pending/:username').get(controller.getPendingSellTokenRequestsForAdmin);
-
+router.route('/sellToken/seller/:sellerId').get(controller.getApprovedSellTokenRequestsForUser);
 
 
 /*______________________Buy Request Routes ______________________*/
@@ -79,5 +79,5 @@ router.route('/buyToken/approve/:id').put(controller.approveBuyToken);
 router.route('/buyToken/approved/:id').put(controller.approveBuyTokenByAdmin);
 router.route('/buyToken/reject/:id').put(controller.rejectBuyTokenByAdmin);
 router.route('/buyToken/pending/:username').get(controller.getPendingBuyTokenRequestsForAdmin);
-
+router.route('/buyToken/buyer/:buyerId').get(controller.getApprovedBuyTokenRequestsForUser);
 export default router;

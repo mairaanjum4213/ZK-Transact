@@ -42,6 +42,10 @@ import BuyTokenApprovalPage from "./components/buyTokens/buyTokenApprovalPage.ts
 import SellTokenApprovalPage from "./components/sellTokens/SellTokenApprovalPage.tsx";
 import BuyTokensRequest from "./components/admin/BuyTokensRequest.tsx";
 import SellTokensRequest from "./components/admin/SellTokensRequest.tsx";
+import Faqs from "./components/Faqs.tsx";
+import UserNotifications from "./components/UserNotifications.tsx";
+import BuyTokenNotification from "./components/buyTokens/buyTokenNotification.tsx";
+import SellTokenNotification from "./components/sellTokens/SellTokenNotification.tsx";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -78,7 +82,7 @@ function App() {
     }
   }, []); */
   const isAuthenticated = useAuthStore((state) => state.auth.isAuthenticated);
-  console.log(isAuthenticated);
+  const isAdmin = useAuthStore((state) => state.auth.isAdmin);
   return (
     <>
       <WagmiProvider>
@@ -98,8 +102,11 @@ function App() {
               <Route path="/reset" element={<ResetPassword />} />
               <Route path="/profile" element={<Profile />} />
 
-              <Route path="/admin" element={<AdminDashboard />} />
-             
+              <Route
+                path="/admin"
+                element={isAdmin ? <AdminDashboard /> : <Login />}
+              />
+
               <Route
                 path="/user"
                 element={isAuthenticated ? <UserDashboard /> : <Login />}
@@ -192,6 +199,22 @@ function App() {
               <Route
                 path="/walletDetails"
                 element={isAuthenticated ? <WalletDetails /> : <Login />}
+              />
+
+              <Route path="/faqs" element={isAuthenticated ? <Faqs /> : <Login />} />
+
+              <Route
+                path="/userNotifications"
+                element={isAuthenticated ? <UserNotifications /> : <Login />}
+              />
+
+              <Route
+                path="/buy-notification-details/:requestId"
+                element={isAuthenticated ? <BuyTokenNotification/> : <Login />}
+              />
+              <Route
+                path="/sell-notification-details/:requestId"
+                element={isAuthenticated ? <SellTokenNotification/> : <Login />}
               />
             </Routes>
 

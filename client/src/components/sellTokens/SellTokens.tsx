@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import BreadCrumb from '../BreadCrumb.tsx';
 import '../../css/Registration.css';
@@ -13,30 +12,29 @@ import toast, { Toaster } from 'react-hot-toast';
 import { jwtDecode } from "jwt-decode";
 import { getUser, storesSellToken } from "../../helper/helper"
 
-
 const SellTokens: React.FC = () => {
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
   const decodedToken: any = token ? jwtDecode(token) : {};
   const username = decodedToken.username || '';
   const [userData, setUserData] = useState<string>("");
-  const [sellerMetamask, setSellerMetamask] = useState<string>('');
-  const [purchaserName, setPurchaserName] = useState<string>('');
-  const [accountNumber, setAccountNumber] = useState<string>('');
-  const [accountName, setAccountName] = useState<string>('');
-  const [accountComments, setAccountComments] = useState<string>('');
-  const [contractHash, setContractHash] = useState<string>('');
+  const [sellerMetamask, setSellerMetamask] = useState<string>(() => localStorage.getItem('sellerMetamask') || '');
+  const [purchaserName, setPurchaserName] = useState<string>(() => localStorage.getItem('purchaserName') || '');
+  const [accountNumber, setAccountNumber] = useState<string>(() => localStorage.getItem('accountNumber') || '');
+  const [accountName, setAccountName] = useState<string>(() => localStorage.getItem('accountName') || '');
+  const [accountComments, setAccountComments] = useState<string>(() => localStorage.getItem('accountComments') || '');
+  const [contractHash, setContractHash] = useState<string>(() => localStorage.getItem('contractHash') || '');
   // From ZK Token Conversion
   const [localCurrencyVal, setLocalCurrencyVal] = useState<number>();
   const [transactionfee, settransactionfee] = useState<number>();
   const [inputZKToken, setInputZKToken] = useState<number>();
+
   useEffect(() => {
     async function fetchUserData() {
       try {
         const response = await getUser({ username });
         if (response.data) {
           setUserData(response.data)
-        
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -44,6 +42,16 @@ const SellTokens: React.FC = () => {
     }
     fetchUserData();
   }, [username]);
+
+  useEffect(() => {
+    localStorage.setItem('sellerMetamask', sellerMetamask);
+    localStorage.setItem('purchaserName', purchaserName);
+    localStorage.setItem('accountNumber', accountNumber);
+    localStorage.setItem('accountName', accountName);
+    localStorage.setItem('accountComments', accountComments);
+    localStorage.setItem('contractHash', contractHash);
+  }, [sellerMetamask, purchaserName, accountNumber, accountName, accountComments, contractHash]);
+
   const handleDataUpdate = (
     roundedNum: number,
     inputZKToken: number,
@@ -53,14 +61,13 @@ const SellTokens: React.FC = () => {
     setInputZKToken(inputZKToken);
     settransactionfee(transactionFee);
   };
+
   const formik = useFormik({
-    initialValues: {
-      // No need to provide initial values here
-    },
+    initialValues: {},
     onSubmit: async () => {
       try {
         const values = {
-          seller: userData._id,
+          seller: userData?._id,
           sellerMetamask: sellerMetamask,
           purchaserName:purchaserName,
           accountNumber: accountNumber,
