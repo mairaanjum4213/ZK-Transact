@@ -56,11 +56,13 @@ const UserNotifications: React.FC = () => {
       }
     };
   
-    fetchApprovedBuyRequests();
-    fetchApprovedSellRequests();
-  }, [userData]);
+    const intervalId = setInterval(() => {
+      fetchApprovedBuyRequests();
+      fetchApprovedSellRequests();
+    }, 10000);
   
-
+    return () => clearInterval(intervalId);
+  }, [userData]);
 
   const handleNotification = (requestId: string, type: string) => {
     if (type === "buy") {
