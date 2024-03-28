@@ -9,7 +9,7 @@ import { jwtDecode } from "jwt-decode";
 import toast, { Toaster } from 'react-hot-toast';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import { useAuthStore } from "../../store/store";
 axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
 
 const Consent: React.FC = () => {
@@ -19,6 +19,8 @@ const Consent: React.FC = () => {
   const username = decodedToken.username || '';
   const [userData, setUserData] = useState<any>("");
   const navigate = useNavigate();
+  const setIsAdmin = useAuthStore((state) => state.setIsAdmin);
+
 
 // -----User Data
 useEffect(() => {
@@ -42,6 +44,8 @@ const handleBecomeMerchant = async () => {
   try {
     const response = await axios.post(`/api/becomeMerchant?id=${userData._id}`);
     toast.success(response.data.message); // Display success message
+    setIsAdmin(true);
+    localStorage.setItem("isAdmin", 'true');
     navigate('/admin');
   } catch (error) {
     toast.error('Make sure your KYC Status is true and all fields are filled'); // Display error message

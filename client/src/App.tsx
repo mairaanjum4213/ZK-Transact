@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import AOS from "aos";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -49,6 +49,7 @@ import SellTokenNotification from "./components/sellTokens/SellTokenNotification
 
 function App() {
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     AOS.init();
@@ -62,27 +63,8 @@ function App() {
     };
   }, []);
 
-  /*  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-
-    if (token) {
-      try {
-        jwt.verify(token,ENV.JWT_SECRET );
-        setIsLoggedIn(true);
-      } catch (error) {
-        setIsLoggedIn(false);
-        localStorage.removeItem('token'); // Remove invalid token
-        navigate("/login")
-
-      }
-    } else {
-      setIsLoggedIn(false);
-    }
-  }, []); */
+  
   const isAuthenticated = useAuthStore((state) => state.auth.isAuthenticated);
-  const isAdmin = useAuthStore((state) => state.auth.isAdmin);
   return (
     <>
       <WagmiProvider>
@@ -104,7 +86,7 @@ function App() {
 
               <Route
                 path="/admin"
-                element={isAdmin ? <AdminDashboard /> : <Login />}
+                element={<AdminDashboard />}
               />
 
               <Route

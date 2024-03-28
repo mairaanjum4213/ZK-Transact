@@ -54,6 +54,7 @@ const ViewZKtokensProviders: React.FC<Props> = ({title}) => {
 
     fetchData();
   }, [userData]);
+  console.log(admins)
 
   return (
     <>

@@ -103,7 +103,7 @@ export async function login(req, res) {
                 username: user.username,
               },
               ENV.JWT_SECRET,
-              { expiresIn: "10m" }
+              { expiresIn: "40m" }
             );
 
             return res.status(200).send({

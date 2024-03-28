@@ -20,12 +20,13 @@ import "../css/Registration.css";
 import toast, { Toaster } from "react-hot-toast";
 import { jwtDecode } from "jwt-decode";
 import { getUser, storesTransferToken } from "../helper/helper.tsx";
+import { useAuthStore } from "../store/store";
 import axios from "axios";
 axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
 
 
 export const ERC20: React.FC = () => {
-  
+  const setContractHash= useAuthStore((state) => state.setContractHash);
   const [amount, setAmount] = useState<number | string>(0);
   const [address, setAddress] = useState<number | string>("");
   const { address: metamaskaddress } = useAccount();
@@ -97,14 +98,13 @@ export const ERC20: React.FC = () => {
     if (isSuccess) {
       // Perform actions for a successful transaction
       toast.success("Transaction Successful");
-      // ccSuccess
-      // window.location.reload();
-      const hash = useContractWriteData?.hash; // Access the contract hash directly
+      const hash = useContractWriteData?.hash; 
       if (hash) {
         setTransactionHash(hash);
       }
     }
   }, [isSuccess, useContractWriteData]);
+
   // BACK END
   const [beneficiaryMetamask, setBeneficiaryMetamask] = useState<string>("");
   const [senderMetamask, setSenderMetamask] = useState<string>(
@@ -116,13 +116,11 @@ export const ERC20: React.FC = () => {
   const decodedToken: any = token ? jwtDecode(token) : {};
   const username = decodedToken.username || "";
   const [userData, setUserData] = useState<any>("");
-  // Fetching User Data for Id
   useEffect(() => {
     async function fetchUserData() {
       try {
         const response = await getUser({ username });
         if (response.data) {
-          // To Access Id or other data of user from db just use userData._id
           setUserData(response.data);
         }
       } catch (error) {
@@ -131,7 +129,7 @@ export const ERC20: React.FC = () => {
     }
     fetchUserData();
   }, [username]);
-  // Inside your ERC20 component
+
   const [transferSuccess, setTransferSuccess] = useState(false);
   useEffect(() => {
     if (isSuccess && !transferSuccess) {
@@ -156,12 +154,10 @@ export const ERC20: React.FC = () => {
       const storeTransferTokenPromise = storesTransferToken(values);
       toast.promise(storeTransferTokenPromise, {
         loading: "Creating...",
-        success: <b>Sell Tokens request sent Successfully</b>,
+        success: <b> Token Tranfer Successfully</b>,
         error: <b>Error Occured While Sending Request</b>,
       });
-      // Set transferSuccess to true to indicate successful transfer
       setTransferSuccess(true);
-      // Reload the page after a delay of 2 seconds (2000 milliseconds)
       setTimeout(() => {
         window.location.reload();
       }, 3000);
@@ -169,14 +165,13 @@ export const ERC20: React.FC = () => {
       console.error("Error submitting Selling Token Data:", error);
       toast.error("Error Occured While Submitting Sell Token Data");
     }
-    // Check if transfer has already been processed
     if (transferSuccess) {
       return;
     }
   };
   const handleTransferClick = () => {
     if (write) {
-      write(); // Call the write function here
+      write();
     }
   };
   //Fetching Data from Backend//
@@ -205,6 +200,9 @@ export const ERC20: React.FC = () => {
       setHideBreadCrumb(false);
     }
   }, []);
+  useEffect(() => {
+    setContractHash(transferTokenData?.transferContractHash);
+  }, [transferTokenData]);
   return (
     <>
       {!hideBreadCrumb && (<BreadCrumb
@@ -257,12 +255,12 @@ export const ERC20: React.FC = () => {
                   </span>
                 )}
               </p>
-              <p className="bg-danger">
+              {/*<p className="bg-danger">
                 <p>
                   for confirmation paste contract cash in search bar of link below
                 </p>
                 https://sepolia.etherscan.io/txs
-              </p>
+                </p>*/}
             </div>
           </div>
           <form

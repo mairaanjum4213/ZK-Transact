@@ -9,6 +9,10 @@ let nodeConfig = {
     auth: {
         user: ENV.EMAIL, 
         pass: ENV.PASSWORD, 
+    },
+    secure: true, // Use SSL/TLS
+    tls: {
+        rejectUnauthorized: false // Accept self-signed certificates (not recommended for production)
     }
 }
 

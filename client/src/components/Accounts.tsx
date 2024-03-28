@@ -38,7 +38,7 @@ const Accounts: React.FC = () => {
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
-  }
+  };
   const handleAddAccount = async () => {
     try {
       const response = await axios.post("/api/accounts", {
@@ -49,7 +49,13 @@ const Accounts: React.FC = () => {
       const createdAccountId = response.data.account._id; // Get the created account id
       assignAccountToUser(createdAccountId); // Automatically assign account to user
       toast.success("Account added!");
+      setAccountNumber("");
+      setAccountType("");
+      setAccountName("");
       await fetchUserData();
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
     } catch (error) {
       toast.error("Problem adding account.");
     }
@@ -65,11 +71,13 @@ const Accounts: React.FC = () => {
     <>
       <Toaster position="top-center" reverseOrder={false}></Toaster>
       <div className="container mt-5">
-        <h2 className="font-semibold tracking-wider ">Add Accounts</h2>
+        <h2 className="font-semibold     tracking-wider ">Add Accounts</h2>
       </div>
       <div className="mx-auto flex  w-full lg:w-6/12 ">
         <div className=" w-full  my-8 p-4 accountsCard rounded-sm">
-          <h1 className="text-xl font-semibold mb-4 tracking-[0.2rem]">Add Account</h1>
+          <h1 className="text-xl font-semibold mb-4 tracking-[0.2rem]">
+            Add Account
+          </h1>
           <div className="mb-4">
             <label className="block mb-2">Bank Name:</label>
             <input
@@ -77,7 +85,7 @@ const Accounts: React.FC = () => {
               name="bankName"
               value={accountType}
               onChange={(e) => setAccountType(e.target.value)}
-              className="w-full  text-white rounded-sm py-[0.7rem]  px-2 focus:outline-none "
+              className="w-full  text-white genericBg rounded-sm py-[0.7rem]  px-2 focus:outline-none "
             />
           </div>
           <div className="mb-4">
@@ -88,7 +96,7 @@ const Accounts: React.FC = () => {
               name="accNumber"
               value={accountNumber}
               onChange={(e) => setAccountNumber(e.target.value)}
-              className="w-full  rounded-sm py-[0.7rem] px-2 focus:outline-none "
+              className="w-full  rounded-sm  genericBg py-[0.7rem] px-2 focus:outline-none "
             />
           </div>
           <div className="mb-4">
@@ -98,7 +106,7 @@ const Accounts: React.FC = () => {
               name="accComment"
               value={accountName}
               onChange={(e) => setAccountName(e.target.value)}
-              className="w-full rounded-sm py-[0.7rem] px-2 focus:outline-none"
+              className="w-full rounded-sm py-[0.7rem]   genericBg px-2 focus:outline-none"
             />
           </div>
           <button

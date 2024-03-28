@@ -1,24 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { IoInformationCircle } from 'react-icons/io5';
-import BreadCrumb from '../BreadCrumb.tsx';
-import ImportTokens from '../ImportTokensAccordian.tsx';
-import LocalCurrencyConversion from '../LocalCurrencyConversion.tsx';
-import buyTokens from '../../assets/buyTokens.png';
-import buyToken from '../../assets/BreadCrumbs/buyZkTokens.png';
-import '../../css/Registration.css';
-import '../../css/TokenTraders.css';
-import toast, { Toaster } from 'react-hot-toast';
-import { storebuyToken } from '../../helper/helper';
-import { useFormik } from 'formik';
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { IoInformationCircle } from "react-icons/io5";
+import BreadCrumb from "../BreadCrumb.tsx";
+import ImportTokens from "../ImportTokensAccordian.tsx";
+import LocalCurrencyConversion from "../LocalCurrencyConversion.tsx";
+import buyTokens from "../../assets/buyTokens.png";
+import buyToken from "../../assets/BreadCrumbs/buyZkTokens.png";
+import "../../css/Registration.css";
+import "../../css/TokenTraders.css";
+import toast, { Toaster } from "react-hot-toast";
+import { storebuyToken } from "../../helper/helper";
+import { useFormik } from "formik";
 import { jwtDecode } from "jwt-decode";
 import { getUser } from "../../helper/helper";
 
 const BuyTokens: React.FC = () => {
   const navigate = useNavigate();
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   const decodedToken: any = token ? jwtDecode(token) : {};
-  const username = decodedToken.username || '';
+  const username = decodedToken.username || "";
   const [userData, setUserData] = useState<any>("");
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const BuyTokens: React.FC = () => {
       try {
         const response = await getUser({ username });
         if (response.data) {
-          setUserData(response.data)
+          setUserData(response.data);
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -36,34 +36,34 @@ const BuyTokens: React.FC = () => {
   }, [username]);
 
   const [metamask, setMetamask] = useState<string>(() => {
-    const storedMetamask = localStorage.getItem('metamask');
-    return storedMetamask !== null ? storedMetamask : '';
+    const storedMetamask = localStorage.getItem("metamask");
+    return storedMetamask !== null ? storedMetamask : "";
   });
   const [serviceProvider, setServiceProvider] = useState<string>(() => {
-    const storedServiceProvider = localStorage.getItem('serviceProvider');
-    return storedServiceProvider !== null ? storedServiceProvider : '';
+    const storedServiceProvider = localStorage.getItem("serviceProvider");
+    return storedServiceProvider !== null ? storedServiceProvider : "";
   });
   const [localCurrencyVal, setLocalCurrencyVal] = useState<number>(() => {
-    const storedLocalCurrencyVal = localStorage.getItem('localCurrencyVal');
+    const storedLocalCurrencyVal = localStorage.getItem("localCurrencyVal");
     return storedLocalCurrencyVal !== null ? +storedLocalCurrencyVal : 0;
   });
   const [transactionfee, settransactionfee] = useState<number>(() => {
-    const storedTransactionFee = localStorage.getItem('transactionfee');
+    const storedTransactionFee = localStorage.getItem("transactionfee");
     return storedTransactionFee !== null ? +storedTransactionFee : 0;
   });
   const [zkTokenVal, setZkTokenVal] = useState<number>(() => {
-    const storedZkTokenVal = localStorage.getItem('zkTokenVal');
+    const storedZkTokenVal = localStorage.getItem("zkTokenVal");
     return storedZkTokenVal !== null ? +storedZkTokenVal : 0;
   });
   const [file, setFile] = useState<File | null>(null);
   const [userInputLocalVal, setUserInputLocalVal] = useState<number>(0);
 
   useEffect(() => {
-    localStorage.setItem('metamask', metamask);
-    localStorage.setItem('serviceProvider', serviceProvider);
-    localStorage.setItem('localCurrencyVal', localCurrencyVal.toString());
-    localStorage.setItem('transactionfee', transactionfee.toString());
-    localStorage.setItem('zkTokenVal', zkTokenVal.toString());
+    localStorage.setItem("metamask", metamask);
+    localStorage.setItem("serviceProvider", serviceProvider);
+    localStorage.setItem("localCurrencyVal", localCurrencyVal.toString());
+    localStorage.setItem("transactionfee", transactionfee.toString());
+    localStorage.setItem("zkTokenVal", zkTokenVal.toString());
   }, [metamask, serviceProvider, localCurrencyVal, transactionfee, zkTokenVal]);
 
   const handleDataUpdate = (
@@ -84,125 +84,163 @@ const BuyTokens: React.FC = () => {
       if (!file) return;
       try {
         const formData = new FormData();
-        formData.append('buyer', userData._id);
-        formData.append('metamaskAddress', metamask);
-        formData.append('serviceProviderName', serviceProvider);
-        formData.append('localCurrency', (localCurrencyVal || 0).toString());
-        formData.append('TokensAmount', (zkTokenVal || 0).toString());
-        formData.append('transactionFee', (transactionfee || 0).toString());
-        formData.append('buyReceipt', file);
+        formData.append("buyer", userData._id);
+        formData.append("metamaskAddress", metamask);
+        formData.append("serviceProviderName", serviceProvider);
+        formData.append("localCurrency", (localCurrencyVal || 0).toString());
+        formData.append("TokensAmount", (zkTokenVal || 0).toString());
+        formData.append("transactionFee", (transactionfee || 0).toString());
+        formData.append("buyReceipt", file);
 
         const storebuyTokenPromise = storebuyToken(formData);
         toast.promise(storebuyTokenPromise, {
-          loading: 'Creating...',
+          loading: "Creating...",
           success: <b>Buy Tokens request sent Successfully...!</b>,
-          error: <b>Error occurs while buying tokens.</b>
+          error: <b>Error occurs while buying tokens.</b>,
         });
-        storebuyTokenPromise.then(() => navigate(`/buyTokens-reciept/${serviceProvider}`));
+        await storebuyTokenPromise;
+
+        // Clear fields and remove from local storage
+        setMetamask("");
+        setServiceProvider("");
+        setLocalCurrencyVal(0);
+        setZkTokenVal(0);
+        setUserInputLocalVal(0);
+        settransactionfee(0);
+        setFile(null);
+        localStorage.removeItem("metamask");
+        localStorage.removeItem("serviceProvider");
+        localStorage.removeItem("localCurrencyVal");
+        localStorage.removeItem("transactionfee");
+        localStorage.removeItem("zkTokenVal");
+
+        // Redirect after successful submission
+        navigate(`/buyTokens-reciept/${serviceProvider}`);
       } catch (error) {
         console.error("Error submitting buy token data:", error);
         toast.error("Error submitting buy token data. Please try again later.");
       }
-    }
+    },
   });
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
-    if (selectedFile && selectedFile.type === 'image/png') {
+    if (selectedFile && selectedFile.type === "image/png") {
       setFile(selectedFile);
     } else {
-      toast.error('Please select a PNG file.');
+      console.error("Please select a PNG file.");
     }
   };
 
-
   return (
     <>
-    <Toaster position='top-center' reverseOrder={false}></Toaster>
+      <Toaster position="top-center" reverseOrder={false}></Toaster>
       <BreadCrumb
-        parentPageLink='/user'
-        ParentPage='Home'
-        pageName='Buy ZK-Tokens'
-        ChildPage='Buy ZK-Tokens'
+        parentPageLink="/user"
+        ParentPage="Home"
+        pageName="Buy ZK-Tokens"
+        ChildPage="Buy ZK-Tokens"
         imageUrl={buyToken}
       />
-      <div className='pt-2 px-5'>
+      <div className="pt-2 px-5">
         <ImportTokens text="Dont forget to import ZKT in Meta Mask wallet" />
-        <div className='row pt-5 pb-5'>
-          <div className='col-xl-6 col-lg-6 col-md-6 displayNone centerDiv d-flex justify-content-center align-items-center'>
+        <div className="row pt-5 pb-5">
+          <div className="col-xl-6 col-lg-6 col-md-6 displayNone centerDiv d-flex justify-content-center align-items-center">
             <img
-              className='RegisterationImage'
+              className="RegisterationImage"
               src={buyTokens}
-              alt='Girl Registering Her Account'
+              alt="Girl Registering Her Account"
             />
           </div>
 
-          <div className='col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12'>
-            <p style={{ fontSize: 'x-large', fontWeight: 'bold', letterSpacing: "2px" }} className=''>
+          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <p
+              style={{
+                fontSize: "x-large",
+                fontWeight: "bold",
+                letterSpacing: "2px",
+              }}
+              className=""
+            >
               Buy ZK-Tokens
             </p>
-            <form onSubmit={formik.handleSubmit} encType="multipart/form-data" method="POST" action="/buyToken">
+            <form
+              onSubmit={formik.handleSubmit}
+              encType="multipart/form-data"
+              method="POST"
+              action="/buyToken"
+            >
               <input
-                className='InputReg mt-4'
-                type='text'
-                placeholder='Enter Your Meta Mask Wallet Address'
-                value={metamask || ''}
-                onChange={(e) => setMetamask(String((e.target as HTMLInputElement).value))}
+                className="InputReg mt-4"
+                type="text"
+                placeholder="Enter Your Meta Mask Wallet Address"
+                value={metamask || ""}
+                onChange={(e) =>
+                  setMetamask(String((e.target as HTMLInputElement).value))
+                }
                 required
               />
               <div className="admin">
                 <input
-                  className='InputReg mt-4'
-                  type='text'
-                  placeholder='Enter Seller User Name'
-                  value={serviceProvider || ''}
-                  onChange={(e) => setServiceProvider(String((e.target as HTMLInputElement).value))}
+                  className="InputReg mt-4"
+                  type="text"
+                  placeholder="Enter Seller User Name"
+                  value={serviceProvider || ""}
+                  onChange={(e) =>
+                    setServiceProvider(
+                      String((e.target as HTMLInputElement).value)
+                    )
+                  }
                   required
                 />
-                <p  ><span className="link-wrapper">
-                  <Link className="link hover-2 fw-bold" style={{ letterSpacing: "1px" }} to="/zkt-providers" > View ZK-Token Sellers</Link></span></p>
+                <p>
+                  <span className="link-wrapper">
+                    <Link
+                      className="link hover-2 fw-bold"
+                      style={{ letterSpacing: "1px" }}
+                      to="/zkt-providers"
+                    >
+                      {" "}
+                      View ZK-Token Sellers
+                    </Link>
+                  </span>
+                </p>
               </div>
-              <div className='mt-4'>
-                LocalCurrencyConversion  commented in file:"BuyTokens" to save api free trial
-
+              <div className="mt-4">
+             {/*LocalCurrencyConversion commented in file:"BuyTokens" to save
+                api free trial*/}
                 <LocalCurrencyConversion onDataUpdate={handleDataUpdate} />
               </div>
-              <div className='mt-4 d-flex align-items-center justify-content-left'
-                data-toggle="tooltip" data-placement="top" title="Click on ZK Token Seller Name to  view local bank account details"
+              <div
+                className="mt-4 d-flex align-items-center justify-content-left"
+                data-toggle="tooltip"
+                data-placement="top"
+                title="Click on ZK Token Seller Name to  view local bank account details"
               >
-                <div className=''>
-                  Attach bank reciept for transaction of <b>100</b> local currency <u>
-                    <Link to="/zkt-provider-profile">
-                      Faheem
-                    </Link>
-                  </u> local bank
+                <div className="">
+                  Attach bank reciept 
                 </div>
-                <div className='mx-1'>
+                <div className="mx-1">
                   <IoInformationCircle className="information" />
                 </div>
               </div>
               <input
-                className='InputReg  recieptChose'
-                type='file'
-                placeholder='Attach Reciept'
-                name= 'buyReceipt'
-                accept='.png'
+                className="InputReg  recieptChose"
+                type="file"
+                placeholder="Attach Reciept"
+                name="buyReceipt"
+                accept=".png"
                 onChange={handleFileChange}
               />
-               {file && <p>Selected File: {file.name}</p>} {/* Display the selected file name if a file is selected */}
-              
-              <button type='submit' className='my-4 btnStyle' rel="stylesheet"> 
-              Generate Reciept
-            </button>
-               
+              {file && <p>Selected File: {file.name}</p>}{" "}
+              {/* Display the selected file name if a file is selected */}
+              <button type="submit" className="my-4 btnStyle" rel="stylesheet">
+                Generate Reciept
+              </button>
             </form>
-
           </div>
         </div>
-
       </div>
-
-      
     </>
   );
 };

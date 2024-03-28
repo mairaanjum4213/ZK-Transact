@@ -278,6 +278,7 @@ const WalletDetails: React.FC = () => {
               onChange={(e) => setMetamaskAddress(e.target.value)}
               className="w-full border border-gray-700 rounded-md py-2 px-2 focus:outline-none focus:border-blue-400"
               placeholder=" Copy the metamask address here from above and paste here"
+              required
             />
           </div>
           <div className="mb-4">

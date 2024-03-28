@@ -8,7 +8,7 @@ const Notice: React.FC = () => {
                     WebkitBackgroundClip: 'text',
                     color: 'transparent'
                 }}>
-                  <FaRegBell className="text-white"/> <p> Select the Notification To Access Data </p>
+               <FaRegBell className="text-gray-500"/> <p> Select the Notification To Access Data </p>
                 </span>
             </div>
         </>
