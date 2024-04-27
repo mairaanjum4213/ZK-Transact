@@ -13,6 +13,8 @@ import { storebuyToken } from "../../helper/helper";
 import { useFormik } from "formik";
 import { jwtDecode } from "jwt-decode";
 import { getUser } from "../../helper/helper";
+import axios from "axios";
+axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
 
 const BuyTokens: React.FC = () => {
   const navigate = useNavigate();
@@ -35,6 +37,25 @@ const BuyTokens: React.FC = () => {
     fetchUserData();
   }, [username]);
 
+  const [admins, setAdmins] = useState<string[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (!userData) return;
+
+        const response = await axios.get(
+          `/api/getMerchants?region=${userData.region}&id=${userData?._id}`
+        );
+        setAdmins(response.data.admins);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [userData]);
+
   const [metamask, setMetamask] = useState<string>(() => {
     const storedMetamask = localStorage.getItem("metamask");
     return storedMetamask !== null ? storedMetamask : "";
@@ -56,6 +77,7 @@ const BuyTokens: React.FC = () => {
     return storedZkTokenVal !== null ? +storedZkTokenVal : 0;
   });
   const [file, setFile] = useState<File | null>(null);
+
   const [userInputLocalVal, setUserInputLocalVal] = useState<number>(0);
 
   useEffect(() => {
@@ -80,8 +102,17 @@ const BuyTokens: React.FC = () => {
 
   const formik = useFormik({
     initialValues: {},
+
     onSubmit: async () => {
       if (!file) return;
+   
+      if (!admins.map((admin:any) => admin?.username).includes(serviceProvider)) {
+        toast.error(
+          "Invalid seller name. Please select from the list of ZK-Token Sellers."
+        );
+        return;
+      }
+
       try {
         const formData = new FormData();
         formData.append("buyer", userData._id);
@@ -207,7 +238,7 @@ const BuyTokens: React.FC = () => {
                 </p>
               </div>
               <div className="mt-4">
-             {/*LocalCurrencyConversion commented in file:"BuyTokens" to save
+                {/*LocalCurrencyConversion commented in file:"BuyTokens" to save
                 api free trial*/}
                 <LocalCurrencyConversion onDataUpdate={handleDataUpdate} />
               </div>
@@ -217,9 +248,7 @@ const BuyTokens: React.FC = () => {
                 data-placement="top"
                 title="Click on ZK Token Seller Name to  view local bank account details"
               >
-                <div className="">
-                  Attach bank reciept 
-                </div>
+                <div className="">Attach bank reciept</div>
                 <div className="mx-1">
                   <IoInformationCircle className="information" />
                 </div>

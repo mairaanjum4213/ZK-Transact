@@ -11,13 +11,14 @@ import { useFormik } from "formik";
 import toast, { Toaster } from "react-hot-toast";
 import { jwtDecode } from "jwt-decode";
 import { getUser, storesSellToken } from "../../helper/helper";
+import axios from "axios";
 
 const SellTokens: React.FC = () => {
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const decodedToken: any = token ? jwtDecode(token) : {};
   const username = decodedToken.username || "";
-  const [userData, setUserData] = useState<string>("");
+  const [userData, setUserData] = useState<any>("");
   const [sellerMetamask, setSellerMetamask] = useState<string>(
     () => localStorage.getItem("sellerMetamask") || ""
   );
@@ -55,6 +56,42 @@ const SellTokens: React.FC = () => {
     fetchUserData();
   }, [username]);
 
+  const [admins, setAdmins] = useState<string[]>([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (!userData) return;
+
+        const response = await axios.get(
+          `/api/getMerchants?region=${userData.region}&id=${userData?._id}`
+        );
+        setAdmins(response.data.admins);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [userData]);
+
+   
+   const [transferTokenData, settransferTokenData] = useState<any>();
+   useEffect(() => {
+     if (userData && userData._id) {
+       fetchtransferToken();
+     }
+   }, [userData]);
+   const fetchtransferToken = async () => {
+     try {
+       const result = await axios.get(
+         `/api/getalltransfertokens/sender/${userData._id}`
+       );
+       settransferTokenData(result.data);
+     } catch (error) {
+       console.error("Error fetching files:", error);
+     }
+   };
+
   useEffect(() => {
     localStorage.setItem("sellerMetamask", sellerMetamask);
     localStorage.setItem("purchaserName", purchaserName);
@@ -84,6 +121,18 @@ const SellTokens: React.FC = () => {
   const formik = useFormik({
     initialValues: {},
     onSubmit: async () => {
+      if (!admins.map((admin:any) => admin?.username).includes(purchaserName)) {
+        toast.error(
+          "Invalid purchaser name. Please select from the list of ZK-Token Purchasers."
+        );
+        return;
+      }
+
+       // Check if transferTokenData contains the contractHash
+  if (!transferTokenData || !transferTokenData.some(token => token.transferContractHash === contractHash)) {
+    toast.error("Invalid contract hash. Please select from the list of transfer contract hashes.");
+    return;
+  }
       try {
         const values = {
           seller: userData?._id,

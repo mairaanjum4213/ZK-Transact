@@ -174,10 +174,10 @@ export const ERC20: React.FC = () => {
       write();
     }
   };
+  
   //Fetching Data from Backend//
   const [transferTokenData, settransferTokenData] = useState<any>();
   useEffect(() => {
-    // Fetch transfer token data only when userData is available
     if (userData && userData._id) {
       fetchtransferToken();
     }
@@ -192,6 +192,7 @@ export const ERC20: React.FC = () => {
       console.error("Error fetching files:", error);
     }
   };
+
   const [hideBreadCrumb, setHideBreadCrumb] = useState<boolean>(false);
   useEffect(() => {
     if (window.location.pathname === "/admin") {

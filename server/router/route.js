@@ -30,7 +30,8 @@ router.route('/getbuytokens').get(controller.userwithBuyToken)
 router.route('/getselltokens').get(controller.userwithSellToken) 
 router.route('/userwithselltoken/:sellTokenId').get(controller.userwithSellTokenwithId);
 router.route('/userwithbuytoken/:buyTokenId').get(controller.userwithBuyTokenwithId);
-router.route('/gettransfertokens/sender/:senderId').get(controller.userwithTransferToken) 
+router.route('/gettransfertokens/sender/:senderId').get(controller.userwithTransferToken)
+router.route('/getalltransfertokens/sender/:senderId').get(controller.getAllTransferTokens)
 
 /** PUT Methods */
 router.route('/updateuser').put(Auth, controller.updateUser); // is use to update the user profile,, 

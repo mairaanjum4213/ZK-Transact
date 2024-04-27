@@ -397,7 +397,7 @@ export async function transferToken(req, res) {
 //http://localhost:8080/api/getTransferTokens/transferTokenId
 export async function userwithTransferToken(req, res) {
   try {
-    // Extract the sender ID from req.params
+  
     const { senderId } = req.params;
     const transferToken = await TransferTokenModel.findOne({ sender: senderId })
       .sort({
@@ -408,6 +408,22 @@ export async function userwithTransferToken(req, res) {
       res.status(200).json(transferToken);
     } else {
       res.status(404).json({ message: "TransferToken Instance not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+// http://localhost:8080/api/getTransferTokens
+export async function getAllTransferTokens(req, res) {
+  const { senderId } = req.params;
+  try {
+    const allTransferTokens = await TransferTokenModel.find({sender : senderId}).populate("sender", ["username", "email"]);
+
+    if (allTransferTokens.length > 0) {
+      res.status(200).json(allTransferTokens);
+    } else {
+      res.status(404).json({ message: "No transfer tokens found" });
     }
   } catch (error) {
     res.status(500).json({ message: error.message });
