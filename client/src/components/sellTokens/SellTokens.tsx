@@ -129,7 +129,7 @@ const SellTokens: React.FC = () => {
       }
 
        // Check if transferTokenData contains the contractHash
-  if (!transferTokenData || !transferTokenData.some(token => token.transferContractHash === contractHash)) {
+  if (!transferTokenData || !transferTokenData.some((token:any) => token.transferContractHash === contractHash)) {
     toast.error("Invalid contract hash. Please select from the list of transfer contract hashes.");
     return;
   }
