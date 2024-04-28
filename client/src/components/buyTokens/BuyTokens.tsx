@@ -100,13 +100,42 @@ const BuyTokens: React.FC = () => {
     settransactionfee(transactionFee);
   };
 
+  const [merchants, setMerchants] = useState<any>();
+
+  useEffect(() => {
+    const fetchMerchantsByUsername = async (username: any) => {
+      try {
+        const response = await axios.get(
+          `/api/getMerchant?username=${username}`
+        );
+        return response.data.admins;
+      } catch (error) {
+        console.error("Error fetching merchants:", error);
+        return [];
+      }
+    };
+
+    const username = serviceProvider;
+    fetchMerchantsByUsername(username)
+      .then((merchants) => {
+        setMerchants(merchants);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }, [serviceProvider]);
+
+  console.log("mm", merchants);
+
   const formik = useFormik({
     initialValues: {},
 
     onSubmit: async () => {
       if (!file) return;
-   
-      if (!admins.map((admin:any) => admin?.username).includes(serviceProvider)) {
+
+      if (
+        !admins.map((admin: any) => admin?.username).includes(serviceProvider)
+      ) {
         toast.error(
           "Invalid seller name. Please select from the list of ZK-Token Sellers."
         );
@@ -240,7 +269,16 @@ const BuyTokens: React.FC = () => {
               <div className="mt-4">
                 {/*LocalCurrencyConversion commented in file:"BuyTokens" to save
                 api free trial*/}
-                <LocalCurrencyConversion onDataUpdate={handleDataUpdate} />
+                <div className="mt-4">
+                
+                  {merchants && merchants.length > 0 && (
+                    <LocalCurrencyConversion
+                      onDataUpdate={handleDataUpdate}
+                      merchantFee={merchants[0].merchantFee} // Assuming you want to pass the merchant fee from the first merchant in the array
+                    />
+                  )}
+                  
+                </div>
               </div>
               <div
                 className="mt-4 d-flex align-items-center justify-content-left"

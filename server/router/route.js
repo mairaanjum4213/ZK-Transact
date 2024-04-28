@@ -56,6 +56,7 @@ router.route('/getMessages/:chatId').get(messageController.getMessages);
 router.route('/becomeMerchant').post(controller.becomeMerchant);
 router.route('/merchant/fee').put(controller.updateFee);
 router.route('/getMerchants').get(controller.getMerchants);
+router.route('/getMerchant').get(controller.getSpecificMerchant);
 
 /*___________________Account Route ____________________*/
 router.route('/accounts').post(controller.createAccountDetails);

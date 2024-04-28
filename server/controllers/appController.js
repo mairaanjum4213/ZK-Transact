@@ -602,6 +602,25 @@ export async function getMerchants(req, res) {
   }
 }
 
+export async function getSpecificMerchant(req, res) {
+  try {
+    const username = req.query.username;
+    const admins = await UserModel.find({
+      isMerchant: true,
+      username: username,
+      accounts: { $exists: true, $ne: [] },
+      wallet: { $exists: true },
+    })
+      .populate("accounts")
+      .populate("wallet");
+
+    res.json({ admins });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+
 //_________________________________________________ ↑ Merchant Controller↑
 
 //_________________________________________________ ↓ Account Controller↓
