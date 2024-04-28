@@ -16,6 +16,7 @@ interface SellTokensRequestProps {
 }
 const SellTokensRequest: React.FC<SellTokensRequestProps> = ({ requestId }) => {
   const [decision, setDecision] = useState<String>("null");
+  const [requestState, setRequestState] = useState("loading");
   const [requestData, setRequestData] = useState<any>(null);
   const [isLightMode] = useLightMode();
   const [userData, setUserData] = useState<any>();
@@ -43,6 +44,7 @@ const SellTokensRequest: React.FC<SellTokensRequestProps> = ({ requestId }) => {
       try {
         const response = await axios.get(`/api/userwithselltoken/${requestId}`);
         setRequestData(response.data);
+        setRequestState("success");
       } catch (error) {
         console.error("Error fetching sell request data:", error);
       }
@@ -107,6 +109,10 @@ const SellTokensRequest: React.FC<SellTokensRequestProps> = ({ requestId }) => {
         handleApprovedBuyToken(sellTokenRequestId, commentsByAdmin);
       }
   };
+
+  if (requestState === "loading") {
+    return <p>Loading...</p>; 
+  }
 
   return (
     <>

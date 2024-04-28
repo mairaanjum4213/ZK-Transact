@@ -23,14 +23,13 @@ import {
 } from "wagmi";
 import { BigNumber } from "bignumber.js";
 import contractABI from "../../Wagmi/data.json";
-import ImportTokens from "../ImportTokensAccordian.tsx";
-import { HiOutlineRefresh } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
 interface BuyTokensRequestProps {
   requestId: string;
 }
 const BuyTokensRequest: React.FC<BuyTokensRequestProps> = ({ requestId }) => {
   const navigate = useNavigate();
+  const [requestState, setRequestState] = useState("loading");
   const [decision, setDecision] = useState<String>("null");
   const [requestData, setRequestData] = useState<any>(null);
   const [isLightMode] = useLightMode();
@@ -59,6 +58,7 @@ const BuyTokensRequest: React.FC<BuyTokensRequestProps> = ({ requestId }) => {
       try {
         const response = await axios.get(`/api/userwithbuytoken/${requestId}`);
         setRequestData(response.data);
+        setRequestState("success");
       } catch (error) {
         console.error("Error fetching sell request data:", error);
       }
@@ -222,6 +222,10 @@ const BuyTokensRequest: React.FC<BuyTokensRequestProps> = ({ requestId }) => {
   ) => {
     setAdminComments(e.target.value);
   };
+
+  if (requestState === "loading") {
+    return <p>Loading...</p>; 
+  }
 
   return (
     <>
