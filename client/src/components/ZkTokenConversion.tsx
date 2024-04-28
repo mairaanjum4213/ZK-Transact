@@ -5,11 +5,12 @@ import { toast, Toaster } from 'react-hot-toast';
 
 interface ZkTokenConversionProps {
   onDataUpdate: (roundedNum: number, inputZKToken: number, transactionFee:number) => void;
+  merchantFee: number;
 }
 
-const ZkTokenConversion:React.FC<ZkTokenConversionProps> = ({ onDataUpdate }) => {
+const ZkTokenConversion:React.FC<ZkTokenConversionProps> = ({ onDataUpdate, merchantFee }) => {
   const [inputZKToken, setText1] = useState<number>();
-  const [transactionfee, settransactionfee] = useState<number>(0.5);
+  const [transactionfee, settransactionfee] = useState<number>(merchantFee);
   const [localCurrencyVal, setLocalCurrencyVal] = useState<number>();
   const [country1, setCountry1] = useState<Record<string, number>>({});
   const [inputZkTokens, setInputZkTokens] = useState<number>();
@@ -45,7 +46,9 @@ const ZkTokenConversion:React.FC<ZkTokenConversionProps> = ({ onDataUpdate }) =>
   const convert = (event: React.FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
     let num = (inputZkTokens / zkTokenUniversalVal) * inputZKToken;
-    let roundedNum = parseFloat(num.toFixed(5));
+    let feeAmount = num * (transactionfee / 100);
+    let exchangedAmountAfterFee = num - feeAmount;
+    let roundedNum = parseFloat(exchangedAmountAfterFee.toFixed(2));
     setLocalCurrencyVal(roundedNum);
     onDataUpdate(roundedNum,inputZKToken,transactionfee);
 

@@ -108,6 +108,7 @@ const SellTokens: React.FC = () => {
     contractHash,
   ]);
 
+
   const handleDataUpdate = (
     roundedNum: number,
     inputZKToken: number,
@@ -117,6 +118,30 @@ const SellTokens: React.FC = () => {
     setInputZKToken(inputZKToken);
     settransactionfee(transactionFee);
   };
+
+  const [merchants, setMerchants] = useState<any>();
+  useEffect(() => {
+    const fetchMerchantsByUsername = async (username: any) => {
+      try {
+        const response = await axios.get(
+          `/api/getMerchant?username=${username}`
+        );
+        return response.data.admins;
+      } catch (error) {
+        console.error("Error fetching merchants:", error);
+        return [];
+      }
+    };
+
+    const username = purchaserName;
+    fetchMerchantsByUsername(username)
+      .then((merchants) => {
+        setMerchants(merchants);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }, [purchaserName]);
 
   const formik = useFormik({
     initialValues: {},
@@ -272,7 +297,9 @@ const SellTokens: React.FC = () => {
               <div className="mt-4">
                {/*} CurrencyConversion commented in file:"BuyTokens" to save api
                 free trial*/}
-                <ZkTokenConversion onDataUpdate={handleDataUpdate} />
+              {merchants && merchants.length > 0 && (
+                <ZkTokenConversion onDataUpdate={handleDataUpdate}  merchantFee={merchants[0].merchantFee} />
+              )}
               </div>
               <div
                 className="mt-4 d-flex align-items-center justify-content-left"

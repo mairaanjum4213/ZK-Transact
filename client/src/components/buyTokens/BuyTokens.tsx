@@ -125,8 +125,6 @@ const BuyTokens: React.FC = () => {
       });
   }, [serviceProvider]);
 
-  console.log("mm", merchants);
-
   const formik = useFormik({
     initialValues: {},
 
@@ -274,7 +272,7 @@ const BuyTokens: React.FC = () => {
                   {merchants && merchants.length > 0 && (
                     <LocalCurrencyConversion
                       onDataUpdate={handleDataUpdate}
-                      merchantFee={merchants[0].merchantFee} // Assuming you want to pass the merchant fee from the first merchant in the array
+                      merchantFee={merchants[0].merchantFee} 
                     />
                   )}
                   
