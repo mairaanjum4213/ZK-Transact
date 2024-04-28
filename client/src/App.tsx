@@ -46,6 +46,7 @@ import Faqs from "./components/Faqs.tsx";
 import UserNotifications from "./components/UserNotifications.tsx";
 import BuyTokenNotification from "./components/buyTokens/buyTokenNotification.tsx";
 import SellTokenNotification from "./components/sellTokens/SellTokenNotification.tsx";
+import Fees from "./components/admin/Fees.tsx";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -83,6 +84,7 @@ function App() {
               <Route path="/recovery" element={<Recovery />} />
               <Route path="/reset" element={<ResetPassword />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/testfee" element={<Fees/>}/>
 
               <Route
                 path="/admin"
