@@ -532,6 +532,42 @@ export async function becomeMerchant(req, res) {
   }
 }
 
+export async function updateFee(req, res) {
+  try {
+    const { userId, fee } = req.body;
+
+    const user = await UserModel.findById(userId);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found',
+      });
+    }
+
+    if (!user.isMerchant) {
+      return res.status(403).json({
+        success: false,
+        message: 'Only merchants can update the fee',
+      });
+    }
+
+    user.merchantFee = fee;
+    await user.save();
+
+    res.json({
+      success: true,
+      message: 'Fee updated successfully',
+      user,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Internal Server Error',
+    });
+  }
+}
+
+
 export async function getMerchants(req, res) {
   try {
     const region = req.query.region;
