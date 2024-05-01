@@ -74,6 +74,7 @@ router.route('/sellToken/approve/:id').put(controller.approveSellToken);
 router.route('/sellToken/approved/:id').put(controller.approveSellTokenByAdmin);
 router.route('/sellToken/reject/:id').put(controller.rejectSellTokenByAdmin);
 router.route('/sellToken/pending/:username').get(controller.getPendingSellTokenRequestsForAdmin);
+router.route('/sellToken/approved/:username').get(controller.getApprovedSellTokenRequestsForAdmin);
 router.route('/sellToken/seller/:sellerId').get(controller.getApprovedSellTokenRequestsForUser);
 
 
@@ -82,5 +83,12 @@ router.route('/buyToken/approve/:id').put(controller.approveBuyToken);
 router.route('/buyToken/approved/:id').put(controller.approveBuyTokenByAdmin);
 router.route('/buyToken/reject/:id').put(controller.rejectBuyTokenByAdmin);
 router.route('/buyToken/pending/:username').get(controller.getPendingBuyTokenRequestsForAdmin);
+router.route('/buyToken/approved/:username').get(controller.getApprovedBuyTokenRequestsForAdmin);
 router.route('/buyToken/buyer/:buyerId').get(controller.getApprovedBuyTokenRequestsForUser);
+
+/*___________________________Dashboard __________________*/
+router.route('/buysell/approved/:username').get(controller.getApprovedTokenRequestsForAdmin);
+router.route('/buysell/pending/:username').get(controller.getPendingTokenRequestsCountForAdmin);
+router.route('/buysell/recentapproved/:username').get(controller.getRecentApprovedTokenRequestsForAdmin);
+router.route('/buysell/all/:username').get(controller.getAllTokenRequestsForAdmin);
 export default router;
