@@ -39,12 +39,10 @@ import CompleteViewZKTokenPurchasers from "./components/sellTokens/CompleteViewZ
 import CompleteZKTokenProviderProfile from "./components/buyTokens/CompleteZKTokenProviderProfile.tsx";
 import CompleteZKTokenPurchasers from "./components/sellTokens/CompleteZKTokenPurchasers.tsx";
 import BuyTokenApprovalPage from "./components/buyTokens/buyTokenApprovalPage.tsx";
+import BuyTokenNotification from "./components/buyTokens/buyTokenNotification.tsx";
 import SellTokenApprovalPage from "./components/sellTokens/SellTokenApprovalPage.tsx";
-import BuyTokensRequest from "./components/admin/BuyTokensRequest.tsx";
-import SellTokensRequest from "./components/admin/SellTokensRequest.tsx";
 import Faqs from "./components/Faqs.tsx";
 import UserNotifications from "./components/UserNotifications.tsx";
-import BuyTokenNotification from "./components/buyTokens/buyTokenNotification.tsx";
 import SellTokenNotification from "./components/sellTokens/SellTokenNotification.tsx";
 import Fees from "./components/admin/Fees.tsx";
 
@@ -64,7 +62,6 @@ function App() {
     };
   }, []);
 
-  
   const isAuthenticated = useAuthStore((state) => state.auth.isAuthenticated);
   return (
     <>
@@ -84,12 +81,9 @@ function App() {
               <Route path="/recovery" element={<Recovery />} />
               <Route path="/reset" element={<ResetPassword />} />
               <Route path="/profile" element={<Profile />} />
-              <Route path="/testfee" element={<Fees/>}/>
+              <Route path="/testfee" element={<Fees />} />
 
-              <Route
-                path="/admin"
-                element={<AdminDashboard />}
-              />
+              <Route path="/admin" element={<AdminDashboard />} />
 
               <Route
                 path="/user"
@@ -185,7 +179,10 @@ function App() {
                 element={isAuthenticated ? <WalletDetails /> : <Login />}
               />
 
-              <Route path="/faqs" element={isAuthenticated ? <Faqs /> : <Login />} />
+              <Route
+                path="/faqs"
+                element={isAuthenticated ? <Faqs /> : <Login />}
+              />
 
               <Route
                 path="/userNotifications"
@@ -194,11 +191,13 @@ function App() {
 
               <Route
                 path="/buy-notification-details/:requestId"
-                element={isAuthenticated ? <BuyTokenNotification/> : <Login />}
+                element={isAuthenticated ? <BuyTokenNotification /> : <Login />}
               />
               <Route
                 path="/sell-notification-details/:requestId"
-                element={isAuthenticated ? <SellTokenNotification/> : <Login />}
+                element={
+                  isAuthenticated ? <SellTokenNotification /> : <Login />
+                }
               />
             </Routes>
 
