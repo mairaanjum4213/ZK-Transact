@@ -71,11 +71,11 @@ const Accounts: React.FC = () => {
     <>
       <Toaster position="top-center" reverseOrder={false}></Toaster>
       <div className="container mt-5">
-        <h2 className="font-semibold     tracking-wider ">Add Accounts</h2>
+        <h2 className="font-semibold   tracking-wider ">Add Accounts</h2>
       </div>
       <div className="mx-auto flex  w-full lg:w-6/12 ">
-        <div className=" w-full  my-8 p-4 accountsCard rounded-sm">
-          <h1 className="text-xl font-semibold mb-4 tracking-[0.2rem]">
+        <div className=" w-full  my-8 p-4 bgLightGret bdr rounded-lg">
+          <h1 className="text-xl mb-4">
             Add Account
           </h1>
           <div className="mb-4">
@@ -85,7 +85,7 @@ const Accounts: React.FC = () => {
               name="bankName"
               value={accountType}
               onChange={(e) => setAccountType(e.target.value)}
-              className="w-full  text-white genericBg rounded-sm py-[0.7rem]  px-2 focus:outline-none "
+              className="w-full  borderStandard rounded-[0.3rem] bg-transparent py-[0.7rem]  px-2 focus:outline-none "
             />
           </div>
           <div className="mb-4">
@@ -96,7 +96,7 @@ const Accounts: React.FC = () => {
               name="accNumber"
               value={accountNumber}
               onChange={(e) => setAccountNumber(e.target.value)}
-              className="w-full  rounded-sm  genericBg py-[0.7rem] px-2 focus:outline-none "
+              className="w-full  borderStandard rounded-[0.3rem] bg-transparent py-[0.7rem] px-2 focus:outline-none "
             />
           </div>
           <div className="mb-4">
@@ -106,7 +106,7 @@ const Accounts: React.FC = () => {
               name="accComment"
               value={accountName}
               onChange={(e) => setAccountName(e.target.value)}
-              className="w-full rounded-sm py-[0.7rem]   genericBg px-2 focus:outline-none"
+              className="w-full  py-[0.7rem]   borderStandard rounded-[0.3rem] bg-transparent px-2 focus:outline-none"
             />
           </div>
           <button
@@ -130,23 +130,23 @@ const Accounts: React.FC = () => {
           {userData?.accounts?.map((account: any, index: any) => (
             <div
               key={index}
-              className="my-4 flex bg-stone-300    accountsCard rounded-sm hover:shadow-md"
+              className="my-4 flex  bgLightGret   duration-300 rounded-lg hover:shadow-md"
             >
               <div className="flex-grow p-3">
                 <div>
-                  <p className="text-xl font-semibold border-b w-fit tracking-[0.1rem] my-2">
+                  <p className="text-xl text-primaryColor  w-fit my-2">
                     Bank Name
                   </p>
                   <p>{account?.accountType}</p>
                 </div>
                 <div>
-                  <p className="text-xl font-bold border-b w-fit tracking-[0.1rem] my-2">
+                  <p className="text-xl text-primaryColor  w-fit my-2">
                     Account Number
                   </p>
                   <p>{account?.accountNumber}</p>
                 </div>
                 <div>
-                  <p className="text-xl font-bold border-b w-fit tracking-[0.1rem] my-2">
+                  <p className="text-xl text-primaryColor  w-fit my-2">
                     Account Holder Name
                   </p>
                   <p>{account?.accountName}</p>

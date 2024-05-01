@@ -119,6 +119,15 @@
   .chatCard:hover {
     background-color: #28383d56 !important;
   }
+
+  .bgLightGrep{
+    background-color: #28383d56 !important;
+  }
+ 
+  .textBasic{
+    color: rgb(255, 255, 255) !important;
+    font-weight: normal;
+  }
 }
 @media (prefers-color-scheme:light) {
   .Chat-container,
@@ -137,5 +146,17 @@
   .chatCard:hover {
     box-shadow: rgba(0, 0, 0, .068) 0 10px 20px, rgba(0, 0, 0, .085) 0 6px 6px;
     background-color: #40424256 !important;
+  }
+
+  .bgLightGrep{
+    box-shadow: rgba(0, 0, 0, .068) 0 10px 20px, rgba(0, 0, 0, .085) 0 6px 6px;
+    background-color: #40424256 !important;
+  }
+
+ 
+
+  .textBasic{
+    color: rgb(0, 0, 0) !important;
+    font-weight: normal;
   }
 }

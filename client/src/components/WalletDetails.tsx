@@ -1,25 +1,19 @@
-import "../css/WalletDetails.css";
-import BreadCrumb from "./BreadCrumb";
-import breadCrumWallet from "../assets/BreadCrumbs/ImportTokens.png";
-import { HiOutlineRefresh } from "react-icons/hi";
-import { useEffect, useState } from "react";
-import { CopyToClipboard } from "react-copy-to-clipboard";
-import { MdOutlineContentCopy } from "react-icons/md";
-import toast, { Toaster } from "react-hot-toast";
-import { useNetwork, useSwitchNetwork } from "wagmi";
-import { useBlockNumber } from "wagmi";
-import { useAccount, useEnsName, useBalance } from "wagmi";
-import React from "react";
-import metamask from "../assets/metamask.png";
-import { jwtDecode } from "jwt-decode";
-import { getUser } from "../helper/helper";
 import axios from "axios";
-axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
+import { jwtDecode } from "jwt-decode";
+import React, { useEffect, useState } from "react";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import toast, { Toaster } from "react-hot-toast";
+import { HiOutlineRefresh } from "react-icons/hi";
+import { MdOutlineContentCopy } from "react-icons/md";
+import { useAccount, useBalance, useBlockNumber, useEnsName, useNetwork, useSwitchNetwork } from "wagmi";
+import breadCrumWallet from "../assets/BreadCrumbs/ImportTokens.png";
+import metamask from "../assets/metamask.png";
+import "../css/WalletDetails.css";
+import { getUser } from "../helper/helper";
+import BreadCrumb from "./BreadCrumb";
 import ConnectWallet from "./ConnectWallet";
-
+axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
 const WalletDetails: React.FC = () => {
-
-
   const [hideBreadCrumb, setHideBreadCrumb] = useState<boolean>(false);
   useEffect(() => {
     if (window.location.pathname === "/admin") {
@@ -116,7 +110,7 @@ const WalletDetails: React.FC = () => {
   return (
     <>
       <Toaster position="top-center" reverseOrder={false}></Toaster>
-      {!hideBreadCrumb && ( <BreadCrumb
+      {!hideBreadCrumb && (<BreadCrumb
         parentPageLink="/user"
         ParentPage="Home"
         pageName="Wallet Detials"
@@ -155,17 +149,16 @@ const WalletDetails: React.FC = () => {
                         <p className="text-secondary mb-4">Wallet</p>
                       </div>
                       <div className="col-md-8">
-                        <div className="card-body px-4 pb-4 pt-lg-4">
+                        <div className="card-body  px-4 pb-4 pt-lg-4" >
                           <p
-                            className="fs-4 fw-bold mt-2  mb-2"
-                            style={{ letterSpacing: "2px" }}
+                            className="fs-4  mt-2  mb-2"
                           >
                             Details
                           </p>
                           <hr className="mt-0 mb-4" />
                           <div className="row pt-1">
                             <div className="col-12 mb-3">
-                              <h6>
+                              <h6 className="texy-md">
                                 Wallet Address
                                 <CopyToClipboard text={walletAddress}>
                                   <MdOutlineContentCopy
@@ -267,8 +260,8 @@ const WalletDetails: React.FC = () => {
       </section>
       {/*   Add metamask details*/}
       {userData.isMerchant && (<div className="mx-auto flex  w-full lg:w-6/12 ">
-        <div className=" w-full  my-8 p-4 accountsCard rounded-xl">
-          <h1 className="text-xl font-bold mb-4 tracking-widest" >Add Metamask Details </h1>
+        <div className=" w-full  my-8 p-5 bgLightGret bdr rounded-lg">
+          <h1 className="text-xl  mb-4 " >Add Metamask Details </h1>
           <div className="mb-4">
             <label className="block mb-2">Metamask Address:</label>
             <input
@@ -276,7 +269,7 @@ const WalletDetails: React.FC = () => {
               name="bankName"
               value={metamaskAddress}
               onChange={(e) => setMetamaskAddress(e.target.value)}
-              className="w-full border border-gray-700 rounded-md py-2 px-2 focus:outline-none focus:border-blue-400"
+              className="w-full bg-transparent borderStandard rounded-[0.3rem]  py-[0.8rem] px-2 focus:outline-none "
               placeholder=" Copy the metamask address here from above and paste here"
               required
             />
@@ -288,14 +281,14 @@ const WalletDetails: React.FC = () => {
               type="text"
               name="accNumber"
               value={zkTokens}
-              className="w-full border border-gray-700 rounded-md py-2 px-2 focus:outline-none focus:border-blue-400"
+              className="w-full  bg-transparent borderStandard rounded-[0.3rem] py-[0.8rem] px-2 focus:outline-none "
             />
           </div>
           <button
             type="submit"
             onClick={handleAddWallet}
             disabled={isButtonClicked}
-            className="standarButton-1"
+            className="standarButton-1 mb-3"
           >
             {isButtonClicked ? "Adding Wallet..." : "Add Wallet"}
           </button>

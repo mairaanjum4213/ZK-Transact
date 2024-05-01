@@ -52,6 +52,15 @@
     .focusedDiv {
         background-image: linear-gradient(to right, #6bb3a7 0%, #269e88 51%, #269e88 100%) !important;
     }
+
+    .bgLightGret {
+        background-color: #091113 !important;
+
+    }
+
+    .borderStandard{
+        border: 1px solid #f3f3f311;
+    }
 }
 @media (prefers-color-scheme: light) {
     .connectWallet {
@@ -78,5 +87,14 @@
         background-color: white !important;
         transition: border 0.7s ease;
         border: 1px solid rgba(128, 128, 128, 0.521);
+    }
+
+    .borderStandard{
+        border: 1px solid #413f3f7a;
+    }
+
+    .bgLightGret {
+        background-color: #413f3f11 !important;
+       
     }
 }
