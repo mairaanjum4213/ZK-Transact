@@ -1027,7 +1027,7 @@ export const getRecentApprovedTokenRequestsForAdmin = async (req, res) => {
       .sort({
         SellTokendateTimeField: -1,
       })
-      .limit(5)
+      .limit(2)
       .populate("seller", ["username", "email"]);
 
     const buyTokenPromise = BuyTokenModel.find({
@@ -1037,7 +1037,7 @@ export const getRecentApprovedTokenRequestsForAdmin = async (req, res) => {
       .sort({
         dateTimeField: -1,
       })
-      .limit(5)
+      .limit(2)
       .populate("buyer", ["username", "email"]);
 
     const [approvedSellTokens, approvedBuyTokens] = await Promise.all([
@@ -1062,11 +1062,19 @@ export const getAllTokenRequestsForAdmin = async (req, res) => {
   try {
     const sellTokenPromise = SellTokenModel.find({
       purchaserName: username,
-    }).populate("seller", ["username", "email"]);
+    })
+      .sort({
+        SellTokendateTimeField: -1,
+      })
+      .populate("seller", ["username", "email"]);
 
     const buyTokenPromise = BuyTokenModel.find({
       serviceProviderName: username,
-    }).populate("buyer", ["username", "email"]);
+    })
+      .sort({
+        dateTimeField: -1,
+      })
+      .populate("buyer", ["username", "email"]);
 
     const [sellTokens, buyTokens] = await Promise.all([
       sellTokenPromise,
@@ -1075,10 +1083,7 @@ export const getAllTokenRequestsForAdmin = async (req, res) => {
 
     return res.status(200).json({ sellTokens, buyTokens });
   } catch (error) {
-    console.error(
-      `Error fetching  token data for admin ${username}:`,
-      error
-    );
+    console.error(`Error fetching  token data for admin ${username}:`, error);
     return res.status(500).json({ message: "Internal server error" });
   }
 };
