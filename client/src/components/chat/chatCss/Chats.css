@@ -6,6 +6,18 @@
 
 }
 
+.apexcharts-legend{
+margin-top: 24%;
+margin-right: 10%;
+}
+
+@media screen and (min-width: 1012px) and (max-width: 1276px) {
+  .apexcharts-legend{
+    
+    margin-right: 20%;
+    }
+}
+
 .Chat-list{
  /* min-height: 80vh ; */
 }
@@ -124,10 +136,15 @@
     background-color: #28383d56 !important;
   }
  
+  
   .textBasic{
     color: rgb(255, 255, 255) !important;
     font-weight: normal;
   }
+
+  .apexcharts-legend-text{
+    color: rgb(255, 255, 255) !important;
+   }
 }
 @media (prefers-color-scheme:light) {
   .Chat-container,
@@ -153,7 +170,9 @@
     background-color: #40424256 !important;
   }
 
- 
+ .apexcharts-legend-text{
+  color: black !important;
+ }
 
   .textBasic{
     color: rgb(0, 0, 0) !important;

@@ -81,7 +81,7 @@ function App() {
               <Route path="/recovery" element={<Recovery />} />
               <Route path="/reset" element={<ResetPassword />} />
               <Route path="/profile" element={<Profile />} />
-              <Route path="/testfee" element={<Fees />} />
+              <Route path="/adminFee" element={<Fees />} />
 
               <Route path="/admin" element={<AdminDashboard />} />
 

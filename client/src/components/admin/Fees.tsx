@@ -4,14 +4,12 @@ import { jwtDecode } from "jwt-decode";
 import toast, { Toaster } from "react-hot-toast";
 import { getUser } from "../../helper/helper";
 axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
-
 export default function Fees() {
   const [selectedOption, setSelectedOption] = useState("1");
   const [userData, setUserData] = useState<any>();
   const token = localStorage.getItem("token");
   const decodedToken: any = token ? jwtDecode(token) : {};
   const username = decodedToken.username || "";
-
   useEffect(() => {
     async function fetchUserData() {
       try {
@@ -25,11 +23,9 @@ export default function Fees() {
     }
     fetchUserData();
   }, [username]);
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedOption(e.target.value);
   };
-
   const updateFee = async () => {
     try {
       const userId = userData?._id;
@@ -37,7 +33,6 @@ export default function Fees() {
         userId,
         fee: selectedOption,
       });
-
       if (response.data.success) {
         toast.success("Fee set successfully");
       } else {
@@ -47,7 +42,6 @@ export default function Fees() {
       console.error("Error updating fee:", error);
     }
   };
-
   return (
     <>
       <Toaster position="top-center" reverseOrder={false}></Toaster>
@@ -152,12 +146,14 @@ export default function Fees() {
             </div>
           </div>
         </main>
-        <button
+       <div className="row">
+       <button
           onClick={updateFee}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="btnStyle !rounded-full !px-[5rem] mx-auto my-6 "
         >
           Set Fee
         </button>
+       </div>
       </div>
     </>
   );

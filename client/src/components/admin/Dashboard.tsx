@@ -1,4 +1,7 @@
 import Chest from "../../assets/chest.png";
+import Chart from "react-apexcharts";
+import { FaExchangeAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import { FaCircle } from "react-icons/fa";
 import { CgArrowsExchangeAltV } from "react-icons/cg";
 import { useEffect, useState } from "react";
@@ -10,8 +13,53 @@ axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
 import ConnectWallet from "../../components/ConnectWallet.tsx";
 import { jwtDecode } from "jwt-decode";
 import { getUser } from "../../helper/helper.tsx";
-
 const Dashboard: React.FC = () => {
+  //Graph Transaction Status -
+  const [transactionsStatus, setTransactionsStatus] = useState({
+    options: {
+      dataLabels: {
+        enabled: false,
+      },
+      chart: {
+        id: "transactionsStatus",
+        type: 'donut'
+      },
+      plotOptions: {
+        pie: {
+          donut: {
+            size: '90%'
+          },
+          customScale: 0.5,
+          expandOnClick: true,
+          labels: {
+            shown: false,
+          }
+        },
+      },
+    },
+    series: [44, 55, 41],
+  })
+  //Graph Transaction Status -
+  // Graphs
+  const [pieGraphData, setPieGraphData] = useState(
+    {
+      options: {
+        chart: {
+          id: "basic-bar"
+        },
+        xaxis: {
+          categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999]
+        }
+      },
+      series: [
+        {
+          name: "series-1",
+          data: [30, 40, 45, 50, 49, 60, 70, 91]
+        }
+      ]
+    }
+  )
+  // Graphs
   const { isConnected } = useAccount();
   const { address: metamaskaddress } = useAccount();
   const { data } = useBalance({
@@ -19,6 +67,7 @@ const Dashboard: React.FC = () => {
     token: "0x00a8Db0104a6b0C6a3d0a61ADC1Ea8f3b1cd8855",
   });
   const [userOption, setUserOption] = useState("buy");
+  const [graphOption, setGraphOption] = useState(true);
   const [period, setPeriod] = useState("Newest");
   const token = localStorage.getItem("token");
   const decodedToken: any = token ? jwtDecode(token) : {};
@@ -29,11 +78,9 @@ const Dashboard: React.FC = () => {
   const [approvedBuyTokens, setApprovedBuyTokens] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-
   //2
   const [sellTokenCount, setSellTokenCount] = useState(0);
   const [buyTokenCount, setBuyTokenCount] = useState(0);
-
   //3
   const [recentApprovedSellTokens, setRecentApprovedSellTokens] = useState<
     any[]
@@ -41,11 +88,9 @@ const Dashboard: React.FC = () => {
   const [recentApprovedBuyTokens, setRecentApprovedBuyTokens] = useState<any[]>(
     []
   );
-
   //4
   const [sellTokens, setSellTokens] = useState([]);
   const [buyTokens, setBuyTokens] = useState([]);
-
   useEffect(() => {
     async function fetchUserData() {
       try {
@@ -59,9 +104,7 @@ const Dashboard: React.FC = () => {
     }
     fetchUserData();
   }, [username]);
-
   //1
-
   useEffect(() => {
     const fetchApprovedTokenRequests = async () => {
       try {
@@ -75,10 +118,8 @@ const Dashboard: React.FC = () => {
         setLoading(false);
       }
     };
-
     fetchApprovedTokenRequests();
   }, []);
-
   //2
   useEffect(() => {
     const fetchTokenRequestsCount = async () => {
@@ -94,10 +135,8 @@ const Dashboard: React.FC = () => {
         setLoading(false);
       }
     };
-
     fetchTokenRequestsCount();
   }, []);
-
   //3
   useEffect(() => {
     const fetchRecentApprovedTokenRequests = async () => {
@@ -115,10 +154,8 @@ const Dashboard: React.FC = () => {
         setLoading(false);
       }
     };
-
     fetchRecentApprovedTokenRequests();
   }, []);
-
   //4
   useEffect(() => {
     const fetchTokenRequests = async () => {
@@ -133,29 +170,26 @@ const Dashboard: React.FC = () => {
         setLoading(false);
       }
     };
-
     fetchTokenRequests();
   }, []);
-
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="text-center ">Loading...</div>;
   }
-
   if (error) {
     return <div>Error: {error}</div>;
   }
-
+  const handleGraphOption = (e: any) => {
+    setGraphOption(!graphOption)
+  };
   const handleOptionChange = (e: any) => {
     setUserOption(e.target.value);
   };
   const togglePeriod = () => {
     setPeriod((prevPeriod) => (prevPeriod === "Newest" ? "Oldest" : "Newest"));
   };
-
   const filteredTokens = userOption === "buy" ? buyTokens : sellTokens;
   const sortedTokens =
     period === "Newest" ? filteredTokens : filteredTokens.slice().reverse();
-
   return (
     <>
       {isConnected ? (
@@ -170,6 +204,8 @@ const Dashboard: React.FC = () => {
                   <span>{data?.symbol}</span>
                 </p>
                 <p>Standard Charges: {userData?.merchantFee} percent</p>
+                <Link className="text-primaryColor  border-b border-primaryColor w-fit" to='/adminFee'>
+                  Set Fee</Link>
               </div>
             </div>
             <div className="flex flex-col  pt-4">
@@ -182,11 +218,10 @@ const Dashboard: React.FC = () => {
               </button>
             </div>
           </div>
-
           {/*  */}
           <div className="flex lg:flex-row flex-col lg:mx-0 mx-3 -mt-[2.5rem]  !justify-center items-center  ">
             <div className="lg:w-[30%] w-full p-4  lg:mx-0 ml=0 lg:!ml-[2rem]  mx-3 my-5  rounded-lg  bgLightGret">
-              <p className="text-xl !mb-4 ">Top Transactions of Buy Tokens</p>
+              <p className="text-xl !mb-4 ">Top Buy Transactions</p>
               <div
                 id="carouselExampleAutoplayingBuy"
                 className="carousel slide"
@@ -214,7 +249,7 @@ const Dashboard: React.FC = () => {
                   ))}
                 </div>
                 <button
-                  className="carousel-control-prev w-4 h-3 mt-[25%] opacity-1 py-2 px-1 bgLightGrep rounded-full"
+                  className="carousel-control-prev w-4 h-3 mt-[25%] opacity-1 "
                   type="button"
                   data-bs-target="#carouselExampleAutoplayingBuy"
                   data-bs-slide="prev"
@@ -226,7 +261,7 @@ const Dashboard: React.FC = () => {
                   <span className="visually-hidden">Previous</span>
                 </button>
                 <button
-                  className="carousel-control-next w-4 h-3 mt-[25%] opacity-1 rounded-full py-2 px-1 bgLightGrep"
+                  className="carousel-control-next w-4 h-3 mt-[25%] opacity-1 "
                   type="button"
                   data-bs-target="#carouselExampleAutoplayingBuy"
                   data-bs-slide="next"
@@ -239,9 +274,8 @@ const Dashboard: React.FC = () => {
                 </button>
               </div>
             </div>
-
             <div className="lg:w-[30%] w-full p-4  lg:mx-0 ml=0 lg:!ml-[2rem]  mx-3 my-5  rounded-lg  bgLightGret">
-              <p className="text-xl !mb-4 ">Top Transaction of Sell Tokens</p>
+              <p className="text-xl !mb-4 ">Top Sell Transaction </p>
               <div
                 id="carouselExampleAutoplayingSell"
                 className="carousel slide"
@@ -268,7 +302,7 @@ const Dashboard: React.FC = () => {
                   ))}
                 </div>
                 <button
-                  className="carousel-control-prev w-4 h-3 mt-[25%] opacity-1 py-2 px-1 bgLightGrep rounded-full"
+                  className="carousel-control-prev w-4 h-3 mt-[25%] opacity-1 "
                   type="button"
                   data-bs-target="#carouselExampleAutoplayingSell"
                   data-bs-slide="prev"
@@ -280,7 +314,7 @@ const Dashboard: React.FC = () => {
                   <span className="visually-hidden">Previous</span>
                 </button>
                 <button
-                  className="carousel-control-next w-4 h-3 mt-[25%] opacity-1 rounded-full py-2 px-1 bgLightGrep"
+                  className="carousel-control-next w-4 h-3 mt-[25%] opacity-1 rounded-full "
                   type="button"
                   data-bs-target="#carouselExampleAutoplayingSell"
                   data-bs-slide="next"
@@ -293,28 +327,67 @@ const Dashboard: React.FC = () => {
                 </button>
               </div>
             </div>
-
             <div className="lg:w-[33%]   w-full p-4 lg:mx-0 mx-3 items-center rounded-lg bdr bgLightGret ">
-              <p className="text-xl !mb-4 ">Pending Transactions</p>
-              <div className="flex lg:flex-row flex-col justify-between items-center gap-5">
-                <div className="lg:w-[50%] w-full">
-                  <div className="w-full h-[11.3rem] rounded-full  bg-lime-700">
-                    ds
-                  </div>
+              <p className="text-xl "> Transactions Requests</p>
+              <div className="text-primaryColor flex items-center mb-[2rem] gap-1">
+                <FaCircle className="text-[8px]" />
+                <p className="capitalize">  {graphOption === true ? ('Buy') : ('Sell')}  </p>
+                <FaExchangeAlt className=" cursor-pointer text-[0.7rem] mx-2" onClick={handleGraphOption} style={{ zIndex: "1000" }} />
+                <div>
                 </div>
-                <div className="lg:w-[50%] w-full  justify-center items- center">
-                  <div className="flex gap-3 w-fit lg:flex-col flex-row">
-                    <div className="text-primaryColor flex items-center  gap-1">
-                      <FaCircle className="text-[8px]" />
-                      Buy
-                    </div>
-                    <div>{buyTokenCount}</div>
-                    <div className="text-red-500 flex items-center  gap-1">
-                      <FaCircle className="text-[8px]" />
-                      Sell
-                    </div>
-                    <div>{sellTokenCount}</div>
+              </div>
+              <div className="flex lg:flex-row flex-col justify-between items-center gap-5 ">
+                <div className="">
+                  <div className="ml-5 mt-1 w-[200px] h-[140px] pt-[2rem] flex items-end justify-center ">
+                    <Chart
+                      className=" "
+                      series={[sellTokenCount, 2, 2]}
+                      type="donut"
+                      width="400"
+                      height="400"
+                      options={{
+                        labels: [
+                          "Accepted",
+                          "Pendings",
+                          "Rejected"
+                        ],
+                        // colors: ["#900E7F", "#151C52", "#165AC3"],
+                        dataLabels: {
+                          enabled: false,
+                        },
+                        plotOptions: {
+                          pie: {
+                            expandOnClick: false,
+                            donut: {
+                              size: '88%',
+                              labels: {
+                                show: true,
+                                value: {
+                                  color: "#34A28E",
+                                  fontSize: 25,
+                                },
+                                total: {
+                                  label: 'Requests',
+                                  show: true,
+                                  fontSize: 25,
+                                  color: '#34A28E',
+                                }
+                              }
+                            },
+                            customScale: 0.5,
+                            expandOnClick: true,
+                          },
+                        }
+                      }}
+                    />
                   </div>
+                  {/* <Chart
+                    className=" block relative left-0 w-fit h-fit"
+                    options={transactionsStatus.options}
+                    series={transactionsStatus.series}
+                    type="donut"
+                    width="400"
+                  /> */}
                 </div>
               </div>
             </div>
@@ -324,12 +397,12 @@ const Dashboard: React.FC = () => {
               <p className="text-xl  ">Graphical Analysis </p>
               <div className="mb-4 flex gap-2 justify-between">
                 <p className="my-2">
-                  No of transactions ocured green is for buy and red is for sale
+                  use userOption usestate for switing graph
                 </p>
                 <div className="flex w-fit gap-3 lg:flex-col flex-row">
                   <div className="text-primaryColor flex items-center  gap-1">
                     <FaCircle className="text-[8px]" />
-                    Buy
+                    {userOption}
                   </div>
                   <div className="text-red-500 flex items-center gap-1">
                     <FaCircle className="text-[8px]" />
@@ -337,6 +410,13 @@ const Dashboard: React.FC = () => {
                   </div>
                 </div>
               </div>{" "}
+              <Chart
+                className=""
+                options={pieGraphData.options}
+                series={pieGraphData.series}
+                type="bar"
+                width="500"
+              />
               <div className="flex my-2 gap-2 items-center simpleButton1 w-fit">
                 <FaFilter />
                 <select
@@ -356,7 +436,6 @@ const Dashboard: React.FC = () => {
             </div>
             <div className="lg:w-[34%]  w-full p-4 lg:mx-0 mx-3 items-center rounded-lg bdr bgLightGret overflow-auto ">
               <p className="text-xl !mb-4 ">Recent Approved Transactions</p>
-
               {recentApprovedBuyTokens.length > 0 && (
                 <div>
                   <div className="flex items-center justify-start">
@@ -405,15 +484,15 @@ const Dashboard: React.FC = () => {
                   ))}
                 </div>
               )}
-
-              <button className="btnStyle !py-[0.8rem] !rounded-sm my-1 mx-[25%]">
+              <a href="#table" className=" border-b">
                 {" "}
                 View All
-              </button>
+              </a>
             </div>
           </div>
           <div className="relative overflow-x-auto rounded-lg bdr bgLightGret mr-3 ml-3  lg:ml-4 lg:mr-8 my-5 p-4">
             <p className="text-xl  ">Tabular Analysis </p>
+            <p className="mt-3">Tabular Analysis  of <span>{userOption}</span> requests  in {period === "Newest" ? ("newest to oldest order") : ("oldest to newest order")} </p>
             <div className="flex my-2 gap-2 items-center absolute right-5 simpleButton1 w-fit">
               <FaFilter />
               <select
@@ -431,9 +510,9 @@ const Dashboard: React.FC = () => {
               </select>
             </div>
             <br />
-            <table className="w-full whitespace-nowrap !text-center my-5">
+            <table id="table" className="w-full whitespace-nowrap !text-center my-5">
               <thead>
-                <tr className="">
+                <tr className="border-b border-primaryColor text-left">
                   <th className="px-6 py-3 text-md font-bold text-primaryColor uppercase tracking-wider">
                     ID
                   </th>
@@ -450,21 +529,21 @@ const Dashboard: React.FC = () => {
                     Status
                   </th>
                   <CgArrowsExchangeAltV
-                    className="text-3xl mt-2 cursor-pointer"
+                    className="text-3xl mt-[0.71rem] cursor-pointer hover:text-primaryColor duration-300"
                     onClick={togglePeriod}
                   />
                 </tr>
               </thead>
               <tbody className="border-t"></tbody>
-              {sortedTokens.map((token:any, index) => (
+              {sortedTokens.map((token: any, index) => (
                 <tr
                   key={index}
-                  className=""
+                  className="text-left"
                   style={{ borderBottom: "1px solid #41464580" }}
                 >
                   <td className="px-6 py-3 textBasic">{token._id}</td>
                   <td className="px-6 py-3 textBasic">
-                  {new Date(token.dateTimeField || token.SellTokendateTimeField).toLocaleString()}
+                    {new Date(token.dateTimeField || token.SellTokendateTimeField).toLocaleString()}
                   </td>
                   <td className="px-6 py-3 textBasic">
                     {token.Tokens || token.TokensAmount}
@@ -472,7 +551,7 @@ const Dashboard: React.FC = () => {
                   <td className="px-6 py-3 textBasic">
                     {token.buyer?.username || token.seller?.username}
                   </td>
-                  <td className="px-6 py-3 textBasic">
+                  <td className={`px-6 py-3 textBasic  ${token.transactionStatus === 'Declined' ? '!text-red-400' : ''} ${token.transactionStatus === 'Pending' ? '!text-yellow-400' : ''} ${token.transactionStatus === 'Approved' ? '!text-green-400' : ''}`}>
                     {token.transactionStatus || token.status}
                   </td>
                 </tr>
@@ -482,7 +561,7 @@ const Dashboard: React.FC = () => {
         </>
       ) : (
         <>
-          <div className="flex justify-center flex-col   align-items-center text-red-500 text-lg">
+          <div className="flex justify-center flex-col  my-[20%]  align-items-center text-red-500 text-lg">
             <p> Please Connect the wallet first.</p>
             <div className="w-fit">
               <div className="my-4">

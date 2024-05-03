@@ -94,7 +94,10 @@
     }
 
     .bgLightGret {
-        background-color: #413f3f11 !important;
+       
+        /* #413f3f11  */
+        background-color: rgba(156, 204, 194, 0.178) !important;
+        /* border: 1px solid rgba(156, 196, 188, 0.123) ; */
        
     }
 }
