@@ -18,11 +18,11 @@ const Dashboard: React.FC = () => {
   const options2 = {
     chart: {
       id: 'line-chart',
-      type: 'line',
+    
     },
-    /*xaxis: {
-      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-    },*/
+    xaxis: {
+     categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+     }
   };
 
   const series2 = [{
@@ -467,13 +467,7 @@ const Dashboard: React.FC = () => {
                    }
                    
                   </div>
-                  {/* <Chart
-                    className=" block relative left-0 w-fit h-fit"
-                    options={transactionsStatus.options}
-                    series={transactionsStatus.series}
-                    type="donut"
-                    width="400"
-                  /> */}
+                
                 </div>
               </div>
             </div>
@@ -496,7 +490,27 @@ const Dashboard: React.FC = () => {
                   </div>
                 </div>
               </div>{" "}
-              <Chart options={options2} series={series2} type="line" height={350} />
+              <Chart
+            
+            
+  type="line"
+  options={{
+    chart: {
+      id: 'line-chart',
+    },
+    xaxis: {
+      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+    }
+  }}
+  series={[
+    {
+      name: "series-1",
+      data: [32],
+    }
+  ]}
+  height={350}
+/>
+
              
               <div className="flex my-2 gap-2 items-center simpleButton1 w-fit">
                 <FaFilter />
