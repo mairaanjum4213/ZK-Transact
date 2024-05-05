@@ -14,23 +14,22 @@ import ConnectWallet from "../../components/ConnectWallet.tsx";
 import { jwtDecode } from "jwt-decode";
 import { getUser } from "../../helper/helper.tsx";
 const Dashboard: React.FC = () => {
- 
   const options2 = {
     chart: {
-      id: 'line-chart',
-    
+      id: "line-chart",
     },
     xaxis: {
-     categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-     }
+      categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+    },
   };
 
-  const series2 = [{
-    name: 'Series 1',
-    data: [30, 40, 45, 50, 49, 60, 70],
-  }];
-  
-  
+  const series2 = [
+    {
+      name: "Series 1",
+      data: [30, 40, 45, 50, 49, 60, 70],
+    },
+  ];
+
   // Graphs
   const [pieGraphData, setPieGraphData] = useState({
     options: {
@@ -90,6 +89,18 @@ const Dashboard: React.FC = () => {
   //5
   const [sellTransactionsPerDay, setSellTransactionsPerDay] = useState([]);
   const [buyTransactionsPerDay, setBuyTransactionsPerDay] = useState([]);
+
+  const buyDates = buyTransactionsPerDay.map((transaction) => transaction._id);
+  const buyCount = buyTransactionsPerDay.map(
+    (transaction) => transaction?.count
+  );
+
+  const sellDates = sellTransactionsPerDay.map(
+    (transaction) => transaction._id
+  );
+  const sellCount = sellTransactionsPerDay.map(
+    (transaction) => transaction?.count
+  );
 
   useEffect(() => {
     async function fetchUserData() {
@@ -380,94 +391,98 @@ const Dashboard: React.FC = () => {
               <div className="flex lg:flex-row flex-col justify-between items-center gap-5 ">
                 <div className="">
                   <div className="ml-5 mt-1 w-[200px] h-[140px] pt-[2rem] flex items-end justify-center ">
-                   {graphOption === true && 
-                   <>
-                    <Chart
-                      className=" "
-                      series={[buyApprovedCount, buyPendingCount, buyDeclinedCount]}
-                      type="donut"
-                      width="400"
-                      height="400"
-                      options={{
-                        labels: ["Accepted", "Pendings", "Rejected"],
-                        // colors: ["#900E7F", "#151C52", "#165AC3"],
-                        dataLabels: {
-                          enabled: false,
-                        },
-                        plotOptions: {
-                          pie: {
-                            expandOnClick: false,
-                            donut: {
-                              size: "88%",
-                              labels: {
-                                show: true,
-                                value: {
-                                  color: "#34A28E",
-                                  fontSize: 25,
+                    {graphOption === true && (
+                      <>
+                        <Chart
+                          className=" "
+                          series={[
+                            buyApprovedCount,
+                            buyPendingCount,
+                            buyDeclinedCount,
+                          ]}
+                          type="donut"
+                          width="400"
+                          height="400"
+                          options={{
+                            labels: ["Accepted", "Pendings", "Rejected"],
+                            // colors: ["#900E7F", "#151C52", "#165AC3"],
+                            dataLabels: {
+                              enabled: false,
+                            },
+                            plotOptions: {
+                              pie: {
+                                expandOnClick: false,
+                                donut: {
+                                  size: "88%",
+                                  labels: {
+                                    show: true,
+                                    value: {
+                                      color: "#34A28E",
+                                      fontSize: 25,
+                                    },
+                                    total: {
+                                      label: "Requests",
+                                      show: true,
+                                      fontSize: 25,
+                                      color: "#34A28E",
+                                    },
+                                  },
                                 },
-                                total: {
-                                  label: "Requests",
-                                  show: true,
-                                  fontSize: 25,
-                                  color: "#34A28E",
-                                },
+                                customScale: 0.5,
+                                expandOnClick: true,
                               },
                             },
-                            customScale: 0.5,
-                            expandOnClick: true,
-                          },
-                        },
-                      }}
-                    />
-                   </>
-                   } 
+                          }}
+                        />
+                      </>
+                    )}
 
-
-                   {
-                    graphOption === false &&
-                    <>
-                     <Chart
-                      className=" "
-                      series={[sellApprovedCount, sellPendingCount, sellDeclinedCount]}
-                      type="donut"
-                      width="400"
-                      height="400"
-                      options={{
-                        labels: ["Accepted", "Pendings", "Rejected"],
-                        // colors: ["#900E7F", "#151C52", "#165AC3"],
-                        dataLabels: {
-                          enabled: false,
-                        },
-                        plotOptions: {
-                          pie: {
-                            expandOnClick: false,
-                            donut: {
-                              size: "88%",
-                              labels: {
-                                show: true,
-                                value: {
-                                  color: "#34A28E",
-                                  fontSize: 25,
+                    {graphOption === false && (
+                      <>
+                        <Chart
+                          className=" "
+                          series={[
+                            sellApprovedCount,
+                            sellPendingCount,
+                            sellDeclinedCount,
+                          ]}
+                          type="donut"
+                          width="400"
+                          height="400"
+                          options={{
+                            labels: ["Accepted", "Pendings", "Rejected"],
+                            // colors: ["#900E7F", "#151C52", "#165AC3"],
+                            dataLabels: {
+                              enabled: false,
+                            },
+                            plotOptions: {
+                              pie: {
+                                expandOnClick: false,
+                                donut: {
+                                  size: "88%",
+                                  labels: {
+                                    show: true,
+                                    value: {
+                                      color: "#34A28E",
+                                      fontSize: 25,
+                                    },
+                                    total: {
+                                      label: "Requests",
+                                      show: true,
+                                      fontSize: 25,
+                                      color: "#34A28E",
+                                    },
+                                  },
                                 },
-                                total: {
-                                  label: "Requests",
-                                  show: true,
-                                  fontSize: 25,
-                                  color: "#34A28E",
-                                },
+                                customScale: 0.5,
+                                expandOnClick: true,
                               },
                             },
-                            customScale: 0.5,
-                            expandOnClick: true,
-                          },
-                        },
-                      }}
-                    />
-                    </>
-                   }
-                   
+                          }}
+                        />
+                      </>
+                    )}
                   </div>
-                
                 </div>
               </div>
             </div>
@@ -490,28 +505,50 @@ const Dashboard: React.FC = () => {
                   </div>
                 </div>
               </div>{" "}
-              <Chart
-            
-            
-  type="line"
-  options={{
-    chart: {
-      id: 'line-chart',
-    },
-    xaxis: {
-      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-    }
-  }}
-  series={[
-    {
-      name: "series-1",
-      data: [32],
-    }
-  ]}
-  height={350}
-/>
-
-             
+              {userOption === "buy" && (
+                <>
+                  <Chart
+                    type="line"
+                    options={{
+                      chart: {
+                        id: "line-chart",
+                      },
+                      xaxis: {
+                        categories: buyDates,
+                      },
+                    }}
+                    series={[
+                      {
+                        name: "No of Transactions",
+                        data: buyCount,
+                      },
+                    ]}
+                    height={350}
+                  />
+                </>
+              )}
+              {userOption === "sell" && (
+                <>
+                  <Chart
+                    type="line"
+                    options={{
+                      chart: {
+                        id: "line-chart",
+                      },
+                      xaxis: {
+                        categories: sellDates,
+                      },
+                    }}
+                    series={[
+                      {
+                        name: "No of Transactions",
+                        data: sellCount,
+                      },
+                    ]}
+                    height={350}
+                  />
+                </>
+              )}
               <div className="flex my-2 gap-2 items-center simpleButton1 w-fit">
                 <FaFilter />
                 <select
