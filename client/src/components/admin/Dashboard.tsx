@@ -1,5 +1,6 @@
 import Chest from "../../assets/chest.png";
 import Chart from "react-apexcharts";
+import { useDarkMode, useLightMode } from "color-scheme-hook";
 import { FaExchangeAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { FaCircle } from "react-icons/fa";
@@ -14,22 +15,7 @@ import ConnectWallet from "../../components/ConnectWallet.tsx";
 import { jwtDecode } from "jwt-decode";
 import { getUser } from "../../helper/helper.tsx";
 const Dashboard: React.FC = () => {
-  const options2 = {
-    chart: {
-      id: "line-chart",
-    },
-    xaxis: {
-      categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
-    },
-  };
-
-  const series2 = [
-    {
-      name: "Series 1",
-      data: [30, 40, 45, 50, 49, 60, 70],
-    },
-  ];
-
+  const [isLightMode] = useLightMode();
   // Graphs
   const [pieGraphData, setPieGraphData] = useState({
     options: {
@@ -47,7 +33,6 @@ const Dashboard: React.FC = () => {
       },
     ],
   });
-
   // Graphs
   const { isConnected } = useAccount();
   const { address: metamaskaddress } = useAccount();
@@ -74,7 +59,6 @@ const Dashboard: React.FC = () => {
   const [buyApprovedCount, setBuyApprovedCount] = useState(0);
   const [sellDeclinedCount, setSellDeclinedCount] = useState(0);
   const [buyDeclinedCount, setBuyDeclinedCount] = useState(0);
-
   //3
   const [recentApprovedSellTokens, setRecentApprovedSellTokens] = useState<
     any[]
@@ -85,23 +69,19 @@ const Dashboard: React.FC = () => {
   //4
   const [sellTokens, setSellTokens] = useState([]);
   const [buyTokens, setBuyTokens] = useState([]);
-
   //5
   const [sellTransactionsPerDay, setSellTransactionsPerDay] = useState([]);
   const [buyTransactionsPerDay, setBuyTransactionsPerDay] = useState([]);
-
   const buyDates = buyTransactionsPerDay.map((transaction) => transaction._id);
   const buyCount = buyTransactionsPerDay.map(
     (transaction) => transaction?.count
   );
-
   const sellDates = sellTransactionsPerDay.map(
     (transaction) => transaction._id
   );
   const sellCount = sellTransactionsPerDay.map(
     (transaction) => transaction?.count
   );
-
   useEffect(() => {
     async function fetchUserData() {
       try {
@@ -209,10 +189,8 @@ const Dashboard: React.FC = () => {
         setLoading(false);
       }
     };
-
     fetchTokenRequestsForAdminGraph();
   }, []);
-
   if (loading) {
     return <div className="text-center ">Loading...</div>;
   }
@@ -225,7 +203,6 @@ const Dashboard: React.FC = () => {
   const handleOptionChange = (e: any) => {
     setUserOption(e.target.value);
   };
-
   const togglePeriod = () => {
     setPeriod((prevPeriod) => (prevPeriod === "Newest" ? "Oldest" : "Newest"));
   };
@@ -295,7 +272,7 @@ const Dashboard: React.FC = () => {
                   ))}
                 </div>
                 <button
-                  className="carousel-control-prev w-4 h-3 mt-[25%] opacity-1 "
+                  className="carousel-control-prev w-4 h-3 mt-[25%] opacity-1  lightCar "
                   type="button"
                   data-bs-target="#carouselExampleAutoplayingBuy"
                   data-bs-slide="prev"
@@ -307,7 +284,7 @@ const Dashboard: React.FC = () => {
                   <span className="visually-hidden">Previous</span>
                 </button>
                 <button
-                  className="carousel-control-next w-4 h-3 mt-[25%] opacity-1 "
+                  className="carousel-control-next w-4 h-3 mt-[25%] opacity-1 lightCar  "
                   type="button"
                   data-bs-target="#carouselExampleAutoplayingBuy"
                   data-bs-slide="next"
@@ -348,7 +325,7 @@ const Dashboard: React.FC = () => {
                   ))}
                 </div>
                 <button
-                  className="carousel-control-prev w-4 h-3 mt-[25%] opacity-1 "
+                  className="carousel-control-prev w-4 h-3 mt-[25%] opacity-1 lightCar "
                   type="button"
                   data-bs-target="#carouselExampleAutoplayingSell"
                   data-bs-slide="prev"
@@ -360,13 +337,13 @@ const Dashboard: React.FC = () => {
                   <span className="visually-hidden">Previous</span>
                 </button>
                 <button
-                  className="carousel-control-next w-4 h-3 mt-[25%] opacity-1 rounded-full "
+                  className="carousel-control-next w-4 h-3 mt-[25%] opacity-1 rounded-full lightCar "
                   type="button"
                   data-bs-target="#carouselExampleAutoplayingSell"
                   data-bs-slide="next"
                 >
                   <span
-                    className="carousel-control-next-icon"
+                    className="carousel-control-next-icon "
                     aria-hidden="true"
                   />
                   <span className="visually-hidden">Next</span>
@@ -436,7 +413,6 @@ const Dashboard: React.FC = () => {
                         />
                       </>
                     )}
-
                     {graphOption === false && (
                       <>
                         <Chart
@@ -490,28 +466,36 @@ const Dashboard: React.FC = () => {
           <div className=" flex lg:flex-row flex-col lg:mr-5">
             <div className="lg:w-[70%]  w-full p-4 lg:mx-0 mx-3 items-center rounded-lg bdr bgLightGret  ">
               <p className="text-xl  ">Graphical Analysis </p>
-              <div className="mb-4 flex gap-2 justify-between">
-                <p className="my-2">
-                  use userOption usestate for switing graph
-                </p>
-                <div className="flex w-fit gap-3 lg:flex-col flex-row">
-                  <div className="text-primaryColor flex items-center  gap-1">
-                    <FaCircle className="text-[8px]" />
-                    {userOption}
-                  </div>
-                  <div className="text-red-500 flex items-center gap-1">
-                    <FaCircle className="text-[8px]" />
-                    Sell
-                  </div>
-                </div>
-              </div>{" "}
+              <div className="flex my-2 gap-2 items-center  simpleButton1 w-fit">
+                <FaFilter />
+                <select
+                  className="bg-transparent outline-none w-full"
+                  name="requestType"
+                  id="requestType"
+                  onChange={handleOptionChange}
+                  style={{ zIndex: 100 }}
+                >
+                  <option className=" text-primaryColor" value="buy">
+                    Buy Requests
+                  </option>
+                  <option className=" text-primaryColor" value="sell">
+                    Sell Requests
+                  </option>
+                </select>
+              </div>
               {userOption === "buy" && (
                 <>
                   <Chart
+                    clsasName=''
                     type="line"
                     options={{
+                      theme: {
+                        mode: isLightMode ? "light" : "dark",
+                      }
+                      ,
                       chart: {
                         id: "line-chart",
+                        background: 'transparent'
                       },
                       xaxis: {
                         categories: buyDates,
@@ -532,8 +516,12 @@ const Dashboard: React.FC = () => {
                   <Chart
                     type="line"
                     options={{
+                      theme: {
+                        mode: isLightMode ? "light" : "dark",
+                      },
                       chart: {
                         id: "line-chart",
+                        background: 'transparent'
                       },
                       xaxis: {
                         categories: sellDates,
@@ -549,22 +537,6 @@ const Dashboard: React.FC = () => {
                   />
                 </>
               )}
-              <div className="flex my-2 gap-2 items-center simpleButton1 w-fit">
-                <FaFilter />
-                <select
-                  className="bg-transparent outline-none w-full"
-                  name="requestType"
-                  id="requestType"
-                  onChange={handleOptionChange}
-                >
-                  <option className=" text-primaryColor  " value="buy">
-                    Buy Requests
-                  </option>
-                  <option className=" text-primaryColor  " value="sell">
-                    Sell Requests
-                  </option>
-                </select>
-              </div>
             </div>
             <div className="lg:w-[34%]  w-full p-4 lg:mx-0 mx-3 items-center rounded-lg bdr bgLightGret overflow-auto ">
               <p className="text-xl !mb-4 ">Recent Approved Transactions</p>
@@ -694,19 +666,16 @@ const Dashboard: React.FC = () => {
                     {token.buyer?.username || token.seller?.username}
                   </td>
                   <td
-                    className={`px-6 py-3 textBasic  ${
-                      token.transactionStatus === "Declined"
-                        ? "!text-red-400"
-                        : ""
-                    } ${
-                      token.transactionStatus === "Pending"
+                    className={`px-6 py-3 textBasic  ${token.transactionStatus === "Declined"
+                      ? "!text-red-400"
+                      : ""
+                      } ${token.transactionStatus === "Pending"
                         ? "!text-yellow-400"
                         : ""
-                    } ${
-                      token.transactionStatus === "Approved"
+                      } ${token.transactionStatus === "Approved"
                         ? "!text-green-400"
                         : ""
-                    }`}
+                      }`}
                   >
                     {token.transactionStatus || token.status}
                   </td>

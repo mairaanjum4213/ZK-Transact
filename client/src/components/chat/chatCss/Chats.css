@@ -3,25 +3,19 @@
   flex-direction: row;
   grid-template-columns: 22% auto;
   gap: 1rem;
-
 }
-
-.apexcharts-legend{
-margin-top: 24%;
-margin-right: 10%;
+.apexcharts-legend {
+  margin-top: 24%;
+  margin-right: 10%;
 }
-
 @media screen and (min-width: 1012px) and (max-width: 1276px) {
-  .apexcharts-legend{
-    
+  .apexcharts-legend {
     margin-right: 20%;
-    }
+  }
 }
-
-.Chat-list{
- /* min-height: 80vh ; */
+.Chat-list {
+  /* min-height: 80vh ; */
 }
-
 .Left-side-chat {
   width: 25%;
   display: flex;
@@ -29,8 +23,6 @@ margin-right: 10%;
   border-radius: 3px;
   gap: 1rem;
   margin-left: 1rem;
-
-  
 }
 .Right-side-chat {
   width: 75%;
@@ -42,15 +34,12 @@ margin-right: 10%;
   padding: 10px;
   gap: 1rem
 }
-
-
 .Chat-container,
 .Chat-list {
   flex-direction: column;
   display: flex;
   gap: 0.3rem;
 }
-
 .Chat-container {
   gap: 1rem;
   padding: 1rem 1rem 2rem 1rem;
@@ -64,37 +53,28 @@ margin-right: 10%;
   padding: 10px;
   width: fit-content;
 }
-
-.clrred{
-  color:red;
+.clrred {
+  color: red;
 }
-
-.clrgreen{
+.clrgreen {
   color: #51e200;
 }
-
 .followerImage {
   width: 3.2rem;
   height: 3.2rem;
   border-radius: 50%;
 }
-
-
 .follower {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-
 .follower>div {
   display: flex;
   gap: 10px;
 }
-
 @media screen and (max-width:768px) {
-
-  .conversation{
-
+  .conversation {
     min-width: 13rem;
   }
   .Left-side-chat {
@@ -117,6 +97,11 @@ margin-right: 10%;
     min-height: fit-content;
   }
 }
+.apexcharts-zoomin-icon,
+.apexcharts-zoomout-icon,
+.apexcharts-selected {
+  display: none;
+}
 @media (prefers-color-scheme:dark) {
   .Chat-container,
   .Right-side-chat,
@@ -131,31 +116,30 @@ margin-right: 10%;
   .chatCard:hover {
     background-color: #28383d56 !important;
   }
-
-  .bgLightGrep{
+  .bgLightGrep {
     background-color: #28383d56 !important;
   }
- 
-  
-  .textBasic{
+  .textBasic {
     color: rgb(255, 255, 255) !important;
     font-weight: normal;
   }
-
-  .apexcharts-legend-text{
+  .apexcharts-legend-text {
     color: rgb(255, 255, 255) !important;
-   }
+  }
 }
 @media (prefers-color-scheme:light) {
+  .lightCar {
+    background-color: #244e58 !important;
+    padding: 9px 5px 9px 5px;
+    border-radius: 50%;
+  }
   .Chat-container,
   .Right-side-chat {
     border: 1px solid rgba(128, 128, 128, 0.404);
   }
-
   .left-side-chat {
     border: 1px solid rgba(128, 128, 128, 0.158);
   }
-  
   .chatCard {
     border-radius: 3px;
     transition: .5s
@@ -164,17 +148,14 @@ margin-right: 10%;
     box-shadow: rgba(0, 0, 0, .068) 0 10px 20px, rgba(0, 0, 0, .085) 0 6px 6px;
     background-color: #40424256 !important;
   }
-
-  .bgLightGrep{
+  .bgLightGrep {
     box-shadow: rgba(0, 0, 0, .068) 0 10px 20px, rgba(0, 0, 0, .085) 0 6px 6px;
     background-color: #40424256 !important;
   }
-
- .apexcharts-legend-text{
-  color: black !important;
- }
-
-  .textBasic{
+  .apexcharts-legend-text {
+    color: black !important;
+  }
+  .textBasic {
     color: rgb(0, 0, 0) !important;
     font-weight: normal;
   }
