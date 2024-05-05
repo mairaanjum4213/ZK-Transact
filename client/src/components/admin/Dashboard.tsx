@@ -14,51 +14,41 @@ import ConnectWallet from "../../components/ConnectWallet.tsx";
 import { jwtDecode } from "jwt-decode";
 import { getUser } from "../../helper/helper.tsx";
 const Dashboard: React.FC = () => {
-  //Graph Transaction Status -
-  const [transactionsStatus, setTransactionsStatus] = useState({
+ 
+  const options2 = {
+    chart: {
+      id: 'line-chart',
+      type: 'line',
+    },
+    /*xaxis: {
+      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+    },*/
+  };
+
+  const series2 = [{
+    name: 'Series 1',
+    data: [30, 40, 45, 50, 49, 60, 70],
+  }];
+  
+  
+  // Graphs
+  const [pieGraphData, setPieGraphData] = useState({
     options: {
-      dataLabels: {
-        enabled: false,
-      },
       chart: {
-        id: "transactionsStatus",
-        type: 'donut'
+        id: "basic-bar",
       },
-      plotOptions: {
-        pie: {
-          donut: {
-            size: '90%'
-          },
-          customScale: 0.5,
-          expandOnClick: true,
-          labels: {
-            shown: false,
-          }
-        },
+      xaxis: {
+        categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999],
       },
     },
-    series: [44, 55, 41],
-  })
-  //Graph Transaction Status -
-  // Graphs
-  const [pieGraphData, setPieGraphData] = useState(
-    {
-      options: {
-        chart: {
-          id: "basic-bar"
-        },
-        xaxis: {
-          categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999]
-        }
+    series: [
+      {
+        name: "series-1",
+        data: [30, 40, 45, 50, 49, 60, 70, 91],
       },
-      series: [
-        {
-          name: "series-1",
-          data: [30, 40, 45, 50, 49, 60, 70, 91]
-        }
-      ]
-    }
-  )
+    ],
+  });
+
   // Graphs
   const { isConnected } = useAccount();
   const { address: metamaskaddress } = useAccount();
@@ -79,8 +69,13 @@ const Dashboard: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   //2
-  const [sellTokenCount, setSellTokenCount] = useState(0);
-  const [buyTokenCount, setBuyTokenCount] = useState(0);
+  const [sellPendingCount, setSellPendingCount] = useState(0);
+  const [buyPendingCount, setBuyPendingCount] = useState(0);
+  const [sellApprovedCount, setSellApprovedCount] = useState(0);
+  const [buyApprovedCount, setBuyApprovedCount] = useState(0);
+  const [sellDeclinedCount, setSellDeclinedCount] = useState(0);
+  const [buyDeclinedCount, setBuyDeclinedCount] = useState(0);
+
   //3
   const [recentApprovedSellTokens, setRecentApprovedSellTokens] = useState<
     any[]
@@ -91,6 +86,11 @@ const Dashboard: React.FC = () => {
   //4
   const [sellTokens, setSellTokens] = useState([]);
   const [buyTokens, setBuyTokens] = useState([]);
+
+  //5
+  const [sellTransactionsPerDay, setSellTransactionsPerDay] = useState([]);
+  const [buyTransactionsPerDay, setBuyTransactionsPerDay] = useState([]);
+
   useEffect(() => {
     async function fetchUserData() {
       try {
@@ -124,10 +124,21 @@ const Dashboard: React.FC = () => {
   useEffect(() => {
     const fetchTokenRequestsCount = async () => {
       try {
-        const response = await axios.get(`/api/buysell/pending/${username}`);
-        const { sellTokenCount, buyTokenCount } = response.data;
-        setSellTokenCount(sellTokenCount);
-        setBuyTokenCount(buyTokenCount);
+        const response = await axios.get(`/api/buysell/allreq/${username}`);
+        const {
+          sellPendingCount,
+          sellApprovedCount,
+          sellDeclinedCount,
+          buyPendingCount,
+          buyApprovedCount,
+          buyDeclinedCount,
+        } = response.data;
+        setSellPendingCount(sellPendingCount);
+        setBuyPendingCount(buyPendingCount);
+        setSellApprovedCount(sellApprovedCount);
+        setBuyApprovedCount(buyApprovedCount);
+        setSellDeclinedCount(sellDeclinedCount);
+        setBuyDeclinedCount(buyDeclinedCount);
       } catch (error) {
         console.error("Error fetching token requests count:", error);
         setError("Error fetching token requests count");
@@ -172,6 +183,25 @@ const Dashboard: React.FC = () => {
     };
     fetchTokenRequests();
   }, []);
+  //5
+  useEffect(() => {
+    const fetchTokenRequestsForAdminGraph = async () => {
+      try {
+        const response = await axios.get(`/api/buysell/allgraph/${username}`);
+        const { sellTransactionsPerDay, buyTransactionsPerDay } = response.data;
+        setSellTransactionsPerDay(sellTransactionsPerDay);
+        setBuyTransactionsPerDay(buyTransactionsPerDay);
+      } catch (error) {
+        console.error("Error fetching token requests for admin graph:", error);
+        setError("Error fetching token requests for admin graph");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTokenRequestsForAdminGraph();
+  }, []);
+
   if (loading) {
     return <div className="text-center ">Loading...</div>;
   }
@@ -179,11 +209,12 @@ const Dashboard: React.FC = () => {
     return <div>Error: {error}</div>;
   }
   const handleGraphOption = (e: any) => {
-    setGraphOption(!graphOption)
+    setGraphOption(!graphOption);
   };
   const handleOptionChange = (e: any) => {
     setUserOption(e.target.value);
   };
+
   const togglePeriod = () => {
     setPeriod((prevPeriod) => (prevPeriod === "Newest" ? "Oldest" : "Newest"));
   };
@@ -204,8 +235,12 @@ const Dashboard: React.FC = () => {
                   <span>{data?.symbol}</span>
                 </p>
                 <p>Standard Charges: {userData?.merchantFee} percent</p>
-                <Link className="text-primaryColor  border-b border-primaryColor w-fit" to='/adminFee'>
-                  Set Fee</Link>
+                <Link
+                  className="text-primaryColor  border-b border-primaryColor w-fit"
+                  to="/adminFee"
+                >
+                  Set Fee
+                </Link>
               </div>
             </div>
             <div className="flex flex-col  pt-4">
@@ -331,26 +366,30 @@ const Dashboard: React.FC = () => {
               <p className="text-xl "> Transactions Requests</p>
               <div className="text-primaryColor flex items-center mb-[2rem] gap-1">
                 <FaCircle className="text-[8px]" />
-                <p className="capitalize">  {graphOption === true ? ('Buy') : ('Sell')}  </p>
-                <FaExchangeAlt className=" cursor-pointer text-[0.7rem] mx-2" onClick={handleGraphOption} style={{ zIndex: "1000" }} />
-                <div>
-                </div>
+                <p className="capitalize">
+                  {" "}
+                  {graphOption === true ? "Buy" : "Sell"}{" "}
+                </p>
+                <FaExchangeAlt
+                  className=" cursor-pointer text-[0.7rem] mx-2"
+                  onClick={handleGraphOption}
+                  style={{ zIndex: "1000" }}
+                />
+                <div></div>
               </div>
               <div className="flex lg:flex-row flex-col justify-between items-center gap-5 ">
                 <div className="">
                   <div className="ml-5 mt-1 w-[200px] h-[140px] pt-[2rem] flex items-end justify-center ">
+                   {graphOption === true && 
+                   <>
                     <Chart
                       className=" "
-                      series={[sellTokenCount, 2, 2]}
+                      series={[buyApprovedCount, buyPendingCount, buyDeclinedCount]}
                       type="donut"
                       width="400"
                       height="400"
                       options={{
-                        labels: [
-                          "Accepted",
-                          "Pendings",
-                          "Rejected"
-                        ],
+                        labels: ["Accepted", "Pendings", "Rejected"],
                         // colors: ["#900E7F", "#151C52", "#165AC3"],
                         dataLabels: {
                           enabled: false,
@@ -359,7 +398,7 @@ const Dashboard: React.FC = () => {
                           pie: {
                             expandOnClick: false,
                             donut: {
-                              size: '88%',
+                              size: "88%",
                               labels: {
                                 show: true,
                                 value: {
@@ -367,19 +406,66 @@ const Dashboard: React.FC = () => {
                                   fontSize: 25,
                                 },
                                 total: {
-                                  label: 'Requests',
+                                  label: "Requests",
                                   show: true,
                                   fontSize: 25,
-                                  color: '#34A28E',
-                                }
-                              }
+                                  color: "#34A28E",
+                                },
+                              },
                             },
                             customScale: 0.5,
                             expandOnClick: true,
                           },
-                        }
+                        },
                       }}
                     />
+                   </>
+                   } 
+
+
+                   {
+                    graphOption === false &&
+                    <>
+                     <Chart
+                      className=" "
+                      series={[sellApprovedCount, sellPendingCount, sellDeclinedCount]}
+                      type="donut"
+                      width="400"
+                      height="400"
+                      options={{
+                        labels: ["Accepted", "Pendings", "Rejected"],
+                        // colors: ["#900E7F", "#151C52", "#165AC3"],
+                        dataLabels: {
+                          enabled: false,
+                        },
+                        plotOptions: {
+                          pie: {
+                            expandOnClick: false,
+                            donut: {
+                              size: "88%",
+                              labels: {
+                                show: true,
+                                value: {
+                                  color: "#34A28E",
+                                  fontSize: 25,
+                                },
+                                total: {
+                                  label: "Requests",
+                                  show: true,
+                                  fontSize: 25,
+                                  color: "#34A28E",
+                                },
+                              },
+                            },
+                            customScale: 0.5,
+                            expandOnClick: true,
+                          },
+                        },
+                      }}
+                    />
+                    </>
+                   }
+                   
                   </div>
                   {/* <Chart
                     className=" block relative left-0 w-fit h-fit"
@@ -410,13 +496,8 @@ const Dashboard: React.FC = () => {
                   </div>
                 </div>
               </div>{" "}
-              <Chart
-                className=""
-                options={pieGraphData.options}
-                series={pieGraphData.series}
-                type="bar"
-                width="500"
-              />
+              <Chart options={options2} series={series2} type="line" height={350} />
+             
               <div className="flex my-2 gap-2 items-center simpleButton1 w-fit">
                 <FaFilter />
                 <select
@@ -492,7 +573,12 @@ const Dashboard: React.FC = () => {
           </div>
           <div className="relative overflow-x-auto rounded-lg bdr bgLightGret mr-3 ml-3  lg:ml-4 lg:mr-8 my-5 p-4">
             <p className="text-xl  ">Tabular Analysis </p>
-            <p className="mt-3">Tabular Analysis  of <span>{userOption}</span> requests  in {period === "Newest" ? ("newest to oldest order") : ("oldest to newest order")} </p>
+            <p className="mt-3">
+              Tabular Analysis of <span>{userOption}</span> requests in{" "}
+              {period === "Newest"
+                ? "newest to oldest order"
+                : "oldest to newest order"}{" "}
+            </p>
             <div className="flex my-2 gap-2 items-center absolute right-5 simpleButton1 w-fit">
               <FaFilter />
               <select
@@ -510,7 +596,10 @@ const Dashboard: React.FC = () => {
               </select>
             </div>
             <br />
-            <table id="table" className="w-full whitespace-nowrap !text-center my-5">
+            <table
+              id="table"
+              className="w-full whitespace-nowrap !text-center my-5"
+            >
               <thead>
                 <tr className="border-b border-primaryColor text-left">
                   <th className="px-6 py-3 text-md font-bold text-primaryColor uppercase tracking-wider">
@@ -543,7 +632,9 @@ const Dashboard: React.FC = () => {
                 >
                   <td className="px-6 py-3 textBasic">{token._id}</td>
                   <td className="px-6 py-3 textBasic">
-                    {new Date(token.dateTimeField || token.SellTokendateTimeField).toLocaleString()}
+                    {new Date(
+                      token.dateTimeField || token.SellTokendateTimeField
+                    ).toLocaleString()}
                   </td>
                   <td className="px-6 py-3 textBasic">
                     {token.Tokens || token.TokensAmount}
@@ -551,7 +642,21 @@ const Dashboard: React.FC = () => {
                   <td className="px-6 py-3 textBasic">
                     {token.buyer?.username || token.seller?.username}
                   </td>
-                  <td className={`px-6 py-3 textBasic  ${token.transactionStatus === 'Declined' ? '!text-red-400' : ''} ${token.transactionStatus === 'Pending' ? '!text-yellow-400' : ''} ${token.transactionStatus === 'Approved' ? '!text-green-400' : ''}`}>
+                  <td
+                    className={`px-6 py-3 textBasic  ${
+                      token.transactionStatus === "Declined"
+                        ? "!text-red-400"
+                        : ""
+                    } ${
+                      token.transactionStatus === "Pending"
+                        ? "!text-yellow-400"
+                        : ""
+                    } ${
+                      token.transactionStatus === "Approved"
+                        ? "!text-green-400"
+                        : ""
+                    }`}
+                  >
                     {token.transactionStatus || token.status}
                   </td>
                 </tr>

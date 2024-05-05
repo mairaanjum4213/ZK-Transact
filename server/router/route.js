@@ -88,7 +88,8 @@ router.route('/buyToken/buyer/:buyerId').get(controller.getApprovedBuyTokenReque
 
 /*___________________________Dashboard __________________*/
 router.route('/buysell/approved/:username').get(controller.getApprovedTokenRequestsForAdmin);
-router.route('/buysell/pending/:username').get(controller.getPendingTokenRequestsCountForAdmin);
+router.route('/buysell/allreq/:username').get(controller.getTokenRequestsCountForAdmin);
 router.route('/buysell/recentapproved/:username').get(controller.getRecentApprovedTokenRequestsForAdmin);
 router.route('/buysell/all/:username').get(controller.getAllTokenRequestsForAdmin);
+router.route('/buysell/allgraph/:username').get(controller.getAllTokenRequestsForAdminGraph);
 export default router;
