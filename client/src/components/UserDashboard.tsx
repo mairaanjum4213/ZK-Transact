@@ -3,31 +3,101 @@ import aboutUs from '../assets/BreadCrumbs/Aboutus.jpg';
 import Chest from "../assets/chest.png";
 import { FaCircle } from "react-icons/fa";
 import { CgArrowsExchangeAltV } from "react-icons/cg";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaFilter } from "react-icons/fa6";
+import { useAccount, useBalance } from "wagmi";
+import ConnectWallet from "../components/ConnectWallet"
+import { jwtDecode } from "jwt-decode";
+
+import axios from "axios";
+import { getUser } from '../helper/helper';
+axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
+
 const UserDashboard: React.FC = () => {
+  const { isConnected } = useAccount();
+  const { address: metamaskaddress } = useAccount();
+  const { data } = useBalance({
+    address: metamaskaddress,
+    token: "0x00a8Db0104a6b0C6a3d0a61ADC1Ea8f3b1cd8855",
+  });
+
+  const token = localStorage.getItem("token");
+  const decodedToken: any = token ? jwtDecode(token) : {};
+  const [userData, setUserData] = useState<any>();
+  const username = decodedToken.username || "";
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [sellTokens, setSellTokens] = useState([]);
+  const [buyTokens, setBuyTokens] = useState([]);
+
   const [userOption, setUserOption] = useState("buy");
   const [period, setPeriod] = useState("Newest");
+
+  useEffect(() => {
+    async function fetchUserData() {
+      try {
+        const response = await getUser({ username });
+        if (response.data) {
+          setUserData(response.data);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    }
+    fetchUserData();
+  }, [username]);
+
+  useEffect(() => {
+    if (!userData) return;
+    const fetchTokenRequests = async () => {
+      try {
+        const response = await axios.get(`/api/buysell/buyerseller/${userData?._id}`);
+        setSellTokens(response.data.sellTokens);
+        setBuyTokens(response.data.buyTokens);
+      } catch (error) {
+        setError("Error fetching token requests");
+        console.error("Error fetching token requests:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchTokenRequests();
+  }, [userData]);
+
+  if (loading) {
+    return <div className="text-center ">Loading...</div>;
+  }
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
   const togglePeriod = () => {
     setPeriod((prevPeriod) => (prevPeriod === "Newest" ? "Oldest" : "Newest"));
   };
   const handleOptionChange = (e: any) => {
     setUserOption(e.target.value);
   };
+
+  const filteredTokens = userOption === "buy" ? buyTokens : sellTokens;
+  const sortedTokens =
+    period === "Newest" ? filteredTokens : filteredTokens.slice().reverse();
+
   return (
     <>
       <BreadCrumb parentPageLink='/user' ParentPage="Home" pageName="User Dashboard" ChildPage="Dashboard" imageUrl={aboutUs} />
-      <div className='px-5 lg:px-10 py-5'>
+      {isConnected ? (
+        <>
+  <div className='px-5 lg:px-10 py-5'>
         <div className="flex lg:flex-row flex-col justify-between my-5 mx-3 md:mx-5 pt-3 pb-5 px-3 items-center rounded-lg bdr bgLightGret">
           <div className=" flex md:flex-row flex-col justify-center items-center ">
             <img className="w-[200px] h-[170px]" src={Chest} alt="" />
             <div className="flex flex-col  pt-5  ">
               <h2 className="font-bold  tracking-wide">ZK - Tokens</h2>
               <p>
-                {/* {data?.formatted} */} data.format
+                 {data?.formatted}
                 <span>
-                  {/* {data?.symbol} */}
-                  data.symbol
+                   {data?.symbol} 
+                 
                 </span>
               </p>
             </div>
@@ -93,51 +163,68 @@ const UserDashboard: React.FC = () => {
               </tr>
             </thead>
             <tbody className="border-t"></tbody>
-            {/* {sortedTokens.map((token: any, index) => ( */}
+            {sortedTokens.map((token: any, index) => ( 
             <tr
-              // key={index}
+               key={index}
               className="text-left"
               style={{ borderBottom: "1px solid #41464580" }}
             >
               <td className="px-6 py-3 textBasic">
-                {/* {token._id} */}
+                {token._id} 
               </td>
               <td className="px-6 py-3 textBasic">
-                {/* {new Date(
+                {new Date(
                       token.dateTimeField || token.SellTokendateTimeField
-                    ).toLocaleString()} */}
-                Date
+                    ).toLocaleString()}
+                
               </td>
               <td className="px-6 py-3 textBasic">
-                Token Amount
-                {/* {token.Tokens || token.TokensAmount} */}
+              
+                {token.Tokens || token.TokensAmount} 
               </td>
               <td className="px-6 py-3 textBasic">
-                Admin Name
-                {/* {token.buyer?.username || token.seller?.username} */}
+               
+                {token.buyer?.username || token.seller?.username}
               </td>
               <td
-              // className={`px-6 py-3 textBasic  ${token.transactionStatus === "Declined"
-              //   ? "!text-red-400"
-              //   : ""
-              //   } ${token.transactionStatus === "Pending"
-              //     ? "!text-yellow-400"
-              //     : ""
-              //   } ${token.transactionStatus === "Approved"
-              //     ? "!text-green-400"
-              //     : ""
-              //   }`}
+               className={`px-6 py-3 textBasic  ${token.transactionStatus === "Declined"
+               ? "!text-red-400"
+               : ""
+               } ${token.transactionStatus === "Pending"
+                 ? "!text-yellow-400"
+                 : ""
+               } ${token.transactionStatus === "Approved"
+                 ? "!text-green-400"
+                 : ""
+               }`}
               >
-                Class ko uncomment krna ha  status color class ki base pr change horha
-                {/* {token.transactionStatus || token.status} */}
+    
+                 {token.transactionStatus || token.status} 
               </td>
             </tr>
+            ))}
         
-        
-               ))}
+               
           </table>
         </div>
       </div>
+        </>
+      )
+      :
+      (
+        <>
+          <div className="flex justify-center flex-col  my-[20%]  align-items-center text-red-500 text-lg">
+            <p> Please Connect the wallet first.</p>
+            <div className="w-fit">
+              <div className="my-4">
+                <ConnectWallet />
+              </div>
+            </div>
+          </div>
+        </>
+      )
+      }
+    
     </>
   );
 };

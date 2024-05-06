@@ -1058,11 +1058,13 @@ export const getTokenRequestsCountForAdmin = async (req, res) => {
       buyDeclinedCount,
     });
   } catch (error) {
-    console.error(`Error fetching token requests count for admin ${username}:`, error);
+    console.error(
+      `Error fetching token requests count for admin ${username}:`,
+      error
+    );
     return res.status(500).json({ message: "Internal server error" });
   }
 };
-
 
 //3
 export const getRecentApprovedTokenRequestsForAdmin = async (req, res) => {
@@ -1143,33 +1145,40 @@ export const getAllTokenRequestsForAdminGraph = async (req, res) => {
 
   try {
     const sellTokenAggregation = SellTokenModel.aggregate([
-      { 
-        $match: { 
+      {
+        $match: {
           purchaserName: username,
           transactionStatus: "Approved",
-        }
+        },
       },
       {
         $group: {
-          _id: { $dateToString: { format: "%Y-%m-%d", date: "$SellTokendateTimeField" } },
-          count: { $sum: 1 }
-        }
-      }
+          _id: {
+            $dateToString: {
+              format: "%Y-%m-%d",
+              date: "$SellTokendateTimeField",
+            },
+          },
+          count: { $sum: 1 },
+        },
+      },
     ]);
 
     const buyTokenAggregation = BuyTokenModel.aggregate([
-      { 
-        $match: { 
+      {
+        $match: {
           serviceProviderName: username,
           status: "Approved",
-        }
+        },
       },
       {
         $group: {
-          _id: { $dateToString: { format: "%Y-%m-%d", date: "$dateTimeField" } },
-          count: { $sum: 1 }
-        }
-      }
+          _id: {
+            $dateToString: { format: "%Y-%m-%d", date: "$dateTimeField" },
+          },
+          count: { $sum: 1 },
+        },
+      },
     ]);
 
     const [sellTransactionsPerDay, buyTransactionsPerDay] = await Promise.all([
@@ -1177,9 +1186,46 @@ export const getAllTokenRequestsForAdminGraph = async (req, res) => {
       buyTokenAggregation,
     ]);
 
-    return res.status(200).json({ sellTransactionsPerDay, buyTransactionsPerDay });
+    return res
+      .status(200)
+      .json({ sellTransactionsPerDay, buyTransactionsPerDay });
   } catch (error) {
     console.error(`Error fetching token data for admin ${username}:`, error);
     return res.status(500).json({ message: "Internal server error" });
   }
 };
+
+/* __________________________________UserDahboard ________________________________*/
+
+export const getAllTokenForUserDashboard = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const sellTokenPromise = SellTokenModel.find({
+      seller: userId,
+    })
+      .sort({
+        SellTokendateTimeField: -1,
+      })
+      .populate("seller", ["username", "email"]);
+
+    const buyTokenPromise = BuyTokenModel.find({
+      buyer: userId,
+    })
+      .sort({
+        dateTimeField: -1,
+      })
+      .populate("buyer", ["username", "email"]);
+
+    const [sellTokens, buyTokens] = await Promise.all([
+      sellTokenPromise,
+      buyTokenPromise,
+    ]);
+
+    return res.status(200).json({ sellTokens, buyTokens });
+  } catch (error) {
+    console.error(`Error fetching  token data :`, error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+

@@ -92,4 +92,9 @@ router.route('/buysell/allreq/:username').get(controller.getTokenRequestsCountFo
 router.route('/buysell/recentapproved/:username').get(controller.getRecentApprovedTokenRequestsForAdmin);
 router.route('/buysell/all/:username').get(controller.getAllTokenRequestsForAdmin);
 router.route('/buysell/allgraph/:username').get(controller.getAllTokenRequestsForAdminGraph);
+
+
+/*________________User Dashboard __________________*/
+router.route('/buysell/buyerseller/:userId').get(controller.getAllTokenForUserDashboard);
+
 export default router;
