@@ -58,7 +58,7 @@ export default function Fees() {
         </p>
         <p className="my-2">Select your fee percentage transaction approval.</p>
         <main className="grid my-3 place-items-center  ">
-          <div className="grid w-full lg:w-[40rem] grid-cols-5 gap-2 rounded-xl bg-gray-200 p-2 ">
+          <div className="grid w-full lg:w-[40rem] grid-cols-5 gap-2 rounded-[3px] bg-gray-200 px-[0.5rem] py-[0.7rem] ">
             <div>
               <input
                 type="radio"
@@ -71,7 +71,7 @@ export default function Fees() {
               />
               <label
                 htmlFor="1"
-                className="block cursor-pointer select-none rounded-xl   dark:text-black p-2 text-center peer-checked:bg-primaryColor peer-checked:font-bold peer-checked:text-white"
+                className="block cursor-pointer select-none rounded-[3px] dark:text-black p-2 text-center peer-checked:bg-primaryColor peer-checked:font-bold peer-checked:text-white"
               >
                 1
               </label>
@@ -88,7 +88,7 @@ export default function Fees() {
               />
               <label
                 htmlFor="2"
-                className="block cursor-pointer select-none rounded-xl p-2   dark:text-black text-center peer-checked:bg-primaryColor peer-checked:font-bold peer-checked:text-white"
+                className="block cursor-pointer select-none rounded-[3px] p-2   dark:text-black text-center peer-checked:bg-primaryColor peer-checked:font-bold peer-checked:text-white"
               >
                 2
               </label>
@@ -105,7 +105,7 @@ export default function Fees() {
               />
               <label
                 htmlFor="3"
-                className="block cursor-pointer select-none rounded-xl p-2  dark:text-black  text-center peer-checked:bg-primaryColor peer-checked:font-bold peer-checked:text-white"
+                className="block cursor-pointer select-none rounded-[3px] p-2  dark:text-black  text-center peer-checked:bg-primaryColor peer-checked:font-bold peer-checked:text-white"
               >
                 3
               </label>
@@ -122,7 +122,7 @@ export default function Fees() {
               />
               <label
                 htmlFor="4"
-                className="block cursor-pointer select-none rounded-xl p-2  dark:text-black text-center peer-checked:bg-primaryColor peer-checked:font-bold peer-checked:text-white"
+                className="block cursor-pointer select-none rounded-[3px] p-2  dark:text-black text-center peer-checked:bg-primaryColor peer-checked:font-bold peer-checked:text-white"
               >
                 4
               </label>
@@ -139,21 +139,21 @@ export default function Fees() {
               />
               <label
                 htmlFor="5"
-                className="block cursor-pointer select-none rounded-xl p-2  dark:text-black text-center peer-checked:bg-primaryColor peer-checked:font-bold peer-checked:text-white"
+                className="block cursor-pointer select-none rounded-[3px] p-2  dark:text-black text-center peer-checked:bg-primaryColor peer-checked:font-bold peer-checked:text-white"
               >
                 5
               </label>
             </div>
           </div>
         </main>
-       <div className="row">
-       <button
-          onClick={updateFee}
-          className="btnStyle !rounded-full !px-[5rem] mx-auto my-6 "
-        >
-          Set Fee
-        </button>
-       </div>
+        <div className="row">
+          <button
+            onClick={updateFee}
+            className="btnStyle  !px-[5rem] mx-auto my-6 "
+          >
+            Set Fee
+          </button>
+        </div>
       </div>
     </>
   );
