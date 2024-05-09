@@ -1229,3 +1229,29 @@ export const getAllTokenForUserDashboard = async (req, res) => {
   }
 };
 
+
+export async function filterMerchants(req, res) {
+  // queryParm   partialUsername
+  //show only those merchants jin ka meta mask wallet or bank details ho complete later staege pr add krna yh
+
+  try {
+    const { partialUsername } = req.query;
+    if (!partialUsername) {
+      return res.status(200).json('');
+    }
+    const regex = new RegExp(`^${partialUsername}.*`, 'i');
+    const users =
+     await UserModel.find({  username: regex,
+      isMerchant: true }).select('username');
+    if (!users || users.length === 0) {
+      return res.status(200).json('');
+    }
+    // Extracting only usernames from user objects
+    const usernames = users.map(user => user.username);
+    return res.status(200).json(usernames);
+  } catch (error) {
+    console.error("Error filtering merchants:", error);
+    return res.status(500).json({ message: "Error searching for merchants", error: error.message });
+  }
+};
+

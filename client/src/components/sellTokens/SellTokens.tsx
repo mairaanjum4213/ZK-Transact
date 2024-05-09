@@ -12,8 +12,10 @@ import toast, { Toaster } from "react-hot-toast";
 import { jwtDecode } from "jwt-decode";
 import { getUser, storesSellToken } from "../../helper/helper";
 import axios from "axios";
+import { filterMerchants } from "../../helper/helper";
 
 const SellTokens: React.FC = () => {
+  const [merchantOptions, setMerchantOptions] = useState<[]>([]);
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const decodedToken: any = token ? jwtDecode(token) : {};
@@ -37,6 +39,19 @@ const SellTokens: React.FC = () => {
   const [contractHash, setContractHash] = useState<string>(
     () => localStorage.getItem("contractHash") || ""
   );
+
+
+  const handleMerchantChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    setPurchaserName(value);
+    if (purchaserName !== "") {
+      const data = await filterMerchants(value);
+      setMerchantOptions(data);
+      console.log(merchantOptions)
+    }
+  };
+
+  
   // From ZK Token Conversion
   const [localCurrencyVal, setLocalCurrencyVal] = useState<number>();
   const [transactionfee, settransactionfee] = useState<number>();
@@ -240,28 +255,50 @@ const SellTokens: React.FC = () => {
                   )
                 }
               />
-              <input
-                required
-                className="InputReg mt-4"
-                type="text"
-                placeholder="Enter ZK-Token Purchaser User Name"
-                value={purchaserName || ""}
-                onChange={(e) =>
-                  setPurchaserName(String((e.target as HTMLInputElement).value))
-                }
-              />
-              <p>
-                <span className="link-wrapper">
-                  <Link
-                    className="link hover-2 fw-bold "
-                    style={{ letterSpacing: "1px" }}
-                    to="/zkt-purchasers"
-                  >
-                    {" "}
-                    View ZK-Token Purchasers
-                  </Link>
-                </span>
-              </p>
+
+
+
+
+
+<div className="admin">
+                <datalist id="filterMerchants">
+                  {
+                    merchantOptions.map((name, index) => (
+                      <option key={index} value={name} />
+                    ))}
+                </datalist>
+                <input
+                  list="filterMerchants"
+                  className="InputReg mt-4"
+                  type="text"
+                  placeholder="Enter Seller User Name"
+                  value={purchaserName || ""}
+                  onChange={
+                    handleMerchantChange
+                    // (e) =>
+                    // setServiceProvider(
+                    //   String((e.target as HTMLInputElement).value)
+                    // )
+                  }
+                  required
+                />
+                <p>
+                  <span className="link-wrapper">
+                    <Link
+                      className="link hover-2 "
+                      to="/zkt-providers"
+                    >
+                      {" "}
+                      View ZK-Token Purchasers
+                    </Link>
+                  </span>
+                </p>
+              </div>
+
+
+
+
+           
               <input
                 required
                 className="InputReg mt-4"
@@ -297,9 +334,9 @@ const SellTokens: React.FC = () => {
               <div className="mt-4">
                {/*} CurrencyConversion commented in file:"BuyTokens" to save api
                 free trial*/}
-              {merchants && merchants.length > 0 && (
+              {/* {merchants && merchants.length > 0 && (
                 <ZkTokenConversion onDataUpdate={handleDataUpdate}  merchantFee={merchants[0].merchantFee} />
-              )}
+              )} */}
               </div>
               <div
                 className="mt-4 d-flex align-items-center justify-content-left"
