@@ -86,7 +86,7 @@ function App() {
               <Route path="/admin" element={<AdminDashboard />} />
 
               <Route
-                path="/userDashboard"
+                path="/user"
                 element={isAuthenticated ? <UserDashboard /> : <Login />}
               />
 

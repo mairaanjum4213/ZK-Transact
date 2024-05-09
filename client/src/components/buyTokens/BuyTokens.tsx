@@ -15,13 +15,29 @@ import { jwtDecode } from "jwt-decode";
 import { getUser } from "../../helper/helper";
 import axios from "axios";
 axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
-
+import { filterMerchants } from "../../helper/helper";
 const BuyTokens: React.FC = () => {
+
+  const [merchantOptions, setMerchantOptions] = useState<[]>([]);
+  
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const decodedToken: any = token ? jwtDecode(token) : {};
   const username = decodedToken.username || "";
   const [userData, setUserData] = useState<any>("");
+
+
+
+  const handleMerchantChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    setServiceProvider(value);
+    if (serviceProvider !== "") {
+      const data = await filterMerchants(value);
+      setMerchantOptions(data);
+      console.log(merchantOptions)
+    }
+  };
+
 
   useEffect(() => {
     async function fetchUserData() {
@@ -238,24 +254,35 @@ const BuyTokens: React.FC = () => {
                 }
                 required
               />
-              <div className="admin">
+
+
+
+<div className="admin">
+                <datalist id="filterMerchants">
+                  {
+                    merchantOptions.map((name, index) => (
+                      <option key={index} value={name} />
+                    ))}
+                </datalist>
                 <input
+                  list="filterMerchants"
                   className="InputReg mt-4"
                   type="text"
                   placeholder="Enter Seller User Name"
                   value={serviceProvider || ""}
-                  onChange={(e) =>
-                    setServiceProvider(
-                      String((e.target as HTMLInputElement).value)
-                    )
+                  onChange={
+                    handleMerchantChange
+                    // (e) =>
+                    // setServiceProvider(
+                    //   String((e.target as HTMLInputElement).value)
+                    // )
                   }
                   required
                 />
                 <p>
                   <span className="link-wrapper">
                     <Link
-                      className="link hover-2 fw-bold"
-                      style={{ letterSpacing: "1px" }}
+                      className="link hover-2 "
                       to="/zkt-providers"
                     >
                       {" "}
@@ -264,17 +291,20 @@ const BuyTokens: React.FC = () => {
                   </span>
                 </p>
               </div>
+
+
+              
               <div className="mt-4">
                 {/*LocalCurrencyConversion commented in file:"BuyTokens" to save
                 api free trial*/}
                 <div className="mt-4">
                 
-                  {merchants && merchants.length > 0 && (
+                  {/* {merchants && merchants.length > 0 && (
                     <LocalCurrencyConversion
                       onDataUpdate={handleDataUpdate}
                       merchantFee={merchants[0].merchantFee} 
                     />
-                  )}
+                  )} */}
                   
                 </div>
               </div>

@@ -385,3 +385,22 @@ export const getMessages = (id: string): Promise<AxiosResponse<MessageModel[]>> 
 
 
 //_________________________________________________ ↑ Messages↑ 
+
+export const filterMerchants = async (partialUsername: any) => {
+  try {
+    const response = await axios.get(`/api/filterMerchants?partialUsername=${partialUsername}`);
+    const responseData = response.data;
+
+    if (Array.isArray(responseData) && responseData.length > 0) {
+      return responseData;
+    } else {
+      return ["Nothing Matched"];
+    }
+  } catch (error) {
+    console.error('Error fetching merchants:', error);
+    return ["Error Fetching Merchants"];
+  }
+};
+
+
+//_________________________________________________ ↑ Filter Merchants Available  ↑
