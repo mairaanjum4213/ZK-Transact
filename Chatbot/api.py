@@ -23,7 +23,7 @@ class ChatInput(BaseModel):
 uri = "mongodb+srv://MAIRAANJUM:TsHWc53rx4vXw7VG@cluster0.o8qcwda.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 
 # Setup OpenAI
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "sk-proj-7Lv0uHPJj2CaBuX9Be83T3BlbkFJne3b2rF7A8n9pB93XfW9"
 llm = OpenAI(temperature=0.5)
 
 app = FastAPI(desc="Chatbot")
