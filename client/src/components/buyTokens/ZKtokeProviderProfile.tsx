@@ -102,7 +102,7 @@ const ZKtokeProviderProfile: React.FC <Props> = ({title}) => {
                         </div>
                         <div className="col-5 mb-3">
                           <h6>Fee</h6>
-                          <p className="text-secondary">2% </p>
+                          <p className="text-secondary">{userData?.merchantFee}% </p>
                         </div>
                       </div>
                       <div className="row pt-1">

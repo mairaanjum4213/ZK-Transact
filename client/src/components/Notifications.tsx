@@ -10,11 +10,11 @@ axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
 
 interface NotificationsProps {
   handleNotificationClick: (content: string, requestId: any) => void;
-
 }
 
-
-const Notifications: React.FC <NotificationsProps> = ({ handleNotificationClick }) => {
+const Notifications: React.FC<NotificationsProps> = ({
+  handleNotificationClick,
+}) => {
   const [buyOrSell, setBuyOrSell] = useState<string>("null");
   const [buyRequests, setBuyRequests] = useState<any[]>([]);
   const [sellRequests, setSellRequests] = useState<any[]>([]);
@@ -23,7 +23,7 @@ const Notifications: React.FC <NotificationsProps> = ({ handleNotificationClick 
   const decodedToken: any = token ? jwtDecode(token) : {};
   const username = decodedToken.username || "";
   const [userData, setUserData] = useState<any>("");
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchUserData() {
@@ -60,20 +60,22 @@ const Notifications: React.FC <NotificationsProps> = ({ handleNotificationClick 
       }
     };
 
-    fetchPendingBuyRequests();
-    fetchPendingSellRequests();
+    const intervalId = setInterval(() => {
+      fetchPendingBuyRequests();
+      fetchPendingSellRequests();
+    }, 10000);
+
+    return () => clearInterval(intervalId);
   }, []);
 
-
-// Function to handle request click
-const handleNotification = (requestId: string, type: string) => {
-  if (type === "buy") {
-    handleNotificationClick('BuyRequest', requestId);
-  } else if (type === "sell") {
-    handleNotificationClick('SellRequest', requestId);
-  }
-};
-
+  // Function to handle request click
+  const handleNotification = (requestId: string, type: string) => {
+    if (type === "buy") {
+      handleNotificationClick("BuyRequest", requestId);
+    } else if (type === "sell") {
+      handleNotificationClick("SellRequest", requestId);
+    }
+  };
 
   return (
     <>
@@ -96,7 +98,6 @@ const handleNotification = (requestId: string, type: string) => {
         <ul className="dropdown-menu dropdown-menu-lg-end dropdownParent  rounded-lg pt-0">
           <div id="notficationBg" className="p-4">
             <p className="text-white fs-4">Notifications</p>
-           
           </div>
           <div className=" p-1  mx-2 d-flex justify-content-center  gap-4 my-3">
             <button
@@ -127,9 +128,17 @@ const handleNotification = (requestId: string, type: string) => {
                     className="d-flex justify-content-between align-items-center m-2"
                     onClick={() => handleNotification(request._id, "sell")}
                   >
-                    <p>You have received sell token request from {request?.seller?.username} with status "{request?.transactionStatus}"</p>
+                    <p>
+                      You have received sell token request from{" "}
+                      {request?.seller?.username} with status "
+                      {request?.transactionStatus}"
+                    </p>
                     <FaCircle
-                      className={`notificationPointer ${request?.status === "Pending" ? 'text-teal-600' : 'hidden'}`}
+                      className={`notificationPointer ${
+                        request?.status === "Pending"
+                          ? "text-teal-600"
+                          : "hidden"
+                      }`}
                       style={{
                         minWidth: "10px",
                         minHeight: "10px",
@@ -142,18 +151,24 @@ const handleNotification = (requestId: string, type: string) => {
 
           {buyOrSell === "buy" && (
             <>
-            {buyRequests.length > 0 &&
+              {buyRequests.length > 0 &&
                 buyRequests.map((request, index) => (
                   <li
                     key={index}
                     className="d-flex justify-content-between align-items-center m-2"
                     onClick={() => handleNotification(request._id, "buy")}
                   >
-                    <p>You have received buy token request from {request?.buyer?.username} with status "{request?.status}"</p>
+                    <p>
+                      You have received buy token request from{" "}
+                      {request?.buyer?.username} with status "{request?.status}"
+                    </p>
                     <FaCircle
-                      className={`notificationPointer ${request?.status === "Pending" ? 'text-teal-600' : 'hidden'}`}
+                      className={`notificationPointer ${
+                        request?.status === "Pending"
+                          ? "text-teal-600"
+                          : "hidden"
+                      }`}
                       style={{
-                        
                         minWidth: "10px",
                         minHeight: "10px",
                       }}

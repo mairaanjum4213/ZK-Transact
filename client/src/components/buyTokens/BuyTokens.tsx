@@ -299,12 +299,12 @@ const BuyTokens: React.FC = () => {
                 api free trial*/}
                 <div className="mt-4">
                 
-                  {/* {merchants && merchants.length > 0 && (
+                  {merchants && merchants.length > 0 && (
                     <LocalCurrencyConversion
                       onDataUpdate={handleDataUpdate}
                       merchantFee={merchants[0].merchantFee} 
                     />
-                  )} */}
+                  )} 
                   
                 </div>
               </div>

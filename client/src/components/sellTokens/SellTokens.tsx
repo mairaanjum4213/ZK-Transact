@@ -334,9 +334,9 @@ const SellTokens: React.FC = () => {
               <div className="mt-4">
                {/*} CurrencyConversion commented in file:"BuyTokens" to save api
                 free trial*/}
-              {/* {merchants && merchants.length > 0 && (
+               {merchants && merchants.length > 0 && (
                 <ZkTokenConversion onDataUpdate={handleDataUpdate}  merchantFee={merchants[0].merchantFee} />
-              )} */}
+              )} 
               </div>
               <div
                 className="mt-4 d-flex align-items-center justify-content-left"

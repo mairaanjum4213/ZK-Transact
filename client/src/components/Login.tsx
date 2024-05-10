@@ -42,7 +42,7 @@ const Login: React.FC = () => {
           navigate('/admin');         
         } 
         else {
-          navigate('/profile');
+          navigate('/user');
         }
     
         setIsAuthenticated(true);
