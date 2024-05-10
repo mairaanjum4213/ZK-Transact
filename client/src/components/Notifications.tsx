@@ -95,7 +95,8 @@ const Notifications: React.FC<NotificationsProps> = ({
           </span>
           <RiNotification2Fill />
         </button>
-        <ul className="dropdown-menu dropdown-menu-lg-end dropdownParent  rounded-lg pt-0">
+        <ul className="dropdown-menu dropdown-menu-lg-end dropdownParent  rounded-lg pt-0"
+        style={{zIndex:'1000'}}>
           <div id="notficationBg" className="p-4">
             <p className="text-white fs-4">Notifications</p>
           </div>
