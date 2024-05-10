@@ -20,7 +20,6 @@ import BuyTokens from "../buyTokens/BuyTokens";
 import SellTokens from "../sellTokens/SellTokens";
 import { ERC20 } from "../../Wagmi/ERC20";
 import Notice from "./Notice";
-import UserNavbar from "../UserNavbar";
 const AdminDashboard: React.FC = () => {
   const [selectedContent, setSelectedContent] = useState("Dashboard");
   const [focusedDiv, setFocusedDiv] = useState("Dashboard");

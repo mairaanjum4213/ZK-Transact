@@ -152,21 +152,22 @@ const Chat: React.FC = () => {
         />
       )}
       <Toaster position="top-center" reverseOrder={false}></Toaster>
-      <div className="mb-5">
-        <div className="LogoSearch  py-4">
-          <div className="Search ml-4 py-3 pr-5">
+      <div className="mb-5 h-screen">
+        <div className="LogoSearch   py-4">
+          <div className="Search d-flex w-100 justify-between mx-[0.9rem]">
             <input
+            className="w-full"
               type="text"
-              placeholder="User Name"
+              placeholder="Search Merchant Name"
               value={searchUsername}
               onChange={(e) => setSearchUsername(e.target.value)}
             />
-            <div className="simpleButton1 py-2 px-3" onClick={handleSearch}>
+            <div className="simpleButton1 w-fit py-2 px-3" onClick={handleSearch}>
               Search
             </div>
           </div>
         </div>
-        <div className="Chat ">
+        <div className="Chat  ">
           <div className="Left-side-chat">
             <div className="Chat-container h-full">
               <h2 className="fs-4" style={{ letterSpacing: "2px" }}>
@@ -180,13 +181,17 @@ const Chat: React.FC = () => {
                       currentUser={userData._id}
                       online={checkOnlineStatus(chat)}
                     />
+
+
+
+                    
                   </div>
                 ))}
               </div>
             </div>
           </div>
           {/* Right Side */}
-          <div className="Right-side-chat  ">
+          <div className="Right-side-chat ">
             <ChatBox
               chat={currentChat}
               currentUser={userData?._id}
@@ -196,6 +201,8 @@ const Chat: React.FC = () => {
           </div>
         </div>
       </div>
+
+      
     </>
   );
 };

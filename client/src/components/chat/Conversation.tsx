@@ -39,8 +39,8 @@ console.log(data)
       <div className=" flex-row w-100  conversation chatCard">
         <img
           className="card-img-left example-card-img-responsive followerImage"
-          src="https://avatar.iran.liara.run/public/job/police/female"
-        />
+          src={`https://avatar.iran.liara.run/${userData?.data.gender === 'female' ? 'public/girl' : 'public/boy'}`}
+          />
         <div className="card-body">
           <p
             className="card-title mt-2"
@@ -60,7 +60,9 @@ console.log(data)
           </p>
         </div>
       </div>
-     <hr style={{ width: "85%", border: "0.1px solid #ececec" }} ></hr>
+     <hr 
+     className="
+     mx-2" style={{ width: "95%", border: "0.1px solid #ececec" }} ></hr>
     </>
   );
 };

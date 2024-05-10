@@ -1,25 +1,26 @@
 .ChatBox-container {
-    border-radius: 1rem;
     display: grid;
-    /* grid-template-rows: 14vh 60vh 20vh; */
-    grid-template-rows: 14vh 60vh 20vh;
+   /* fah */
+    grid-template-rows: 14vh 66vh 20vh;
 }
-
 .chatAi-container {
     border-radius: 1rem;
     display: grid;
+    ;
     grid-template-rows: 14vh 80vh 20vh;
 }
-
 .chat-header {
     display: flex;
     flex-direction: column;
+    padding: 0px 10px 10px 10px ;
+ 
+
 }
 .chat-body {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    padding: 1.5rem;
+    padding: 1rem;
     overflow: scroll;
 }
 .chat-body::-webkit-scrollbar {
@@ -29,7 +30,7 @@
     background-color: #3e0c64dc !important;
     color: white;
     padding: 0.7rem;
-    border-radius: 1rem 1rem 1rem 0;
+    border-radius: 0.4rem 0.4rem 0.4rem 0;
     max-width: 28rem;
     width: fit-content;
     display: flex;
@@ -42,7 +43,7 @@
 }
 .own {
     align-self: flex-end;
-    border-radius: 1rem 1rem 0 1rem;
+    border-radius: 0.4rem 0.4rem 0.4rem 0;
     background: #269e88dc !important;
 }
 .chat-sender {

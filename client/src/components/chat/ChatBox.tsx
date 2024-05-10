@@ -114,15 +114,17 @@ const ChatBox: React.FC<ChatBoxProps> = ({
       <div className="ChatBox-container  ">
         {chat ? (
           <>
-            <div className="chat-header ">
+       
+            <div className="chat-header  "
+            style={{margin:'0'}}
+            >
               <div className="follower">
-                <div className="mx-3 mt-2">
-                  <img
-                    alt="Profile"
-                    className="followerImage mt-2"
-                    src="
-    https://avatar.iran.liara.run/public/job/police/female"
-                  />
+                <div className="px-2  mt-2">
+              
+              <img  alt="Profile"
+  className="followerImage mt-2"
+  src={`https://avatar.iran.liara.run/${userData?.data.gender === 'female' ? 'public/girl' : 'public/boy'}`}
+/>
                   <div className="my-auto">
                     <h3 className="text-xl pt-1" >{userData?.data.fullName}</h3>
                   </div>

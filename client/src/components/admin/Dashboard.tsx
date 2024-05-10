@@ -415,47 +415,51 @@ const Dashboard: React.FC = () => {
                     )}
                     {graphOption === false && (
                       <>
-                        <Chart
-                          className=" "
-                          series={[
-                            sellApprovedCount,
-                            sellPendingCount,
-                            sellDeclinedCount,
-                          ]}
-                          type="donut"
-                          width="400"
-                          height="400"
-                          options={{
-                            labels: ["Accepted", "Pendings", "Rejected"],
-                            // colors: ["#900E7F", "#151C52", "#165AC3"],
-                            dataLabels: {
-                              enabled: false,
-                            },
-                            plotOptions: {
-                              pie: {
-                                expandOnClick: false,
-                                donut: {
-                                  size: "88%",
-                                  labels: {
-                                    show: true,
-                                    value: {
-                                      color: "#34A28E",
-                                      fontSize: 25,
-                                    },
-                                    total: {
-                                      label: "Requests",
-                                      show: true,
-                                      fontSize: 25,
-                                      color: "#34A28E",
-                                    },
-                                  },
-                                },
-                                customScale: 0.5,
-                                expandOnClick: true,
-                              },
-                            },
-                          }}
-                        />
+                     <Chart
+  className=" "
+  series={[
+    sellApprovedCount,
+    sellPendingCount,
+    sellDeclinedCount,
+  ]}
+  type="donut"
+  width="400"
+  height="400"
+  options={{
+    labels: ["Accepted", "Pendings", "Rejected"],
+    dataLabels: {
+      enabled: false,
+    },
+
+   
+    plotOptions: {
+      pie: {
+       
+        expandOnClick: false,
+        donut: {
+          size: "88%",
+          labels: {
+            show: true,
+            value: {
+              color: "#34A28E",
+              fontSize: 25,
+            },
+            total: {
+              label: "Requests",
+              show: true,
+              fontSize: 25,
+              color: "#34A28E",
+            },
+          },
+        },
+        customScale: 0.5,
+        
+       
+      },
+    },
+  }}
+/>
+
                       </>
                     )}
                   </div>
@@ -687,10 +691,10 @@ const Dashboard: React.FC = () => {
         </>
       ) : (
         <>
-          <div className="flex justify-center flex-col  my-[20%]  align-items-center text-red-500 text-lg">
+          <div className="flex justify-center flex-col self-center align-items-center h-screen text-red-500 text-lg">
             <p> Please Connect the wallet first.</p>
             <div className="w-fit">
-              <div className="my-4">
+              <div className="">
                 <ConnectWallet />
               </div>
             </div>
