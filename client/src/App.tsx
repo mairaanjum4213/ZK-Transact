@@ -45,6 +45,7 @@ import Faqs from "./components/Faqs.tsx";
 import UserNotifications from "./components/UserNotifications.tsx";
 import SellTokenNotification from "./components/sellTokens/SellTokenNotification.tsx";
 import Fees from "./components/admin/Fees.tsx";
+import KycForm from "./components/KycForm.tsx";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -73,6 +74,7 @@ function App() {
             <Navbar />
             <ScrollUp />
             <Routes>
+            <Route path="/kycForm" element={<KycForm />} />
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
               <Route path="*" element={<PageNotFound />} />
