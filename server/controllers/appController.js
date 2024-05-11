@@ -3,6 +3,7 @@ import SellTokenModel from "../model/SellToken.model.js";
 import BuyTokenModel from "../model/BuyToken.model.js";
 import TransferTokenModel from "../model/TransferToken.model.js";
 import AccountModel from "../model/Account.model.js";
+import KYCModel from "../model/KYCModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import ENV from "../config.js";
@@ -1229,7 +1230,6 @@ export const getAllTokenForUserDashboard = async (req, res) => {
   }
 };
 
-
 export async function filterMerchants(req, res) {
   // queryParm   partialUsername
   //show only those merchants jin ka meta mask wallet or bank details ho complete later staege pr add krna yh
@@ -1237,21 +1237,125 @@ export async function filterMerchants(req, res) {
   try {
     const { partialUsername } = req.query;
     if (!partialUsername) {
-      return res.status(200).json('');
+      return res.status(200).json("");
     }
-    const regex = new RegExp(`^${partialUsername}.*`, 'i');
-    const users =
-     await UserModel.find({  username: regex,
-      isMerchant: true }).select('username');
+    const regex = new RegExp(`^${partialUsername}.*`, "i");
+    const users = await UserModel.find({
+      username: regex,
+      isMerchant: true,
+    }).select("username");
     if (!users || users.length === 0) {
-      return res.status(200).json('');
+      return res.status(200).json("");
     }
     // Extracting only usernames from user objects
-    const usernames = users.map(user => user.username);
+    const usernames = users.map((user) => user.username);
     return res.status(200).json(usernames);
   } catch (error) {
     console.error("Error filtering merchants:", error);
-    return res.status(500).json({ message: "Error searching for merchants", error: error.message });
+    return res
+      .status(500)
+      .json({ message: "Error searching for merchants", error: error.message });
+  }
+}
+
+/*_________________________________ KYC ___________________ */
+export async function postKYC(req, res) {
+  const { user, name, dob, gender, nationality } = req.body;
+
+  const nationalIdentity = req.file.filename;
+
+  try {
+    const newKYC = new KYCModel({
+      user,
+      name,
+      dob,
+      gender,
+      nationality,
+      nationalIdentity,
+    });
+
+    const result = await newKYC.save();
+
+    return res.status(201).send({ msg: "KYC data stored Successfully" });
+  } catch (error) {
+    return res
+      .status(500)
+      .send({ error: error.message || "Internal server error" });
+  }
+}
+
+export const getAllKYC = async (req, res) => {
+  try {
+    const kycList = await KYCModel.find();
+    return res.json(kycList);
+  } catch (error) {
+    return res.status(500).json({ error: "Failed to retrieve KYC documents" });
   }
 };
 
+export const getPendingKYCRequestsForAdmin = async (req, res) => {
+  try {
+    const pendingKYC = await KYCModel.find({
+      status: "Pending",
+    }).populate("user", ["username", "email", "kycStatus"]);
+
+    return res.status(200).json(pendingKYC);
+  } catch (error) {
+    console.error(`Error fetching pending KYC`, error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const rejectKYCByAdmin = async (req, res) => {
+  const { userId } = req.params;
+  const { reasonRejection } = req.body;
+
+  try {
+    const kyc = await KYCModel.findById({
+      user: userId,
+    });
+    if (!kyc) {
+      return res.status(404).json({ message: "KYC Request not found" });
+    }
+    kyc.status = "Declined";
+    kyc.reasonRejection = reasonRejection;
+    await kyc.save();
+    return res.status(200).json({
+      message: "Request rejected",
+      kyc,
+    });
+  } catch (error) {
+    console.error("Error approving kyc:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const approveKYCByAdmin = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const kyc = await KYCModel.findOneAndUpdate(
+      { user: userId },
+      { status: "Approved" },
+      { new: true }
+    );
+
+    if (!kyc) {
+      return res.status(404).json({ message: "KYC Request not found" });
+    }
+
+    await UserModel.findByIdAndUpdate(
+      userId,
+      { kycStatus: true },
+      { new: true }
+    );
+
+    return res.status(200).json({
+      message: "KYC approved successfully",
+      kyc,
+    });
+  } catch (error) {
+    console.error("Error approving kyc:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};

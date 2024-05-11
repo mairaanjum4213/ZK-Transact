@@ -33,7 +33,6 @@ import Chat from "./components/chat/Chat.tsx";
 import ChatBotFrontend from "./components/chatBot/ChatBotFrontend.tsx";
 import Consent from "./components/admin/Consent.tsx";
 import { useAuthStore } from "./store/store";
-
 import CompleteViewZKTokenProvider from "./components/buyTokens/CompleteViewZKTokenProvider.tsx";
 import CompleteViewZKTokenPurchasers from "./components/sellTokens/CompleteViewZKTokenPurchasers.tsx";
 import CompleteZKTokenProviderProfile from "./components/buyTokens/CompleteZKTokenProviderProfile.tsx";
@@ -74,7 +73,7 @@ function App() {
             <Navbar />
             <ScrollUp />
             <Routes>
-            <Route path="/kycForm" element={<KycForm />} />
+              <Route path="/kycForm" element={<KycForm />} />
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
               <Route path="*" element={<PageNotFound />} />

@@ -45,6 +45,10 @@ interface BuyTokenResponse {
   error?: any;
 }
 
+interface KYCResponse {
+  error?: any;
+}
+
 
 /** To get username from Token */
 /*export async function getUsername(): Promise<UsernameData | null> {
@@ -404,3 +408,17 @@ export const filterMerchants = async (partialUsername: any) => {
 
 
 //_________________________________________________ ↑ Filter Merchants Available  ↑
+
+
+export async function storekyc(formData: FormData): Promise<string | KYCResponse> {
+  try {
+    const response = await axios.post<string | KYCResponse>('/api/postkyc', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data' // Ensure to set Content-Type header for FormData
+      }
+    });
+    return Promise.resolve(response.data);
+  } catch (error) {
+    return Promise.reject({ error });
+  }
+}

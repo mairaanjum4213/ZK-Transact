@@ -5,6 +5,7 @@ import * as chatController from '../controllers/ChatController.js';
 import * as messageController from '../controllers/MessageController.js';
 import Auth, { localVariables } from '../middleware/auth.js';
 import upload from "../middleware/upload.js"
+import uploads from "../middleware/upload2.js"
 import { registerMail } from '../controllers/mailer.js'
 import { registerMail2 } from '../controllers/mailer2.js'
 const router = Router();
@@ -97,5 +98,14 @@ router.route('/buysell/allgraph/:username').get(controller.getAllTokenRequestsFo
 
 /*________________User Dashboard __________________*/
 router.route('/buysell/buyerseller/:userId').get(controller.getAllTokenForUserDashboard);
+
+
+/*_________________________________KYC _________________________*/
+router.route('/postkyc').post(uploads.single('nationalIdentity'),controller.postKYC);
+router.route('/getkyc').get(controller.getAllKYC);
+router.route('/admin/pending-kyc-requests').get(controller.getPendingKYCRequestsForAdmin);
+router.route('/admin/reject-kyc/:userId').put(controller.rejectKYCByAdmin);
+router.route('/admin/approve-kyc/:userId').put(controller.approveKYCByAdmin);
+
 
 export default router;

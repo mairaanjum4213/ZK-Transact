@@ -17,27 +17,25 @@ import axios from "axios";
 axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
 import { filterMerchants } from "../../helper/helper";
 const BuyTokens: React.FC = () => {
-
   const [merchantOptions, setMerchantOptions] = useState<[]>([]);
-  
+
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const decodedToken: any = token ? jwtDecode(token) : {};
   const username = decodedToken.username || "";
   const [userData, setUserData] = useState<any>("");
 
-
-
-  const handleMerchantChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value
+  const handleMerchantChange = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const value = e.target.value;
     setServiceProvider(value);
     if (serviceProvider !== "") {
       const data = await filterMerchants(value);
       setMerchantOptions(data);
-      console.log(merchantOptions)
+      console.log(merchantOptions);
     }
   };
-
 
   useEffect(() => {
     async function fetchUserData() {
@@ -254,15 +252,11 @@ const BuyTokens: React.FC = () => {
                 }
                 required
               />
-
-
-
-<div className="admin">
+              <div className="admin">
                 <datalist id="filterMerchants">
-                  {
-                    merchantOptions.map((name, index) => (
-                      <option key={index} value={name} />
-                    ))}
+                  {merchantOptions.map((name, index) => (
+                    <option key={index} value={name} />
+                  ))}
                 </datalist>
                 <input
                   list="filterMerchants"
@@ -281,31 +275,23 @@ const BuyTokens: React.FC = () => {
                 />
                 <p>
                   <span className="link-wrapper">
-                    <Link
-                      className="link hover-2 "
-                      to="/zkt-providers"
-                    >
+                    <Link className="link hover-2 " to="/zkt-providers">
                       {" "}
                       View ZK-Token Sellers
                     </Link>
                   </span>
                 </p>
               </div>
-
-
-              
               <div className="mt-4">
                 {/*LocalCurrencyConversion commented in file:"BuyTokens" to save
                 api free trial*/}
                 <div className="mt-4">
-                
                   {merchants && merchants.length > 0 && (
                     <LocalCurrencyConversion
                       onDataUpdate={handleDataUpdate}
-                      merchantFee={merchants[0].merchantFee} 
+                      merchantFee={merchants[0].merchantFee}
                     />
-                  )} 
-                  
+                  )}
                 </div>
               </div>
               <div
@@ -328,7 +314,6 @@ const BuyTokens: React.FC = () => {
                 onChange={handleFileChange}
               />
               {file && <p>Selected File: {file.name}</p>}{" "}
-              {/* Display the selected file name if a file is selected */}
               <button type="submit" className="my-4 btnStyle" rel="stylesheet">
                 Generate Reciept
               </button>
