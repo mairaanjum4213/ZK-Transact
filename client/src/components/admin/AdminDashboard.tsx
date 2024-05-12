@@ -20,6 +20,7 @@ import BuyTokens from "../buyTokens/BuyTokens";
 import SellTokens from "../sellTokens/SellTokens";
 import { ERC20 } from "../../Wagmi/ERC20";
 import Notice from "./Notice";
+import KYC from "./Kyc/kycForm.jsx"
 const AdminDashboard: React.FC = () => {
   const [selectedContent, setSelectedContent] = useState("Dashboard");
   const [focusedDiv, setFocusedDiv] = useState("Dashboard");
@@ -74,6 +75,21 @@ const AdminDashboard: React.FC = () => {
                   Dashboard
                 </div>
               </div>
+
+
+
+              <div
+                className={`flex w-full cursor-pointer gap-2 justify-start align-items-center text-white sidebarOptions ${focusedDiv === "KYC" ? "focusedDiv" : ""
+                  }`}
+                onClick={() => handleMenuClick("KYC")}
+              >
+                <AiOutlineDollar className="text-lg text-amber-500 " />
+                <div className="h-fit whitespace-nowrap text-center rounded-lg ">
+                 KYC Requests
+                </div>
+              </div>
+
+
               <div
                 className={`flex w-full cursor-pointer gap-2 justify-start align-items-center text-white sidebarOptions ${focusedDiv === "BuyRequest" ? "focusedDiv" : ""
                   }`}
@@ -204,6 +220,15 @@ const AdminDashboard: React.FC = () => {
                 <SellTokens />
               </div>
             )}
+
+
+
+{selectedContent === "KYC" && (
+              <div className="">
+                <KYC/>
+              </div>
+            )}
+
             {selectedContent === "transferTokens" && (
               <div className="overflow-x-hidden">
                 <ERC20 />
