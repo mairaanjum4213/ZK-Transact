@@ -1307,13 +1307,11 @@ export const getPendingKYCRequestsForAdmin = async (req, res) => {
 };
 
 export const rejectKYCByAdmin = async (req, res) => {
-  const { userId } = req.params;
+  const { id } = req.params;
   const { reasonRejection } = req.body;
 
   try {
-    const kyc = await KYCModel.findById({
-      user: userId,
-    });
+    const kyc = await KYCModel.findById(id);
     if (!kyc) {
       return res.status(404).json({ message: "KYC Request not found" });
     }
@@ -1331,25 +1329,18 @@ export const rejectKYCByAdmin = async (req, res) => {
 };
 
 export const approveKYCByAdmin = async (req, res) => {
-  const { userId } = req.params;
+  const { id } = req.params;
 
   try {
-    const kyc = await KYCModel.findOneAndUpdate(
-      { user: userId },
-      { status: "Approved" },
-      { new: true }
-    );
+    const kyc = await KYCModel.findById(id).populate("user", ["username", "email", "kycStatus"]);
 
     if (!kyc) {
       return res.status(404).json({ message: "KYC Request not found" });
     }
-
-    await UserModel.findByIdAndUpdate(
-      userId,
-      { kycStatus: true },
-      { new: true }
-    );
-
+    kyc.status ="Approved"
+    kyc.user.kycStatus = true
+    await kyc.save();
+   
     return res.status(200).json({
       message: "KYC approved successfully",
       kyc,
@@ -1359,3 +1350,28 @@ export const approveKYCByAdmin = async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const updateUserKYCStatus = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const user = await UserModel.findByIdAndUpdate(
+      userId,
+      { kycStatus: true },
+      { new: true }
+    );
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    return res.status(200).json({
+      message: "KYC status updated successfully",
+      user,
+    });
+  } catch (error) {
+    console.error("Error updating KYC status:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+

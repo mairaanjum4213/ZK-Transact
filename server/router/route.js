@@ -104,8 +104,8 @@ router.route('/buysell/buyerseller/:userId').get(controller.getAllTokenForUserDa
 router.route('/postkyc').post(uploads.single('nationalIdentity'),controller.postKYC);
 router.route('/getkyc').get(controller.getAllKYC);
 router.route('/admin/pending-kyc-requests').get(controller.getPendingKYCRequestsForAdmin);
-router.route('/admin/reject-kyc/:userId').put(controller.rejectKYCByAdmin);
-router.route('/admin/approve-kyc/:userId').put(controller.approveKYCByAdmin);
-
+router.route('/admin/reject-kyc/:id').put(controller.rejectKYCByAdmin);
+router.route('/admin/approve-kyc/:id').put(controller.approveKYCByAdmin);
+router.route('/users/update-kyc-status/:userId').put(controller.updateUserKYCStatus);
 
 export default router;
