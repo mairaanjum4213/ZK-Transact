@@ -20,6 +20,7 @@ import BuyTokens from "../buyTokens/BuyTokens";
 import SellTokens from "../sellTokens/SellTokens";
 import { ERC20 } from "../../Wagmi/ERC20";
 import Notice from "./Notice";
+import { IoCheckmarkDoneSharp } from "react-icons/io5";
 import KYC from "./Kyc/kycForm.jsx"
 const AdminDashboard: React.FC = () => {
   const [selectedContent, setSelectedContent] = useState("Dashboard");
@@ -83,7 +84,9 @@ const AdminDashboard: React.FC = () => {
                   }`}
                 onClick={() => handleMenuClick("KYC")}
               >
-                <AiOutlineDollar className="text-lg text-amber-500 " />
+
+<IoCheckmarkDoneSharp className="text-lg  "/>
+              
                 <div className="h-fit whitespace-nowrap text-center rounded-lg ">
                  KYC Requests
                 </div>

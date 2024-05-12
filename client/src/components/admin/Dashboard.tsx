@@ -1,6 +1,8 @@
 import Chest from "../../assets/chest.png";
 import Chart from "react-apexcharts";
 import { useDarkMode, useLightMode } from "color-scheme-hook";
+
+
 import { FaExchangeAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { FaCircle } from "react-icons/fa";
