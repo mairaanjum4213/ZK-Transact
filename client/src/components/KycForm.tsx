@@ -95,7 +95,7 @@ const KycForm: React.FC = () => {
           We respect our customer privacy your information will be keept privtae
         </p>
 
-        <p>Kyc Status : 'In case usna bji we request'</p>
+  
 
         <div className="container mt-4">
           <div className="row pb-5">

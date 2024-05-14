@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { jwtDecode } from "jwt-decode";
 import { getUser } from "../helper/helper";
+import { Link } from 'react-router-dom';
 const KYCrequiredModal: React.FC = () => {
   const [kyc, setKyc] = useState<boolean>(true);
   const token = localStorage.getItem('token');
@@ -30,25 +31,24 @@ const KYCrequiredModal: React.FC = () => {
             <h5 className="modal-title fw-bold" style={{ letterSpacing: '2px' }} id="staticBackdropLabel-3">
               KYC Verification
             </h5>
-            <button type="button" className="btn-close closeBtn" aria-label="Close" onClick={handleCloseModal}>
-              <span> x</span>
-            </button>
             <br />
           </div>
-          <div className="modal-body">
-            <div className="container text-justify">
-              <span className="">
-                Your KYC status is <span className="mx-1 fw-bold">{" in progress"}</span> Remember KYC verification is required for any sort of transaction in this platform to prevent any sort of illegal transactions
-              </span>
+          <div className='  dark:border-b dark:border-white dark:border-opacity-20 dark:border-r dark:border-l'>
+            <div className="modal-body ">
+              <div className="container text-justify">
+                <span className="">
+                  Your KYC status is <span className="mx-1 text-primaryColor tracking-wider">{" in progress"}</span> Remember KYC verification is required for any sort of transaction in this platform to prevent any sort of illegal transactions
+                </span>
+              </div>
             </div>
-          </div>
-          <div className="modal-footer">
-            <button type="button" className=" simpleButton1 my-2">
-              Go to Verification
-            </button>
-            <button type="button" className=" simpleButton2 my-2 px-4" onClick={handleCloseModal}>
-              Close
-            </button>
+            <div className="modal-footer">
+              <Link to="/kycForm" type="button" className=" simpleButton1 my-2">
+                Go to Verification
+              </Link>
+              <button type="button" className=" simpleButton2 my-2 px-4 cursor-not-allowed " disabled onClick={handleCloseModal}>
+                Close
+              </button>
+            </div>
           </div>
         </div>
       </div>

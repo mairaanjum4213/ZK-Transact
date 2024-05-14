@@ -83,8 +83,8 @@ const UserNotifications: React.FC = () => {
           data-bs-display="static"
           aria-expanded="false"
         >
-          <span
-            className="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle"
+        <span
+            className="position-absolute top-1 left-7 translate-middle p-1 bg-danger border border-light rounded-circle"
             style={{ opacity: 1 }}
           >
             <span className="visually-hidden">New alerts</span>

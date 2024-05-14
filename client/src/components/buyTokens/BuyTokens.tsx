@@ -16,6 +16,7 @@ import { getUser } from "../../helper/helper";
 import axios from "axios";
 axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
 import { filterMerchants } from "../../helper/helper";
+import KYCrequiredModal from "../KYCrequiredModal.tsx";
 const BuyTokens: React.FC = () => {
   const [merchantOptions, setMerchantOptions] = useState<[]>([]);
 
@@ -207,6 +208,7 @@ const BuyTokens: React.FC = () => {
   return (
     <>
       <Toaster position="top-center" reverseOrder={false}></Toaster>
+      <KYCrequiredModal/>
       <BreadCrumb
         parentPageLink="/user"
         ParentPage="Home"

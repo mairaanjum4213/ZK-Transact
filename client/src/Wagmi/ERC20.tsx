@@ -22,6 +22,7 @@ import { jwtDecode } from "jwt-decode";
 import { getUser, storesTransferToken } from "../helper/helper.tsx";
 import { useAuthStore } from "../store/store";
 import axios from "axios";
+import KYCrequiredModal from "../components/KYCrequiredModal.tsx";
 axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
 
 
@@ -216,6 +217,8 @@ export const ERC20: React.FC = () => {
       <Toaster position="top-center" reverseOrder={false}></Toaster>
       {isConnected ? (
         <>
+                <KYCrequiredModal/>
+
           <div className="px-5 mt-5">
             <ImportTokens text="Make Sure Recipent have imported ZKT" />
             <div className="flex align-items-center justify-between mb-4" >

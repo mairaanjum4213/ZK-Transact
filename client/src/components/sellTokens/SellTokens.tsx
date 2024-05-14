@@ -13,6 +13,7 @@ import { jwtDecode } from "jwt-decode";
 import { getUser, storesSellToken } from "../../helper/helper";
 import axios from "axios";
 import { filterMerchants } from "../../helper/helper";
+import KYCrequiredModal from "../KYCrequiredModal.tsx";
 
 const SellTokens: React.FC = () => {
   const [merchantOptions, setMerchantOptions] = useState<[]>([]);
@@ -219,6 +220,8 @@ const SellTokens: React.FC = () => {
 
   return (
     <>
+
+<KYCrequiredModal/>
       <BreadCrumb
         parentPageLink="/"
         ParentPage="Home"

@@ -118,14 +118,14 @@ const WalletDetails: React.FC = () => {
         imageUrl={breadCrumWallet}
       />)}
       <section className="">
-        <div className="container  mb-5">
+        <div className="z-40  mb-5">
           <h1 className="fw-bold fs-4 my-5" style={{ letterSpacing: "1px" }}>
             Connected Wallet Details
           </h1>
           {isConnected ? (
             <>
               <div
-                className="row d-flex justify-content-center align-items-center mt-5 mx-2 px-1"
+                className="row d-flex justify-content-center align-items-center mt-5 mx-2 px-1 z-40"
               >
                 <div className="col col-lg-6 mb-4 mb-lg-0 w-10/12  ">
                   <div
@@ -155,7 +155,7 @@ const WalletDetails: React.FC = () => {
                           >
                             Details
                           </p>
-                          <hr className="mt-0 mb-4" />
+                          <hr className="mt-0 mb-4 " />
                           <div className="row pt-1">
                             <div className="col-12 mb-3">
                               <h6 className="texy-md">

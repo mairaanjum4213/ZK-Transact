@@ -7,24 +7,20 @@ import { getUser } from "../helper/helper";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
-
 interface NotificationsProps {
   handleNotificationClick: (content: string, requestId: any) => void;
 }
-
 const Notifications: React.FC<NotificationsProps> = ({
   handleNotificationClick,
 }) => {
   const [buyOrSell, setBuyOrSell] = useState<string>("null");
   const [buyRequests, setBuyRequests] = useState<any[]>([]);
   const [sellRequests, setSellRequests] = useState<any[]>([]);
-
   const token = localStorage.getItem("token");
   const decodedToken: any = token ? jwtDecode(token) : {};
   const username = decodedToken.username || "";
   const [userData, setUserData] = useState<any>("");
   const navigate = useNavigate();
-
   useEffect(() => {
     async function fetchUserData() {
       try {
@@ -38,7 +34,6 @@ const Notifications: React.FC<NotificationsProps> = ({
     }
     fetchUserData();
   }, [username]);
-
   useEffect(() => {
     // Fetch pending buy token requests for admin
     const fetchPendingBuyRequests = async () => {
@@ -49,7 +44,6 @@ const Notifications: React.FC<NotificationsProps> = ({
         console.error("Error fetching pending buy token requests:", error);
       }
     };
-
     // Fetch pending sell token requests for admin
     const fetchPendingSellRequests = async () => {
       try {
@@ -59,15 +53,12 @@ const Notifications: React.FC<NotificationsProps> = ({
         console.error("Error fetching pending sell token requests:", error);
       }
     };
-
     const intervalId = setInterval(() => {
       fetchPendingBuyRequests();
       fetchPendingSellRequests();
     }, 10000);
-
     return () => clearInterval(intervalId);
   }, []);
-
   // Function to handle request click
   const handleNotification = (requestId: string, type: string) => {
     if (type === "buy") {
@@ -76,10 +67,10 @@ const Notifications: React.FC<NotificationsProps> = ({
       handleNotificationClick("SellRequest", requestId);
     }
   };
-
   return (
     <>
-      <div className="btn-group mx-1">
+      <div className="btn-group mx-1 z-[2000]"
+     >
         <button
           type="button"
           className="btn  relative dropdown-toggle notificationIcon rounded-circle p-2 "
@@ -87,7 +78,7 @@ const Notifications: React.FC<NotificationsProps> = ({
           data-bs-display="static"
           aria-expanded="false"
         >
-          <span
+         <span
             className="position-absolute top-1 left-7 translate-middle p-1 bg-danger border border-light rounded-circle"
             style={{ opacity: 1 }}
           >
@@ -149,7 +140,6 @@ const Notifications: React.FC<NotificationsProps> = ({
                 ))}
             </>
           )}
-
           {buyOrSell === "buy" && (
             <>
               {buyRequests.length > 0 &&

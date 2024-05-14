@@ -74,13 +74,9 @@
     height: 70%;
     padding: 5px;
 }
-.iconSend {
-    color: white;
-}
+
 @media (prefers-color-scheme: dark) {
-    .chat-header {
-        box-shadow: rgba(0, 0, 0, 0.11) 0 5px 15px, rgba(0, 0, 0, 0.363) 0 3px 3px;
-    }
+    
     .chat-sender {
         background-color: #28383d56 !important;
     }
@@ -90,13 +86,12 @@
     }
 }
 @media (prefers-color-scheme: light) {
-    .chat-header,
+
     .chatBg {
         box-shadow: rgba(255, 255, 255, 0.11) 0 5px 15px, rgba(0, 0, 0, 0.226) 0 3px 3px;
     }
     .chat-sender {
-        box-shadow: rgba(0, 0, 0, .068) 0 10px 20px, rgba(0, 0, 0, .085) 0 6px 6px;
-        background-color: #40424256 !important;
+        background-color: #656d6d23 !important;
     }
     .chatBg {
         box-shadow: rgba(0, 0, 0, .068) 0 10px 20px, rgba(0, 0, 0, .085) 0 6px 6px;

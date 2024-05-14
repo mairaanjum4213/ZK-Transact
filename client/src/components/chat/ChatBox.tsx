@@ -10,7 +10,8 @@ import {
 } from "react";
 import { Link } from "react-router-dom";
 import InputEmoji from "react-input-emoji";
-import { BsFillSendFill } from "react-icons/bs";
+import { MdOutlinePermMedia } from "react-icons/md";
+import { RiSendPlane2Line } from "react-icons/ri";
 import "./chatCss/ChatBox.css";
 import axios from "axios";
 import { addMessage, getMessages } from "../../helper/helper";
@@ -114,18 +115,16 @@ const ChatBox: React.FC<ChatBoxProps> = ({
       <div className="ChatBox-container  ">
         {chat ? (
           <>
-       
-            <div className="chat-header  "
-            style={{margin:'0'}}
+            <div className="chat-header bgHeader  "
+        
             >
               <div className="follower">
                 <div className="px-2  mt-2">
-              
-              <img  alt="Profile"
-  className="followerImage mt-2"
-  src={`https://avatar.iran.liara.run/${userData?.data.gender === 'female' ? 'public/girl' : 'public/boy'}`}
-/>
-                  <div className="my-auto">
+                  <img alt="Profile"
+                    className="followerImage mt-2   bg-primaryColor p-[2px]"
+                    src={`https://avatar.iran.liara.run/${userData?.data.gender === 'female' ? 'public/girl' : 'public/boy'}`}
+                  />
+                  <div className="my-auto ">
                     <h3 className="text-xl pt-1" >{userData?.data.fullName}</h3>
                   </div>
                 </div>
@@ -173,14 +172,16 @@ const ChatBox: React.FC<ChatBoxProps> = ({
                 )}
             </div>
             {/* chat-sender */}
-            <div className="chat-sender px-3">
-              <div onClick={() => imageRef.current?.click()}>+</div>
+            <div className="chat-sender  px-3">
+              <div onClick={() => imageRef.current?.click()}>
+                <MdOutlinePermMedia className="text-xl" />
+              </div>
               {file && <p> {file.name}</p>}
               <InputEmoji value={newMessage} onChange={handleChange} />
               <div className="cursor-pointer  button  mt-3 ">
-                <BsFillSendFill
+                <RiSendPlane2Line
                   onClick={handleSend}
-                  className="iconSend hover:text-teal-700  text-opacity-25 duration-300"
+                  className="iconSend text-teal-700  duration-300"
                   style={{ fontSize: "x-large", display: "block" }}
                 />
               </div>

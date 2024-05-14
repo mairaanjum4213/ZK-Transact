@@ -139,6 +139,7 @@
     background-color: gray !important
 }
 @media (prefers-color-scheme:light) {
+    
     .chainName,
     .inputModel {
         background-color: rgba(128, 128, 128, 0.507) !important;

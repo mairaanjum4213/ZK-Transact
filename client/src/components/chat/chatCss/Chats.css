@@ -107,9 +107,12 @@
   .chatCard:hover {
     background-color: #091113 !important
   }
+
+  .bgHeader{
+    background-color: #28383d56 !important;
+  }
   .chatCard {
-    background: 0 0 !important;
-    border-radius: 3px;
+  margin-bottom: 12px;
     transition: .5s !important;
   }
   .chatCard:hover {
@@ -134,18 +137,22 @@
   }
   .Chat-container,
   .Right-side-chat {
-    border: 1px solid rgba(128, 128, 128, 0.404);
+    border: 1px solid rgba(128, 128, 128, 0.24);
   }
   .left-side-chat {
-    border: 1px solid rgba(128, 128, 128, 0.158);
+   
   }
   .chatCard {
     border-radius: 3px;
     transition: .5s
   }
+
+  .bgHeader{
+    background-color: #656d6d23 !important;
+  }
   .chatCard:hover {
     box-shadow: rgba(0, 0, 0, .068) 0 10px 20px, rgba(0, 0, 0, .085) 0 6px 6px;
-    background-color: #40424256 !important;
+    background-color: #878b8b23 !important;
   }
   .bgLightGrep {
     box-shadow: rgba(0, 0, 0, .068) 0 10px 20px, rgba(0, 0, 0, .085) 0 6px 6px;

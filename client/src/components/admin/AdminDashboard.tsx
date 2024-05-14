@@ -177,7 +177,8 @@ const AdminDashboard: React.FC = () => {
             </div>
           </div>
           {/* noScroll */}
-          <div className=" w-full h-screen overflow-y-auto  ">
+          {/* h-screen */}
+          <div className=" w-full  overflow-y-auto  ">
             {!selectedContent ||
               (selectedContent === "Dashboard" && <Dashboard />)}
             {selectedContent === "WalletDetails" && (

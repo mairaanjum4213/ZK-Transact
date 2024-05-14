@@ -1,8 +1,6 @@
 import Chest from "../../assets/chest.png";
 import Chart from "react-apexcharts";
 import { useDarkMode, useLightMode } from "color-scheme-hook";
-
-
 import { FaExchangeAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { FaCircle } from "react-icons/fa";
@@ -417,51 +415,45 @@ const Dashboard: React.FC = () => {
                     )}
                     {graphOption === false && (
                       <>
-                     <Chart
-  className=" "
-  series={[
-    sellApprovedCount,
-    sellPendingCount,
-    sellDeclinedCount,
-  ]}
-  type="donut"
-  width="400"
-  height="400"
-  options={{
-    labels: ["Accepted", "Pendings", "Rejected"],
-    dataLabels: {
-      enabled: false,
-    },
-
-   
-    plotOptions: {
-      pie: {
-       
-        expandOnClick: false,
-        donut: {
-          size: "88%",
-          labels: {
-            show: true,
-            value: {
-              color: "#34A28E",
-              fontSize: 25,
-            },
-            total: {
-              label: "Requests",
-              show: true,
-              fontSize: 25,
-              color: "#34A28E",
-            },
-          },
-        },
-        customScale: 0.5,
-        
-       
-      },
-    },
-  }}
-/>
-
+                        <Chart
+                          className=" "
+                          series={[
+                            sellApprovedCount,
+                            sellPendingCount,
+                            sellDeclinedCount,
+                          ]}
+                          type="donut"
+                          width="400"
+                          height="400"
+                          options={{
+                            labels: ["Accepted", "Pendings", "Rejected"],
+                            dataLabels: {
+                              enabled: false,
+                            },
+                            plotOptions: {
+                              pie: {
+                                expandOnClick: false,
+                                donut: {
+                                  size: "88%",
+                                  labels: {
+                                    show: true,
+                                    value: {
+                                      color: "#34A28E",
+                                      fontSize: 25,
+                                    },
+                                    total: {
+                                      label: "Requests",
+                                      show: true,
+                                      fontSize: 25,
+                                      color: "#34A28E",
+                                    },
+                                  },
+                                },
+                                customScale: 0.5,
+                              },
+                            },
+                          }}
+                        />
                       </>
                     )}
                   </div>
@@ -689,7 +681,6 @@ const Dashboard: React.FC = () => {
               ))}
             </table>
           </div>
-          
         </>
       ) : (
         <>

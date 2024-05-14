@@ -11,6 +11,7 @@ import { jwtDecode } from "jwt-decode";
 
 import axios from "axios";
 import { getUser } from '../helper/helper';
+import KYCrequiredModal from './KYCrequiredModal';
 axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
 
 const UserDashboard: React.FC = () => {
@@ -84,6 +85,8 @@ const UserDashboard: React.FC = () => {
 
   return (
     <>
+
+    <KYCrequiredModal/>
       <BreadCrumb parentPageLink='/user' ParentPage="Home" pageName="User Dashboard" ChildPage="Dashboard" imageUrl={aboutUs} />
       {isConnected ? (
         <>
